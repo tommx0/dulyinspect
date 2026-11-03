@@ -54,7 +54,7 @@
       HTTPS, die Datensicherung und Updates.</p>
   </div>
   <dl>
-    <dt>Stand</dt><dd>2. November 2026 · App 2.89.0</dd>
+    <dt>Stand</dt><dd>3. November 2026 · App 2.90.0</dd>
     <dt>Repository</dt><dd>github.com/tommx0/dulyinspect</dd>
     <dt>Image</dt><dd>dulyinspect</dd>
     <dt>Lizenz</dt><dd>GNU AGPL-3.0, freie Software (Datei LICENSE im Repository)</dd>
@@ -188,13 +188,13 @@ test/smoke-test.sh dulyinspect:latest   # optional: dieselben Prüfungen wie auf
 <ol class="schritt">
   <li>Ordner anlegen, z. B. <code>/opt/dulyinspect</code>, und die Datei <code>docker-compose.yml</code> aus dem Repository hineinkopieren.</li>
   <li>Image laden (entfällt, wenn auf dem Server gebaut):
-    <pre><code>docker load -i dulyinspect-2.89.0-amd64.tar</code></pre></li>
+    <pre><code>docker load -i dulyinspect-2.90.0-amd64.tar</code></pre></li>
   <li>In <code>docker-compose.yml</code> die Umgebungsvariablen eintragen (Abschnitt 4), vor allem <code>APP_URL</code>.</li>
   <li>Starten und das Protokoll verfolgen:
     <pre><code>cd /opt/dulyinspect
 docker compose up -d
 docker compose logs -f</code></pre>
-    Der Container ist bereit, sobald im Protokoll <code>Setup complete, app 2.89.0 at https://….</code> steht. Beim ersten Start dauert das etwa 10–30 Sekunden.</li>
+    Der Container ist bereit, sobald im Protokoll <code>Setup complete, app 2.90.0 at https://….</code> steht. Beim ersten Start dauert das etwa 10–30 Sekunden.</li>
   <li>Einen Reverse Proxy mit HTTPS davorsetzen (Caddy, nginx, Traefik …), der auf <code>http://127.0.0.1:8090</code> weiterleitet.
     Er muss <b>WebSocket</b> durchreichen (Header <code>Upgrade</code> und <code>Connection</code>), sonst funktioniert der Echtzeit-Abgleich zwischen mehreren Prüfern nicht.
     Port 8090 sollte nur lokal erreichbar sein, also <code>"127.0.0.1:8090:8080"</code> in <code>ports</code>, wenn der Proxy auf demselben Server läuft.</li>
@@ -253,7 +253,7 @@ docker compose logs -f</code></pre>
   <li>Danach erscheint <code>dulyinspect</code> mit den Tags <code>latest</code> und der Versionsnummer in der Liste.</li>
 </ol>
 <p class="klein">Alternativ per SSH (<span class="pfad">Systemsteuerung → Terminal &amp; SNMP → SSH-Dienst aktivieren</span>):
-  <code>sudo docker load -i /volume1/docker/dulyinspect-2.89.0-amd64.tar</code></p>
+  <code>sudo docker load -i /volume1/docker/dulyinspect-2.90.0-amd64.tar</code></p>
 
 <h3>7.4 Projekt anlegen (empfohlen)</h3>
 <p>Ein Projekt ist eine Compose-Datei, die der Container Manager verwaltet. So stehen alle Einstellungen an einer Stelle, und Updates sind einfacher.</p>
@@ -268,7 +268,7 @@ docker compose logs -f</code></pre>
     </ul></li>
   <li>Die Seite zu den Webportal-Einstellungen (Web Station) überspringen, dort nichts einrichten.</li>
   <li><b>Fertig</b> mit „Projekt nach der Erstellung starten“. Der Container Manager erstellt und startet den Container.</li>
-  <li><span class="pfad">Container → dulyinspect → Protokoll</span>: warten auf <code>Setup complete, app 2.89.0 at ….</code></li>
+  <li><span class="pfad">Container → dulyinspect → Protokoll</span>: warten auf <code>Setup complete, app 2.90.0 at ….</code></li>
 </ol>
 
 <h3>7.5 Alternative: Container ohne Projekt</h3>
