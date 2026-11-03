@@ -414,6 +414,7 @@ docker compose logs -f</code></pre>
 <h3>Common problems</h3>
 <table>
   <tr><th style="width: 42%">Problem</th><th>Cause and remedy</th></tr>
+  <tr><td>Container Manager reports “invalid Docker repository” when importing</td><td>Usually the ZIP was selected instead of the <code>.tar</code> inside it, or the file comes from an older build in the newer OCI layout. Unzip and use a current file (classic format since 2.90.0), or load it via SSH: <code>sudo docker load -i /volume1/docker/dulyinspect-…-amd64.tar</code>.</td></tr>
   <tr><td>Camera or QR scanning does not work, the app cannot be installed</td><td>The app is running without HTTPS. Open it via the reverse proxy with a certificate (section 7.6).</td></tr>
   <tr><td>Changes by other inspectors only appear after a reload</td><td>The WebSocket headers are missing in the reverse proxy (section 7.6, step 3).</td></tr>
   <tr><td>Sign-in works, then the error „keine Verbindung“ (no connection)</td><td><code>APP_URL</code> does not match the address in the browser. Adjust it and recreate the container.</td></tr>

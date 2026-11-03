@@ -412,6 +412,7 @@ docker compose logs -f</code></pre>
 <h3>Typische Probleme</h3>
 <table>
   <tr><th style="width: 42%">Problem</th><th>Ursache und Abhilfe</th></tr>
+  <tr><td>Container Manager meldet beim Import „ungültiges Docker-Repository“</td><td>Meist wurde die ZIP statt der darin enthaltenen <code>.tar</code> gewählt, oder die Datei stammt aus einem älteren Bau im neuen OCI-Format. Die ZIP entpacken und eine aktuelle Datei verwenden (seit 2.90.0 im klassischen Format), oder per SSH laden: <code>sudo docker load -i /volume1/docker/dulyinspect-…-amd64.tar</code>.</td></tr>
   <tr><td>Kamera bzw. QR-Scan geht nicht, App lässt sich nicht installieren</td><td>Die App läuft ohne HTTPS. Über den Reverse Proxy mit Zertifikat aufrufen (Abschnitt 7.6).</td></tr>
   <tr><td>Änderungen anderer Prüfer erscheinen erst nach dem Neuladen</td><td>WebSocket-Kopfzeilen im Reverse Proxy fehlen (Abschnitt 7.6, Schritt 3).</td></tr>
   <tr><td>Anmeldung klappt, danach Fehler „keine Verbindung“</td><td><code>APP_URL</code> stimmt nicht mit der Adresse im Browser überein. Anpassen und Container neu erzeugen.</td></tr>

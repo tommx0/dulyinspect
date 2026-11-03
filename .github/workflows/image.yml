@@ -54,10 +54,13 @@ jobs:
       - name: Smoke test
         run: test/smoke-test.sh dulyinspect:${{ steps.v.outputs.version }}
 
+      # Classic docker-archive format (with "repositories"): Synology Container Manager rejects the OCI layout of docker save
       - name: Save as file
         run: |
-          docker save -o dulyinspect-${{ steps.v.outputs.version }}-amd64.tar \
-            dulyinspect:${{ steps.v.outputs.version }} dulyinspect:latest
+          V=${{ steps.v.outputs.version }}
+          docker save -o oci.tar dulyinspect:$V dulyinspect:latest
+          ./classic-archive.sh oci.tar dulyinspect-$V-amd64.tar dulyinspect:$V dulyinspect:latest
+          rm oci.tar
           ls -lh *.tar
 
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
