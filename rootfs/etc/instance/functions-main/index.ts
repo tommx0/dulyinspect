@@ -23,6 +23,8 @@ Deno.serve(async (req: Request) => {
     })
     return await worker.fetch(req)
   } catch (e) {
-    return reply(String(e), 500)
+    // Details only in the container log, not to the browser (paths, stack trace)
+    console.error(`function ${name}:`, e)
+    return reply('function unavailable', 500)
   }
 })
