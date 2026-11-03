@@ -1,0 +1,15 @@
+#!/bin/bash
+exec 2>&1
+source /usr/local/lib/instance/common.sh
+load_secrets
+install -d -o realtime -g realtime /tmp/realtime
+SERVICE_ENV=(
+  PORT=4000 DB_HOST=127.0.0.1 DB_PORT=5432 DB_USER=realtime_meta DB_PASSWORD="$PW_REALTIME_META" DB_NAME=realtime_meta
+  DB_AFTER_CONNECT_QUERY="SET search_path TO _realtime" DB_ENC_KEY="$REALTIME_DB_ENC_KEY"
+  API_JWT_SECRET="$REALTIME_API_JWT_SECRET" METRICS_JWT_SECRET="$REALTIME_API_JWT_SECRET" SECRET_KEY_BASE="$REALTIME_SECRET_KEY_BASE"
+  ERL_AFLAGS="-proto_dist inet_tcp" ECTO_IPV6=false DNS_NODES="''" RLIMIT_NOFILE=10000 APP_NAME=realtime
+  SEED_SELF_HOST=false LOG_LEVEL=warning RUN_JANITOR=true JANITOR_INTERVAL=60000 DISABLE_HEALTHCHECK_LOGGING=true
+  MIX_ENV=prod RELEASE_TMP=/tmp/realtime HOME=/tmp/realtime
+)
+ulimit -n 10000
+run_as realtime sh -c '/opt/realtime/bin/migrate && exec /opt/realtime/bin/server'

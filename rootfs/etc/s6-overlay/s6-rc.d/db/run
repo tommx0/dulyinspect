@@ -1,0 +1,7 @@
+#!/bin/bash
+exec 2>&1
+source /usr/local/lib/instance/common.sh
+load_secrets
+# Ready as soon as pg_isready answers (notification-fd); SIGINT = fast, clean shutdown
+exec s6-notifyoncheck -d -n 0 -w 1000 -c "s6-setuidgid postgres pg_isready -q -h /var/run/postgresql -U postgres" \
+  s6-setuidgid postgres env "${PG_ENV[@]}" "${PGSTART[@]}" -c listen_addresses=127.0.0.1

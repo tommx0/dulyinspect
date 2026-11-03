@@ -1,0 +1,18 @@
+package.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
+index.html
+vite.config.ts
+tsconfig.json
+tsconfig.app.json
+tsconfig.node.json
+src/
+public/
+scripts/lizenzen.ts
+scripts/migrationen.mjs
+scripts/migrationen.d.mts
+supabase/migrations/
+supabase/signaturen.json
+supabase/functions/
+# Example checklists the app offers during setup (src/lib/beispielImport.ts)
+docs/checklisten/beispiel-checklisten.json

@@ -1,0 +1,37 @@
+# App and API under one address. TLS is done by a reverse proxy in front.
+{
+	admin off
+	auto_https off
+	persist_config off
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+import /etc/instance/caddy/api.caddy
+:8080 {
+	import api
+	# Per instance (prepare.sh), never from a cache
+	handle /konfig.js {
+		root * /run/instance
+		header Cache-Control no-store
+		header X-Content-Type-Options nosniff
+		file_server
+	}
+	handle {
+		root * /opt/www
+		# Security headers as in the app's _headers
+		header X-Content-Type-Options nosniff
+		header Referrer-Policy strict-origin-when-cross-origin
+		header Permissions-Policy "camera=(self), microphone=(), geolocation=(), payment=()"
+		@page path / /index.html
+		header @page Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self' data:; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
+		@fresh path / /index.html /sw.js /registerSW.js /manifest.webmanifest /migrationen.json
+		header @fresh Cache-Control no-cache
+		@assets path /assets/*
+		header @assets Cache-Control "public, max-age=31536000, immutable"
+		@txt path /.well-known/security.txt /sicherheit.txt
+		header @txt Content-Type "text/plain; charset=utf-8"
+		try_files {path} {path}/index.html /index.html
+		file_server
+	}
+}

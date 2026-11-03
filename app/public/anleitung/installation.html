@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>App installieren</title>
+<link rel="icon" href="../favicon.svg">
+<style>
+  :root { --marke: #1c1c1c; --akzent: #fce400; --akzent-hell: #fef9c3; --text: #1c1c1c; --text-2: #475569; --linie: #e2e8f0; --grund: #fafaf9; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --text: #f1f5f9; --text-2: #cbd5e1; --linie: #334155; --grund: #121212; --akzent-hell: #3a3405; }
+  }
+  :root[data-theme="dark"] { --text: #f1f5f9; --text-2: #cbd5e1; --linie: #334155; --grund: #121212; --akzent-hell: #3a3405; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--grund); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  main { max-width: 1000px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 32px; margin: 8px 0 6px; }
+  h2 { font-size: 24px; margin: 40px 0 12px; padding-top: 10px; border-top: 4px solid var(--akzent); }
+  h3 { font-size: 16px; margin: 12px 0 4px; }
+  p { margin: 0 0 12px; }
+  .lead { color: var(--text-2); font-size: 17px; max-width: 70ch; }
+  .kopf { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; border-bottom: 4px solid var(--akzent); padding-bottom: 12px; }
+  .kopf img { height: 44px; }
+  .kopf .aktionen { margin-left: auto; }
+  .knopf { display: inline-block; padding: 9px 14px; border-radius: 8px; background: var(--marke); color: #fff; text-decoration: none; font-weight: 600; font-size: 14px; }
+  .ui { font-weight: 600; background: #fff; color: #1c1c1c; border: 1px solid #cbd5e1; border-bottom-width: 2px; border-radius: 5px; padding: 1px 6px; white-space: nowrap; }
+  .box { border-left: 4px solid #7dd3fc; background: #f0f9ff; color: #0c4a6e; padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 14px 0; }
+  .box.achtung { border-color: #f59e0b; background: #fffbeb; color: #78350f; }
+  .adresse { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; background: #fff; color: #1c1c1c; border: 1px solid var(--linie); border-radius: 12px; padding: 16px; margin: 16px 0; }
+  .adresse img { width: 120px; height: 120px; }
+  .adresse code { font-size: 15px; word-break: break-all; }
+  .schritte { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin: 12px 0 8px; }
+  @media (max-width: 860px) { .schritte { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 480px) { .schritte { grid-template-columns: minmax(0, 1fr); } }
+  .schritt { break-inside: avoid; }
+  .schritt .nr { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--akzent); color: #1c1c1c; font-weight: 800; font-size: 14px; margin-right: 6px; }
+  .schritt p { font-size: 14px; color: var(--text-2); }
+  .schritt .ui { white-space: normal; }
+  .kurz { background: #fff; color: #1c1c1c; border: 1px solid var(--linie); border-radius: 12px; padding: 14px 18px; }
+  .kurz ol { margin: 0; padding-left: 20px; }
+  .kurz li { margin: 6px 0; }
+
+  /* ---------- Handy-Abbildungen (vereinfacht, keine Original-Oberflächen) ---------- */
+  .handy { position: relative; width: 100%; max-width: 210px; aspect-ratio: 9 / 18.5; margin: 0 auto 10px; border: 7px solid #111; border-radius: 30px; overflow: hidden; background: #f4f4f5; box-shadow: 0 6px 18px rgba(0,0,0,.15); font-size: 10px; color: #111; }
+  .status { height: 18px; display: flex; justify-content: space-between; align-items: center; padding: 0 12px; font-size: 9px; font-weight: 600; background: #fff; }
+  .seite { position: absolute; left: 0; right: 0; top: 18px; bottom: 0; background: #fafaf9 url("bilder/anmelden.jpg") center 30% / cover no-repeat; }
+  .abdunkeln { position: absolute; inset: 0; background: rgba(0,0,0,.35); }
+  .leiste-unten { position: absolute; left: 0; right: 0; bottom: 0; height: 52px; background: rgba(248,248,248,.97); border-top: 1px solid #ddd; display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 4px 8px; }
+  .adressfeld { height: 18px; border-radius: 9px; background: #e5e5ea; display: flex; align-items: center; justify-content: center; font-size: 8px; color: #555; }
+  .symbole { display: flex; justify-content: space-around; align-items: center; height: 20px; }
+  .symbole svg, .leiste-oben svg { width: 16px; height: 16px; stroke: #1d4ed8; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .leiste-oben { position: absolute; left: 0; right: 0; top: 0; height: 30px; background: #fff; border-bottom: 1px solid #ddd; display: flex; align-items: center; gap: 6px; padding: 0 6px; }
+  .leiste-oben .adressfeld { flex: 1; justify-content: flex-start; padding-left: 8px; }
+  .leiste-oben svg { stroke: #333; }
+  .mark { outline: 3px solid var(--akzent); outline-offset: 1px; border-radius: 6px; box-shadow: 0 0 0 6px rgba(252,228,0,.35); background: #fffbe0 !important; }
+  .blatt { position: absolute; left: 0; right: 0; bottom: 0; background: #f2f2f7; border-radius: 14px 14px 0 0; padding: 8px 8px 10px; }
+  .griff { width: 30px; height: 4px; border-radius: 2px; background: #c7c7cc; margin: 0 auto 8px; }
+  .liste { background: #fff; border-radius: 10px; overflow: hidden; }
+  .liste div { padding: 7px 10px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+  .liste div:last-child { border-bottom: 0; }
+  .menue { position: absolute; right: 6px; top: 32px; width: 72%; background: #fff; border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,.25); padding: 4px 0; }
+  .menue div { padding: 6px 10px; }
+  .dialog { position: absolute; left: 10px; right: 10px; top: 32%; background: #fff; border-radius: 14px; padding: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.3); text-align: center; }
+  .dialog img { width: 38px; height: 38px; border-radius: 9px; }
+  .dialog .knoepfe { display: flex; justify-content: center; gap: 4px; margin-top: 10px; font-size: 9px; }
+  .dialog .knoepfe span { padding: 4px 8px; border-radius: 6px; font-weight: 600; color: #1d4ed8; }
+  .ios-kopf { position: absolute; left: 0; right: 0; top: 0; background: #f2f2f7; padding: 8px; }
+  .ios-kopf .zeile { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 3px; align-items: center; font-weight: 600; font-size: 7.5px; text-align: center; }
+  .ios-kopf .zeile span:nth-child(2) { font-size: 7px; line-height: 1.2; }
+  .ios-kopf .zeile span:first-child, .ios-kopf .zeile span:last-child { color: #1d4ed8; padding: 2px 4px; }
+  .ios-kopf .karte { margin-top: 10px; background: #fff; border-radius: 10px; padding: 8px; display: flex; gap: 8px; align-items: center; text-align: left; }
+  .ios-kopf .karte img { width: 34px; height: 34px; border-radius: 8px; }
+  .schalter { margin-top: 8px; background: #fff; border-radius: 10px; padding: 7px 8px; display: flex; justify-content: space-between; align-items: center; }
+  .schalter i { width: 26px; height: 15px; border-radius: 8px; background: #34c759; position: relative; }
+  .schalter i::after { content: ""; position: absolute; right: 2px; top: 2px; width: 11px; height: 11px; border-radius: 50%; background: #fff; }
+  .start { position: absolute; left: 0; right: 0; top: 18px; bottom: 0; background: linear-gradient(160deg, #94a3b8, #475569); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-content: start; gap: 12px 4px; padding: 16px 8px; }
+  .start .app { display: flex; flex-direction: column; align-items: center; gap: 3px; color: #fff; font-size: 7px; min-width: 0; white-space: nowrap; }
+  .start .app.mark { font-size: 6px; letter-spacing: -0.2px; }
+  .start .app b { width: 30px; height: 30px; border-radius: 9px; background: rgba(255,255,255,.35); display: block; }
+  .start .app img { width: 30px; height: 30px; border-radius: 9px; display: block; }
+  .start .app.mark { background: transparent !important; box-shadow: 0 0 0 4px var(--akzent); border-radius: 10px; outline: none; }
+
+  @media print {
+    @page { size: A4; margin: 14mm 14mm 16mm; }
+    body { background: #fff; font-size: 10.5pt; }
+    main { padding: 0; max-width: none; }
+    .kopf .aktionen { display: none; }
+    h2 { break-before: page; margin-top: 0; }
+    .schritt h3 { font-size: 11pt; }
+    .schritt p { font-size: 9pt; }
+    .schritte { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5mm; }
+    .handy { max-width: 42mm; border-width: 5px; border-radius: 20px; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="kopf">
+    <img src="../logo.svg" alt="DulyInspect">
+    <div class="aktionen"><a class="knopf" href="Installation-Tuerpruefung.pdf" download>PDF herunterladen</a></div>
+  </div>
+
+  <h1>App auf dem Handy installieren</h1>
+  <p class="lead">DulyInspect ist eine Web-App: Sie brauchen keinen App-Store. Legen Sie sie einmal auf den Home-Bildschirm. Dann startet sie wie eine normale App im Vollbild, bleibt angemeldet und funktioniert auch ohne Netz zuverlässig.</p>
+
+  <div class="adresse">
+    <img id="qr" alt="QR-Code mit der App-Adresse" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=">
+    <div>
+      <strong>1. App-Adresse öffnen</strong><br>
+      QR-Code mit der Kamera des Handys scannen oder die Adresse im Browser eingeben:<br>
+      <code id="adresse">–</code>
+    </div>
+  </div>
+
+  <div class="box achtung"><strong>iPhone: unbedingt installieren.</strong> Ohne Installation darf Safari die auf dem Gerät gespeicherten Prüfdaten nach einigen Tagen ohne Nutzung löschen.</div>
+
+  <div class="kurz">
+    <strong>So geht's in Kürze</strong>
+    <ol>
+      <li><strong>App-Adresse öffnen</strong> (QR-Code oben scannen).</li>
+      <li><strong>Auf den Home-Bildschirm legen:</strong> iPhone/iPad siehe Seite 2, Android siehe Seite 3.</li>
+      <li><strong>Über das neue Symbol starten und anmelden</strong> mit E-Mail und Passwort von Ihrem Administrator. Sie bleiben angemeldet.</li>
+      <li><strong>Kamera erlauben:</strong> Beim ersten Scannen eines QR-Etiketts fragt das Handy nach der Kamera. Bitte <span class="ui">Erlauben</span>.</li>
+      <li><strong>Vor dem ersten Termin einmal online öffnen,</strong> damit die Daten für das Prüfen ohne Netz auf das Handy geladen werden.</li>
+    </ol>
+  </div>
+
+  <h2>iPhone und iPad (Safari)</h2>
+  <p>Öffnen Sie die App-Adresse in <strong>Safari</strong>. Ab iOS 16.4 geht es auch in anderen Browsern über deren Teilen-Menü.</p>
+  <div class="schritte">
+    <div class="schritt">
+      <div class="handy" aria-label="Safari mit markiertem Teilen-Symbol">
+        <div class="status"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="seite"></div>
+        <div class="leiste-unten">
+          <div class="adressfeld">🔒 App-Adresse</div>
+          <div class="symbole">
+            <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+            <span class="mark" style="padding:2px 4px"><svg viewBox="0 0 24 24"><path d="M12 15V3M8 7l4-4 4 4M5 11v9h14v-9"/></svg></span>
+            <svg viewBox="0 0 24 24"><path d="M5 4h14v16l-7-4-7 4z"/></svg>
+            <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/></svg>
+          </div>
+        </div>
+      </div>
+      <h3><span class="nr">1</span>Teilen</h3>
+      <p>Auf das <strong>Teilen-Symbol</strong> tippen (Quadrat mit Pfeil nach oben). Je nach iOS-Version unten in der Leiste oder über <span class="ui">•••</span>.</p>
+    </div>
+    <div class="schritt">
+      <div class="handy" aria-label="Teilen-Menü mit markiertem Eintrag Zum Home-Bildschirm">
+        <div class="status"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="seite"><div class="abdunkeln"></div></div>
+        <div class="blatt">
+          <div class="griff"></div>
+          <div class="liste">
+            <div>Kopieren <span>⧉</span></div>
+            <div>Zur Leseliste hinzufügen <span>○○</span></div>
+            <div>Lesezeichen hinzufügen <span>□</span></div>
+            <div class="mark">Zum Home-Bildschirm <span>⊞</span></div>
+            <div>Drucken <span>⎙</span></div>
+          </div>
+        </div>
+      </div>
+      <h3><span class="nr">2</span>Zum Home-Bildschirm</h3>
+      <p>Im Menü etwas nach unten wischen und <span class="ui">Zum Home-Bildschirm</span> wählen.</p>
+    </div>
+    <div class="schritt">
+      <div class="handy" aria-label="Dialog Zum Home-Bildschirm mit markiertem Knopf Hinzufügen">
+        <div class="status"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="ios-kopf">
+          <div class="zeile"><span>Abbrechen</span><span>Home-Bildschirm</span><span class="mark">Hinzufügen</span></div>
+          <div class="karte"><img src="../icon-192.png" alt=""><div><strong>DulyInspect</strong><br><span style="color:#888">App-Adresse</span></div></div>
+          <div class="schalter">Als Web-App öffnen <i></i></div>
+        </div>
+      </div>
+      <h3><span class="nr">3</span>Hinzufügen</h3>
+      <p>Namen so lassen. Falls <em>„Als Web-App öffnen“</em> angezeigt wird: eingeschaltet lassen. Dann <span class="ui">Hinzufügen</span>.</p>
+    </div>
+    <div class="schritt">
+      <div class="handy" aria-label="Home-Bildschirm mit dem Symbol der App">
+        <div class="status" style="background:transparent;position:relative;z-index:1;color:#fff"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="start">
+          <div class="app"><b></b>Kalender</div><div class="app"><b></b>Fotos</div><div class="app"><b></b>Kamera</div><div class="app"><b></b>Karten</div>
+          <div class="app"><b></b>Mail</div><div class="app"><b></b>Notizen</div>
+          <div class="app mark"><img src="../icon-192.png" alt="">DulyInspect</div><div class="app"><b></b>Uhr</div>
+        </div>
+      </div>
+      <h3><span class="nr">4</span>Fertig</h3>
+      <p>Die App liegt auf dem Home-Bildschirm. Ab jetzt <strong>immer über dieses Symbol</strong> starten, nicht mehr über Safari.</p>
+    </div>
+  </div>
+
+  <h2>Android (Chrome)</h2>
+  <p>Öffnen Sie die App-Adresse in <strong>Chrome</strong>. Oft erscheint unten sofort ein Hinweis zum Installieren, dann einfach diesen antippen.</p>
+  <div class="schritte">
+    <div class="schritt">
+      <div class="handy" aria-label="Chrome mit markiertem Menü-Symbol">
+        <div class="status"><span>9:41</span><span>▾ ▮</span></div>
+        <div class="seite" style="top:48px"></div>
+        <div class="leiste-oben" style="top:18px">
+          <svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/></svg>
+          <div class="adressfeld">🔒 App-Adresse</div>
+          <svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/></svg>
+          <span class="mark" style="padding:1px 4px;font-weight:900;font-size:14px;line-height:1">⋮</span>
+        </div>
+      </div>
+      <h3><span class="nr">1</span>Menü öffnen</h3>
+      <p>Oben rechts auf die <strong>drei Punkte</strong> <span class="ui">⋮</span> tippen.</p>
+    </div>
+    <div class="schritt">
+      <div class="handy" aria-label="Chrome-Menü mit markiertem Eintrag">
+        <div class="status"><span>9:41</span><span>▾ ▮</span></div>
+        <div class="seite" style="top:48px"><div class="abdunkeln"></div></div>
+        <div class="leiste-oben" style="top:18px"><div class="adressfeld">🔒 App-Adresse</div><span style="font-weight:900;font-size:14px">⋮</span></div>
+        <div class="menue" style="top:46px">
+          <div>Neuer Tab</div><div>Verlauf</div><div>Downloads</div><div>Lesezeichen</div>
+          <div class="mark">Zum Startbildschirm hinzufügen</div>
+          <div>Einstellungen</div>
+        </div>
+      </div>
+      <h3><span class="nr">2</span>Hinzufügen</h3>
+      <p><span class="ui">Zum Startbildschirm hinzufügen</span> wählen. Bei manchen Versionen heißt der Eintrag <span class="ui">App installieren</span>.</p>
+    </div>
+    <div class="schritt">
+      <div class="handy" aria-label="Dialog App installieren mit markiertem Knopf Installieren">
+        <div class="status"><span>9:41</span><span>▾ ▮</span></div>
+        <div class="seite" style="top:18px"><div class="abdunkeln"></div></div>
+        <div class="dialog">
+          <strong style="font-size:12px">App installieren?</strong><br>
+          <img src="../icon-192.png" alt="" style="margin-top:8px"><br>
+          <strong>DulyInspect</strong><br><span style="color:#888">App-Adresse</span>
+          <div class="knoepfe"><span>Abbrechen</span><span class="mark">Installieren</span></div>
+        </div>
+      </div>
+      <h3><span class="nr">3</span>Installieren</h3>
+      <p>Mit <span class="ui">Installieren</span> bzw. <span class="ui">Hinzufügen</span> bestätigen. Fragt das Handy, wo das Symbol hin soll: <em>automatisch</em> wählen.</p>
+    </div>
+    <div class="schritt">
+      <div class="handy" aria-label="Startbildschirm mit dem Symbol der App">
+        <div class="status" style="background:transparent;position:relative;z-index:1;color:#fff"><span>9:41</span><span>▾ ▮</span></div>
+        <div class="start">
+          <div class="app"><b></b>Telefon</div><div class="app"><b></b>SMS</div><div class="app"><b></b>Kamera</div><div class="app"><b></b>Galerie</div>
+          <div class="app"><b></b>Kalender</div><div class="app"><b></b>Uhr</div>
+          <div class="app mark"><img src="../icon-192.png" alt="">DulyInspect</div>
+        </div>
+      </div>
+      <h3><span class="nr">4</span>Fertig</h3>
+      <p>Das Symbol liegt auf dem Startbildschirm bzw. in der App-Übersicht. Ab jetzt <strong>darüber starten</strong>.</p>
+    </div>
+  </div>
+  <p><strong>Samsung Internet:</strong> Menü <span class="ui">≡</span> unten rechts → <span class="ui">Seite hinzufügen zu</span> → <span class="ui">Startbildschirm</span>. Zuverlässiger ist Chrome.</p>
+
+  <h3 style="margin-top:22px">Wenn etwas nicht klappt</h3>
+  <ul>
+    <li><strong>„Zum Home-Bildschirm“ fehlt (iPhone):</strong> Sie sind in einer App-Ansicht, z. B. im Browser einer Mail-App. Seite über <span class="ui">In Safari öffnen</span> öffnen und erneut versuchen.</li>
+    <li><strong>Kein Menüeintrag zum Installieren (Android):</strong> Prüfen Sie, ob Sie in Chrome sind (nicht in einer anderen App). Chrome aktualisieren und Seite neu laden.</li>
+    <li><strong>Kamera wurde abgelehnt:</strong> iPhone: <em>Einstellungen → Safari → Kamera → Erlauben</em>. Android: lange auf das App-Symbol drücken → <em>App-Info → Berechtigungen → Kamera</em>.</li>
+    <li><strong>Doppelt installiert:</strong> überzähliges Symbol einfach entfernen. Ihre Daten liegen in der App, nicht im Symbol.</li>
+  </ul>
+  <p style="color:var(--text-2);font-size:13px">Die Abbildungen sind vereinfacht. Je nach Handy und Version sehen Menüs etwas anders aus, die Begriffe sind aber dieselben.</p>
+</main>
+<script>
+  // App-Adresse: aus ?adresse=… (PDF-Erzeugung) oder aus der aktuellen Adresse (online)
+  (function () {
+    var p = new URLSearchParams(location.search).get('adresse')
+    var a = p || (location.origin + location.pathname.replace(/anleitung\/[^/]*$/, ''))
+    document.getElementById('adresse').textContent = a
+    var qr = document.getElementById('qr')
+    if (!p) qr.style.display = 'none' // online ohne QR (man ist ja schon auf der Seite)
+  })()
+</script>
+</body>
+</html>

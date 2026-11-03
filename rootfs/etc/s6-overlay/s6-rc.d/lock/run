@@ -1,0 +1,17 @@
+#!/bin/bash
+# One volume, one container: two Postgres servers on the same data directory (e.g. old and new container during an update)
+# do not reliably detect each other across containers and can destroy the data.
+# This service holds the lock as long as the container runs (fd 9 stays open while sleeping).
+exec 2>&1
+install -d -m 755 /data
+locked() { echo "ERROR: /data is already in use by another container. Stop the other one first." >&2; exit 1; }
+exec 9>/data/.lock
+flock -n 9 || locked
+# Versions before 2.87 locked /data/.belegt: also hold that one while it exists, then remove it
+if [[ -e /data/.belegt ]]; then
+  exec 8>/data/.belegt
+  flock -n 8 || locked
+  rm -f /data/.belegt
+fi
+echo >&3
+exec sleep infinity

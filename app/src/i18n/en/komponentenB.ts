@@ -1,0 +1,430 @@
+// Englisch: komponentenB (src/lib/sprache.ts, Glossar docs/GLOSSAR-ENGLISCH.md)
+export const KOMPONENTENB: Record<string, string> = {
+  // Allgemeine Bausteine (ui, Bestätigung)
+  'Laden …': 'Loading …',
+  'Schließen': 'Close',
+  'Ansicht': 'View',
+  'Kacheln': 'Tiles',
+  'Liste': 'List',
+  'OK': 'OK',
+  'Verstanden': 'Understood',
+  'Hinweis': 'Note',
+  'Bitte bestätigen': 'Please confirm',
+  'Abbrechen': 'Cancel',
+  'Abmelden': 'Log out',
+  'Zurück': 'Back',
+  'Anlegen': 'Create',
+  'Löschen': 'Delete',
+  'Hinzufügen': 'Add',
+  'Fertig': 'Done',
+  'Übernehmen': 'Apply',
+  'Umbenennen': 'Rename',
+  'Bestätigen': 'Confirm',
+  'Start': 'Start',
+  'Zur Startseite': 'Go to home page',
+  'ja': 'yes',
+  'nein': 'no',
+  'löschen': 'delete',
+
+  // Abschnitte verwalten
+  'Legen Sie hier die Abschnitte der Checkliste an. Im Prüfpunkt wählen Sie den Abschnitt dann aus der Liste. Die Reihenfolge gilt auch für die Prüfung; Abschnitte ohne Prüfpunkte sieht der Prüfer nicht.':
+    'Create the sections of the checklist here. In each check item you then choose the section from the list. The order also applies to the inspection; the inspector does not see sections without check items.',
+  'Noch keine Abschnitte.': 'No sections yet.',
+  'Neuer Name für „{abschnitt}“': 'New name for “{abschnitt}”',
+  '1 Punkt': '1 item',
+  '{n} Punkte': '{n} items',
+  '„{abschnitt}“ nach oben': 'Move “{abschnitt}” up',
+  '„{abschnitt}“ nach unten': 'Move “{abschnitt}” down',
+  '„{abschnitt}“ löschen': 'Delete “{abschnitt}”',
+  'Der Abschnitt enthält 1 Prüfpunkt. Was soll mit ihnen geschehen?': 'The section contains 1 check item. What should happen to it?',
+  'Der Abschnitt enthält {n} Prüfpunkte. Was soll mit ihnen geschehen?': 'The section contains {n} check items. What should happen to them?',
+  'Prüfpunkte des Abschnitts': 'Check items of the section',
+  'verschieben nach „{abschnitt}“': 'move to “{abschnitt}”',
+  'mitlöschen': 'delete as well',
+  'Abschnitt löschen': 'Delete section',
+  'Neuer Abschnitt': 'New section',
+  'z. B. Mechanik': 'e.g. Mechanics',
+
+  // Anlage finden
+  'Tür finden': 'Find door',
+  'Anlage finden': 'Find system',
+  'Etikett, Bezeichnung, Lage, Kunde, Ort …': 'Label, name, location, customer, town …',
+  'QR scannen': 'Scan QR',
+  'Suchen …': 'Searching …',
+  'Keine Tür gefunden.': 'No door found.',
+  'Keine Anlage gefunden.': 'No system found.',
+  'Die ersten 50 Treffer – bitte genauer suchen.': 'The first 50 results – please refine your search.',
+  '{n} Treffer': '{n} results',
+  'ohne Etikett': 'no label',
+  'stillgelegt': 'decommissioned',
+  'fällig {datum}': 'due {datum}',
+  'Etikett scannen': 'Scan label',
+  'Kamera wird vorbereitet …': 'Preparing camera …',
+
+  // Austausch der Melder
+  '{n} Melder: Austausch überfällig': '{n} detectors: replacement overdue',
+  '{n} Melder: Austausch in {monate} Monaten': '{n} detectors: replacement within {monate} months',
+
+  // Beispiel-Checklisten importieren
+  'Importierte Checklisten sind Entwürfe: Prüfpunkte, Grenzwerte und Mangelstufen fachlich prüfen, bei Bedarf anpassen und erst dann freigeben.':
+    'Imported checklists are drafts: review check items, limit values and defect levels professionally, adjust them if necessary and only then approve them.',
+  'Die Beispiel-Checklisten (Fluchttüren, automatische Türen, Feststellanlagen) und passende Türtypen als Entwurf importieren? Vorhandene mit gleichem Namen werden übersprungen.':
+    'Import the sample checklists (escape doors, automatic doors, hold-open systems) and matching door types as drafts? Existing ones with the same name are skipped.',
+  'Die Beispiel-Checklisten und passende Typen für {arten} als Entwurf importieren? Vorhandene mit gleichem Namen werden übersprungen.':
+    'Import the sample checklists and matching types for {arten} as drafts? Existing ones with the same name are skipped.',
+  'Hinweis: Die Beispiel-Checklisten sind nur Muster. Sie zeigen, wie Checklisten aufgebaut sind und funktionieren. Sie sind keine rechts- oder normkonformen Prüfprotokolle.':
+    'Note: The sample checklists are only examples. They show how checklists are structured and how they work. They are not legally compliant or standards-compliant inspection reports.',
+  'Checklisten darf nur eine sachkundige bzw. befähigte Person erstellen und freigeben. Die Verantwortung für Inhalt und Richtigkeit tragen die Person, die eine Checkliste erstellt, und die Person, die sie freigibt.':
+    'Only a competent person may create and approve checklists. Responsibility for content and correctness lies with the person who creates a checklist and the person who approves it.',
+  'Verstanden, importieren': 'Understood, import',
+
+  // Checkliste duplizieren
+  'Checkliste duplizieren': 'Duplicate checklist',
+  'Die Kopie enthält alle Prüfpunkte von „{name}“ und startet als Entwurf. Sie wird erst nach der Freigabe zum Prüfen verwendet.':
+    'The copy contains all check items of “{name}” and starts as a draft. It is only used for inspections after approval.',
+  'Name der Kopie': 'Name of the copy',
+  '{name} (Kopie)': '{name} (copy)',
+
+  // Datei-Knöpfe
+  'Export Excel': 'Export Excel',
+  'Vorlage Excel': 'Template Excel',
+  'Export CSV': 'Export CSV',
+  'Vorlage CSV': 'Template CSV',
+
+  // Demomodus
+  'DEMOMODUS': 'DEMO MODE',
+  'als Admin pflegen Sie die Demodaten, Ihre Änderungen werden gespeichert.': 'as admin you maintain the demo data, your changes are saved.',
+  'Sie können alles ansehen, Änderungen werden nicht gespeichert.': 'you can view everything, changes are not saved.',
+  'Demomodus nur in der App eingeschaltet – die Datenbank ist nicht gesperrt. Bitte den Administrator informieren.':
+    'Demo mode is only switched on in the app – the database is not locked. Please inform the administrator.',
+  'Die Datenbank steht im Demomodus, die App nicht – Änderungen werden abgelehnt. Bitte den Administrator informieren.':
+    'The database is in demo mode, the app is not – changes are rejected. Please inform the administrator.',
+  'Entwickelt von': 'Developed by',
+
+  // Ersteinrichtung
+  'Die Funktion „ersteinrichtung“ ist auf diesem Server noch nicht eingerichtet.': 'The function “ersteinrichtung” has not been set up on this server yet.',
+  'Die Passwörter stimmen nicht überein.': 'The passwords do not match.',
+  'Zugang angelegt, Anmeldung fehlgeschlagen: {fehler}': 'Account created, login failed: {fehler}',
+  'Ersteinrichtung': 'Initial setup',
+  'Diese Instanz hat noch keinen Zugang. Legen Sie den ersten': 'This instance has no account yet. Create the first',
+  'Administrator': 'administrator',
+  'an. Weitere Benutzer legt er danach unter „Benutzer“ an.': 'now. The administrator then creates further users under “Users”.',
+  'Schlüsselblatt der Verschlüsselung': 'Encryption key sheet',
+  'Kunden, Objekte, Fotos, Unterschriften und Protokolle dieser Instanz werden verschlüsselt. Der Schlüssel ist gerade in diesem Browser entstanden und steht nur auf dem':
+    'Customers, sites, photos, signatures and reports of this instance are encrypted. The key has just been created in this browser and exists only on the',
+  'Schlüsselblatt': 'key sheet',
+  'Bitte jetzt ausdrucken.': 'Please print it now.',
+  'Schlüssel-ID:': 'Key ID:',
+  'Schlüsselblatt als PDF herunterladen': 'Download key sheet as PDF',
+  'Ich habe das Schlüsselblatt ausgedruckt und verwahre es an einem sicheren Ort.': 'I have printed the key sheet and keep it in a safe place.',
+  'Wird angelegt …': 'Creating …',
+  'Administrator anlegen': 'Create administrator',
+  'Einrichtungsschlüssel': 'Setup key',
+  'Steht in den Zugangsdaten, die Sie bei der Einrichtung der App erhalten haben.': 'Included in the access details you received when the app was set up.',
+  'Name': 'Name',
+  'E-Mail (Anmeldename)': 'Email (login name)',
+  'Passwort': 'Password',
+  'Mindestens {n} Zeichen.': 'At least {n} characters.',
+  'Passwort wiederholen': 'Repeat password',
+  'Zwei-Faktor-Anmeldung jetzt einrichten (empfohlen) – mit einer Authenticator-App, direkt nach dem Anlegen':
+    'Set up two-factor authentication now (recommended) – with an authenticator app, directly after creation',
+  'Der Schlüssel (Schlüssel-ID {id}) bleibt derselbe – ein schon gedrucktes Schlüsselblatt gilt weiter.':
+    'The key (key ID {id}) stays the same – a key sheet you have already printed remains valid.',
+  'Diese Instanz wird aus einem Backup wiederhergestellt: kein neues Schlüsselblatt, es gilt das der ursprünglichen Instanz (Datensicherung)':
+    'This instance will be restored from a backup: no new key sheet, the one of the original instance applies (backup)',
+  'Weiter zum Schlüsselblatt': 'Next: key sheet',
+
+  // Fremdes Etikett
+  'Gleiche Etikett-Nummern kann es in mehreren Instanzen geben. Bitte das Etikett mit der App der Firma öffnen, die es angebracht hat.':
+    'The same label numbers can exist in several instances. Please open the label with the app of the company that attached it.',
+
+  // Gruppen der Elemente
+  '+ {gruppe} anlegen …': '+ Create {gruppe} …',
+  '{gruppe} anlegen': 'Create {gruppe}',
+  'Bitte einen Namen angeben.': 'Please enter a name.',
+  'Höchstens 40 Zeichen.': 'At most 40 characters.',
+  '{gruppe} „{name}“ gibt es schon.': '{gruppe} “{name}” already exists.',
+  '{gruppe} „{alt}“ heißt jetzt „{name}“.': '{gruppe} “{alt}” is now called “{name}”.',
+  '{gruppe} „{name}“ gespeichert.': '{gruppe} “{name}” saved.',
+  '{gruppe} „{name}“ löschen?': 'Delete {gruppe} “{name}”?',
+  '{gruppe} „{name}“ gelöscht.': '{gruppe} “{name}” deleted.',
+  'Mehrere anlegen …': 'Create several …',
+  'Legen Sie die {gruppen} vorab an. Beim Erfassen der {elemente} wählen Sie sie dann aus. Ein Klick benennt um, die {elemente} darin ändern sich mit. Die Zahl nennt die aktiven {elemente}.':
+    'Create the {gruppen} in advance. When recording the {elemente} you then select them. A click renames them; the {elemente} in them change accordingly. The number shows the active {elemente}.',
+  'Mit Gebäude und Etage erscheinen die {elemente} in der Prüfliste beim jeweiligen Gebäude.': 'With building and floor, the {elemente} appear in the inspection list under the respective building.',
+  'Noch keine angelegt.': 'None created yet.',
+  'Ohne Gebäude': 'No building',
+  '{gruppe} bearbeiten': 'Edit {gruppe}',
+  '{gruppe} umbenennen': 'Rename {gruppe}',
+  'Enthält {n} aktive {elemente}; sie ändern sich mit.': 'Contains {n} active {elemente}; they change accordingly.',
+  '{gruppe} löschen': 'Delete {gruppe}',
+  'Löschen lässt sich {gruppe} erst, wenn keine aktiven {elemente} mehr darin sind.': '{gruppe} can only be deleted once it contains no more active {elemente}.',
+  'Mehrere {gruppen} anlegen': 'Create several {gruppen}',
+  'Erster Name': 'First name in series',
+  'endet mit einer Zahl, z. B. „WE 1“ oder „EG 01“ – die weiteren zählen hoch': 'ends with a number, e.g. “Flat 1” or “GF 01” – the others count up',
+  'Anzahl': 'Number',
+  'Bitte ersten Namen und Anzahl (höchstens 200) angeben.': 'Please enter the first name and the number (at most 200).',
+  '{erster} bis {letzter}': '{erster} to {letzter}',
+  '{namen} gibt es schon': '{namen} already exist',
+  'gilt für alle neuen; leer lassen, wenn es nur ein Gebäude gibt': 'applies to all new ones; leave empty if there is only one building',
+  'Der erste Name muss mit einer Zahl enden (z. B. „WE 1“), Anzahl 1 bis 200.': 'The first name must end with a number (e.g. “Flat 1”), number 1 to 200.',
+  'Diese {gruppen} gibt es alle schon.': 'These {gruppen} all exist already.',
+  '{n} {gruppen} angelegt.': '{n} {gruppen} created.',
+
+  // Inbetriebnahme
+  'Inbetriebnahme: {n} von {m} Schritten erledigt': 'Commissioning: {n} of {m} steps done',
+  'Als Nächstes: {schritt}.': 'Next: {schritt}.',
+  'Alle Schritte erledigt – jetzt nur noch abschließen.': 'All steps done – now just complete it.',
+  'Einrichtung fortsetzen': 'Continue setup',
+
+  // Lesbarkeit, Lizenz, Sichtbarkeit
+  'Nicht lesbar: falscher Schlüssel oder beschädigte Daten': 'Not readable: wrong key or damaged data',
+  'Lizenzbedingungen akzeptieren': 'Accept licence terms',
+  'Version {version} · Stand der Lizenzbedingungen: {stand}. Bitte lesen Sie die Bedingungen und akzeptieren Sie sie, um die App zu nutzen.':
+    'Version {version} · Licence terms as of: {stand}. Please read the terms and accept them to use the app.',
+  'Text der Lizenzbedingungen': 'Text of the licence terms',
+  'Ich habe die Lizenzbedingungen gelesen und akzeptiere sie.': 'I have read the licence terms and accept them.',
+  'Akzeptieren und fortfahren': 'Accept and continue',
+  'Dieser Bereich ist für Prüfer nicht freigegeben.': 'This area is not available to inspectors.',
+
+  // Passwort ändern
+  'Das Passwort braucht mindestens {n} Zeichen.': 'The password needs at least {n} characters.',
+  'Die beiden Eingaben stimmen nicht überein.': 'The two entries do not match.',
+  'Bitte ein anderes Passwort als das vorgegebene wählen.': 'Please choose a password other than the one you were given.',
+  'Das Passwort wurde nicht übernommen. Bitte erneut versuchen.': 'The password was not saved. Please try again.',
+  'Eigenes Passwort festlegen': 'Set your own password',
+  'Ihr Passwort wurde Ihnen vorgegeben. Bitte legen Sie vor dem ersten Arbeiten ein eigenes fest, das nur Sie kennen.':
+    'Your password was assigned to you. Before you start working, please set your own password that only you know.',
+  'Neues Passwort': 'New password',
+  'Neues Passwort wiederholen': 'Repeat new password',
+  'Speichern …': 'Saving …',
+  'Passwort speichern': 'Save password',
+
+  // Pfad-Analyse
+  'Pfad-Analyse': 'Path analysis',
+  '1 Weg': '1 path',
+  '{n} Wege': '{n} paths',
+  '{punkte} Punkte je Prüfung (davon Pflicht {pflicht})': '{punkte} items per inspection (of which mandatory {pflicht})',
+  'zu viele Verzweigungen für eine vollständige Analyse': 'too many branches for a complete analysis',
+  '1 Warnung': '1 warning',
+  '{n} Warnungen': '{n} warnings',
+  '1 Hinweis': '1 note',
+  '{n} Hinweise': '{n} notes',
+  'keine Auffälligkeiten': 'no issues',
+
+  // Prüfprotokolle
+  'Das Protokoll entsteht, sobald der Abschluss übertragen ist.': 'The report is created as soon as the completion has been synced.',
+  'Das Protokoll entsteht, sobald eine Verbindung besteht.': 'The report is created as soon as there is a connection.',
+  'Protokoll öffnen': 'Open report',
+  'Das Protokoll ist nicht lesbar (falscher Schlüssel oder beschädigte Datei).': 'The report is not readable (wrong key or damaged file).',
+  'Das Protokoll erstellt ein Beteiligter oder ein Admin.': 'The report is created by a participant or an admin.',
+  'Protokoll wird erstellt: {stand}': 'Creating report: {stand}',
+  'Protokoll nicht erstellt: {fehler}': 'Report not created: {fehler}',
+  'Erneut versuchen': 'Try again',
+  'Alle Revisionen': 'All revisions',
+  'Protokoll öffnen (Demo)': 'Open report (demo)',
+  'Protokoll wird erstellt …': 'Creating report …',
+  'Protokoll erstellen (Demo)': 'Create report (demo)',
+  'Demomodus: Das Protokoll ist nur simuliert und wird nicht gespeichert.': 'Demo mode: the report is only simulated and is not saved.',
+
+  // Wiederherstellung
+  'Wiederherstellung abgeschlossen: {datensaetze} Datensätze ergänzt, {dateien} Dateien ergänzt.': 'Restore complete: {datensaetze} records added, {dateien} files added.',
+  'Tabelle': 'Table',
+  'ergänzt': 'added',
+  'schon vorhanden': 'already present',
+  'nicht möglich': 'not possible',
+  '{n} Hinweise (z. B. Konflikte mit neueren Daten)': '{n} notes (e.g. conflicts with newer data)',
+
+  // Sachkunde
+  'Sachkunde läuft ab': 'Competence expiring',
+  'abgelaufen am': 'expired on',
+  'gültig bis': 'valid until',
+  'Zu den Benutzern': 'Go to users',
+
+  // Schema und Update
+  'Update wird eingespielt': 'Update in progress',
+  'Diese App-Version ({version}) braucht ein neueres Datenbankschema, als installiert ist.': 'This app version ({version}) needs a newer database schema than the one installed.',
+  'Datenbank: {stand} · benötigt: {benoetigt}': 'Database: {stand} · required: {benoetigt}',
+  'unbekannt': 'unknown',
+  'Bis zum Datenbank-Update ist die App für alle angehalten.': 'The app is paused for everyone until the database has been updated.',
+  'Die App wird gerade aktualisiert. Bitte versuchen Sie es in Kürze erneut.': 'The app is being updated. Please try again shortly.',
+  'Noch nicht übertragene Prüfdaten auf diesem Gerät bleiben erhalten.': 'Inspection data on this device that has not been synced yet is kept.',
+  'Erneut prüfen': 'Check again',
+  'Die Funktion „datenbank-aktualisieren“ ist auf diesem Server noch nicht eingerichtet. Bitte einmal per Ausroll-Skript aktualisieren.':
+    'The function “datenbank-aktualisieren” has not been set up on this server yet. Please update once using the deployment script.',
+  'Migrationen nicht abrufbar (HTTP {status}).': 'Migrations could not be retrieved (HTTP {status}).',
+  'Sicherung nicht möglich: {fehler}. Bitte eine aktuelle Sicherung auf anderem Weg sicherstellen (z. B. Backup des Servers).':
+    'Backup not possible: {fehler}. Please ensure a current backup by other means (e.g. a server backup).',
+  '{n} Datenbank-Änderung(en) jetzt einspielen? Das lässt sich nicht rückgängig machen.': 'Apply {n} database change(s) now? This cannot be undone.',
+  'Jetzt aktualisieren': 'Update now',
+  '{n} Änderung(en) eingespielt. Die Datenbank ist auf dem Stand dieser App.': '{n} change(s) applied. The database is up to date with this app.',
+  'Alle Änderungen waren bereits eingespielt.': 'All changes had already been applied.',
+  'App neu laden': 'Reload app',
+  'Prüfe ausstehende Änderungen …': 'Checking pending changes …',
+  '{n} ausstehende Datenbank-Änderung(en)': '{n} pending database change(s)',
+  'Sicherung herunterladen (empfohlen)': 'Download backup (recommended)',
+  'Es gibt eine aktuelle Sicherung der Daten.': 'There is a current backup of the data.',
+  'Datenbank wird aktualisiert …': 'Updating database …',
+  'Datenbank jetzt aktualisieren': 'Update database now',
+  'Diese App bringt keine Änderungen mit, die der Datenbank fehlen. Bitte das Datenbank-Update per Ausroll-Skript einspielen.':
+    'This app contains no changes that the database is missing. Please apply the database update using the deployment script.',
+  'Eine neue Version der App ist verfügbar.': 'A new version of the app is available.',
+  'Später': 'Later',
+
+  // Synchronisierung
+  'gespeichert': 'saved',
+  '{n} Fehler': '{n} errors',
+  'offline – {n} lokal': 'offline – {n} local',
+  'offline': 'offline',
+  'überträgt ({n})': 'syncing ({n})',
+  'Synchronisierung: {status}': 'Sync: {status}',
+  'Daten sind seit über 24 Stunden nicht übertragen. Bitte mit dem Internet verbinden und die App geöffnet lassen.':
+    'Data has not been synced for more than 24 hours. Please connect to the internet and keep the app open.',
+  'Synchronisierung': 'Sync',
+  'Verbunden.': 'Connected.',
+  'Keine Verbindung – alles wird auf dem Gerät gespeichert und später übertragen.': 'No connection – everything is saved on the device and synced later.',
+  '{n} Änderung(en) warten auf Übertragung.': '{n} change(s) waiting to be synced.',
+  'Alles ist übertragen.': 'Everything is synced.',
+  'Zuletzt übertragen: {zeit}': 'Last synced: {zeit}',
+  'Letzte Meldung: {meldung}': 'Last message: {meldung}',
+  'Nicht übertragbar (vom Server abgelehnt):': 'Cannot be synced (rejected by the server):',
+  'erneut versuchen': 'try again',
+  'Diese Änderung endgültig verwerfen? Sie geht damit verloren.': 'Discard this change permanently? It will be lost.',
+  'Verwerfen': 'Discard',
+  'verwerfen': 'discard',
+  'Jetzt senden': 'Send now',
+
+  // Unterschrift
+  'Hier unterschreiben': 'Sign here',
+
+  // Verschlüsselung einrichten
+  'Verschlüsselung einrichten': 'Set up encryption',
+  'Hinweis ausblenden': 'Hide notice',
+  'Kunden, Objekte, Fotos, Unterschriften und Protokolle liegen noch unverschlüsselt auf dem Server. Mit der Verschlüsselung sieht der Hoster nicht mehr, für wen und wo geprüft wird.':
+    'Customers, sites, photos, signatures and reports are still stored unencrypted on the server. With encryption, the hosting provider can no longer see for whom and where inspections take place.',
+  'Zur Verschlüsselung': 'Go to encryption',
+
+  // Versionsvergleich
+  'Neu': 'New',
+  'Geändert': 'Changed',
+  'Entfernt': 'Removed',
+  'Verschoben': 'Moved',
+  '{neu} gegenüber {alt}:': '{neu} compared with {alt}:',
+  '1 Punkt unverändert': '1 item unchanged',
+  '{n} Punkte unverändert': '{n} items unchanged',
+  'an anderer Stelle': 'in a different place',
+
+  // Vorschauversion
+  'Hinweis: Vorschauversion (Beta)': 'Note: preview version (beta)',
+  'Diese App ist eine': 'This app is a',
+  'Präsentationsversion für Vorschau und Werbung': 'presentation version for preview and marketing',
+  'Sie befindet sich in der Entwicklung (Betaversion).': 'It is under development (beta version).',
+  'Keine kommerzielle Nutzung.': 'No commercial use.',
+  'Die App darf nur zur Ansicht und Erprobung verwendet werden.': 'The app may only be used for viewing and trying out.',
+  'Keine realen Daten eingeben': 'Do not enter real data',
+  'keine echten Kunden, Objekte, Adressen, Personen oder Fotos, sondern nur erfundene Testdaten.': 'no real customers, sites, addresses, people or photos, only made-up test data.',
+  'Prüfungen und Protokolle aus dieser Version sind': 'Inspections and reports from this version are',
+  'keine gültigen Prüfnachweise': 'not valid inspection records',
+  'Funktionen können sich ändern; eingegebene Daten können jederzeit ohne Ankündigung gelöscht werden.': 'Features may change; entered data may be deleted at any time without notice.',
+  'Ich habe die Hinweise gelesen und nutze die App nur zur Vorschau, ohne reale Daten und nicht kommerziell.':
+    'I have read the notes and use the app only as a preview, without real data and not commercially.',
+  'Bestätigen und fortfahren': 'Confirm and continue',
+
+  // Wirkungen eines Prüfpunkts
+  'Wirkungen (strengere Regeln, wenn …)': 'Effects (stricter rules if …)',
+  'Der Punkt bleibt sichtbar. Trifft die Bedingung zu, wird er zur Pflichtangabe, ein Mangel bekommt mindestens eine Stufe oder es gelten andere Grenzwerte.':
+    'The item stays visible. If the condition applies, it becomes mandatory, a defect gets at least a given level or different limit values apply.',
+  'Der Punkt bleibt sichtbar. Trifft die Bedingung zu, wird er zur Pflichtangabe, ein Mangel bekommt mindestens eine Stufe.':
+    'The item stays visible. If the condition applies, it becomes mandatory and a defect gets at least a given level.',
+  'Wirkung {n} gilt, wenn …': 'Effect {n} applies if …',
+  'Bitte eine Bedingung wählen.': 'Please choose a condition.',
+  'Gilt, wenn': 'Applies if',
+  'wird Pflichtangabe': 'becomes mandatory',
+  'Mangelstufe mindestens': 'Defect level at least',
+  'Mangelstufe mindestens (Wirkung {n})': 'Defect level at least (effect {n})',
+  'Soll min': 'Target min',
+  'Soll min (Wirkung {n})': 'Target min (effect {n})',
+  'Soll max': 'Target max',
+  'Soll max (Wirkung {n})': 'Target max (effect {n})',
+  'Wirkung entfernen': 'Remove effect',
+  '+ Wirkung': '+ Effect',
+  'Wirkungen sind nur auf vorherige Punkte möglich.': 'Effects are only possible based on previous items.',
+
+  // Zwei-Faktor-Anmeldung
+  'Keine Authenticator-App eingerichtet. Bitte an den Administrator wenden.': 'No authenticator app set up. Please contact the administrator.',
+  'Der Code stimmt nicht oder ist abgelaufen. Bitte den aktuellen Code eingeben.': 'The code is wrong or has expired. Please enter the current code.',
+  'Zwei-Faktor-Anmeldung': 'Two-factor authentication',
+  'Ihr Zugang ist zusätzlich mit einer Authenticator-App geschützt (z. B. Google Authenticator, Microsoft Authenticator, 1Password).':
+    'Your account is additionally protected with an authenticator app (e.g. Google Authenticator, Microsoft Authenticator, 1Password).',
+  '1. QR-Code mit der App scannen:': '1. Scan the QR code with the app:',
+  'QR-Code für die Authenticator-App': 'QR code for the authenticator app',
+  'QR-Code wird erstellt …': 'Creating QR code …',
+  'Ohne Kamera diesen Schlüssel in der App eintragen:': 'Without a camera, enter this key in the app:',
+  '2. Den sechsstelligen Code aus der App eingeben:': '2. Enter the six-digit code from the app:',
+  'Bitte den sechsstelligen Code aus Ihrer Authenticator-App eingeben.': 'Please enter the six-digit code from your authenticator app.',
+  'Code': 'Code',
+  'Prüfen …': 'Checking …',
+  'Handy verloren? Der Administrator kann die Zwei-Faktor-Anmeldung zurücksetzen.': 'Lost your phone? The administrator can reset two-factor authentication.',
+
+  // Felder von Anlagen und Elementen
+  'Gebäude': 'Building',
+  '+ Neues Gebäude …': '+ New building …',
+  'Etage': 'Floor',
+  '+ Neue Etage …': '+ New floor …',
+  '+ Neuer Hersteller …': '+ New manufacturer …',
+  '+ Neues Modell …': '+ New model …',
+  '{feld}: bitte Monat und Jahr angeben, z. B. 06-2037.': '{feld}: please enter month and year, e.g. 06-2037.',
+  'Typ / Hersteller': 'Type / manufacturer',
+  'Eigener Name …': 'Custom name …',
+  'Neuer Typ / Hersteller …': 'New type / manufacturer …',
+  'Eigener Name': 'Custom name',
+  'Neuer Typ / Hersteller': 'New type / manufacturer',
+  'Art': 'Category',
+  'Ort': 'Position',
+  'Erste freie Nr.': 'First free no.',
+  // Checklisten und Typen ex- und importieren (VorlagenAustausch, lib/vorlagenAustausch)
+  'Exportieren': 'Export',
+  'Importieren': 'Import',
+  'Alle exportieren': 'Export all',
+  'Auswahl exportieren': 'Export selection',
+  '{name} exportieren': 'Export {name}',
+  'Exportdatei wählen': 'Choose export file',
+  'Import abgeschlossen': 'Import finished',
+  'Importiere …': 'Importing …',
+  'Checklisten und Türtypen importieren': 'Import checklists and door types',
+  'Checklisten und Anlagentypen importieren': 'Import checklists and system types',
+  'Datei „{datei}“ enthält {listen} Checkliste(n) und {typen} Türtyp(en).': 'File “{datei}” contains {listen} checklist(s) and {typen} door type(s).',
+  'Datei „{datei}“ enthält {listen} Checkliste(n) und {typen} Anlagentyp(en).': 'File “{datei}” contains {listen} checklist(s) and {typen} system type(s).',
+  'Neue Checklisten werden als Entwurf angelegt. Gibt es eine Checkliste mit gleichem Namen und anderem Inhalt, kommt der Inhalt als neue Entwurfsversion dazu. Vorhandene Türtypen bleiben, fehlende Prüfarten werden ergänzt. Freigegeben wird nichts automatisch.':
+    'New checklists are created as drafts. If a checklist with the same name but different content exists, the content is added as a new draft version. Existing door types are kept, missing inspection types are added. Nothing is approved automatically.',
+  'Neue Checklisten werden als Entwurf angelegt. Gibt es eine Checkliste mit gleichem Namen und anderem Inhalt, kommt der Inhalt als neue Entwurfsversion dazu. Vorhandene Anlagentypen bleiben, fehlende Prüfarten werden ergänzt. Freigegeben wird nichts automatisch.':
+    'New checklists are created as drafts. If a checklist with the same name but different content exists, the content is added as a new draft version. Existing system types are kept, missing inspection types are added. Nothing is approved automatically.',
+  'Neue Checklisten (Entwurf v1)': 'New checklists (draft v1)',
+  'Neue Entwurfsversion': 'New draft version',
+  'Checklisten unverändert (gleicher Inhalt)': 'Checklists unchanged (same content)',
+  'Neue Türtypen': 'New door types',
+  'Neue Anlagentypen': 'New system types',
+  'Türtypen ergänzt': 'Door types extended',
+  'Anlagentypen ergänzt': 'System types extended',
+  'Türtypen unverändert': 'Door types unchanged',
+  'Anlagentypen unverändert': 'System types unchanged',
+  'Übersprungen': 'Skipped',
+  'Prüfarten ohne Checkliste (bitte zuordnen)': 'Inspection types without checklist (please assign)',
+  'Die Datei enthielt nichts zum Importieren.': 'The file contained nothing to import.',
+  'Entwürfe bitte fachlich prüfen und freigeben, bevor mit ihnen geprüft wird.': 'Please review and approve the drafts before using them for inspections.',
+  'Bitte zuerst speichern – exportiert wird der gespeicherte Stand.': 'Please save first – the saved state is exported.',
+  'Die Datei ist kein gültiges JSON.': 'The file is not valid JSON.',
+  'Die Datei ist kein Export von Checklisten oder Türtypen dieser App.': 'The file is not an export of checklists or door types from this app.',
+  'Die Datei ist kein Export von Checklisten oder Anlagentypen dieser App.': 'The file is not an export of checklists or system types from this app.',
+  'Die Datei stammt aus einer neueren Version der App. Bitte zuerst die App aktualisieren.': 'The file comes from a newer version of the app. Please update the app first.',
+  'Die Datei enthält eine Checkliste ohne Namen oder Prüfpunkte.': 'The file contains a checklist without a name or check items.',
+  'Die Datei enthält einen Türtyp ohne Namen oder Prüfarten.': 'The file contains a door type without a name or inspection types.',
+  'Die Datei enthält einen Anlagentyp ohne Namen oder Prüfarten.': 'The file contains a system type without a name or inspection types.',
+  'Checkliste „{name}“: Abschnitte sind ungültig.': 'Checklist “{name}”: sections are invalid.',
+  'Türtyp „{name}“: Prüfart „{pruefart}“ ist ungültig.': 'Door type “{name}”: inspection type “{pruefart}” is invalid.',
+  'Anlagentyp „{name}“: Prüfart „{pruefart}“ ist ungültig.': 'System type “{name}”: inspection type “{pruefart}” is invalid.',
+  'Es gibt schon einen Entwurf (v{version}). Bitte erst freigeben oder verwerfen.': 'A draft already exists (v{version}). Please approve or discard it first.',
+  'Unbekannte Anlagenart „{art}“.': 'Unknown system category “{art}”.',
+  '{name} (+{n} Prüfart(en))': '{name} (+{n} inspection type(s))',
+  '{name} (Entwurf v{version})': '{name} (draft v{version})',
+}

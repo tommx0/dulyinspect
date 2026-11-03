@@ -1,0 +1,13 @@
+{
+	admin off
+	auto_https off
+	persist_config off
+}
+# Internal address for the Edge Functions (SUPABASE_URL), only on 127.0.0.1
+import /etc/instance/caddy/api.caddy
+http://127.0.0.1:8001 {
+	import api
+	handle {
+		respond 404
+	}
+}

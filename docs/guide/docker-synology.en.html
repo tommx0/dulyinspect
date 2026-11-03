@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>DulyInspect single instance – Docker and Synology guide</title>
+<style>
+  @page { size: A4; margin: 20mm 18mm 20mm 18mm; }
+  :root { --akzent: #1f4e79; --grau: #5b6573; --linie: #d5dbe3; --hinterlegt: #f3f6f9; --warn: #8a5a00; --warn-bg: #fff6e0; }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; font-size: 10pt; line-height: 1.45; color: #1d232b; margin: 0; }
+  h1 { font-size: 22pt; color: var(--akzent); margin: 0 0 4mm; line-height: 1.15; }
+  h2 { font-size: 14pt; color: var(--akzent); margin: 9mm 0 3mm; padding-bottom: 1.5mm; border-bottom: 1.5px solid var(--akzent); break-after: avoid; }
+  h3 { font-size: 11pt; margin: 6mm 0 2mm; break-after: avoid; }
+  p { margin: 0 0 2.5mm; }
+  ul, ol { margin: 0 0 3mm; padding-left: 6mm; }
+  li { margin-bottom: 1.2mm; }
+  code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 8.8pt; background: var(--hinterlegt); padding: 0.2mm 1mm; border-radius: 1mm; }
+  pre { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 8.4pt; line-height: 1.4; background: var(--hinterlegt); border: 1px solid var(--linie);
+        border-radius: 1.5mm; padding: 3mm 3.5mm; margin: 0 0 3.5mm; white-space: pre-wrap; word-break: break-word; break-inside: avoid; }
+  pre code { background: none; padding: 0; font-size: inherit; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 4mm; font-size: 9.2pt; break-inside: auto; }
+  th, td { text-align: left; vertical-align: top; padding: 1.8mm 2.2mm; border-bottom: 1px solid var(--linie); }
+  th { background: var(--hinterlegt); font-weight: 600; }
+  tr { break-inside: avoid; }
+  .klein { font-size: 8.8pt; color: var(--grau); }
+  .hinweis, .achtung { border-left: 3px solid var(--akzent); background: var(--hinterlegt); padding: 2.5mm 3.5mm; margin: 0 0 4mm; break-inside: avoid; }
+  .achtung { border-left-color: var(--warn); background: var(--warn-bg); }
+  .hinweis p:last-child, .achtung p:last-child { margin: 0; }
+  .titel { height: 230mm; display: flex; flex-direction: column; justify-content: space-between; break-after: page; }
+  .titel .oben { padding-top: 40mm; }
+  .titel .unter { font-size: 13pt; color: var(--grau); margin-bottom: 10mm; }
+  .titel dl { display: grid; grid-template-columns: 38mm 1fr; gap: 1.5mm 4mm; font-size: 9.5pt; margin: 0; }
+  .titel dt { color: var(--grau); }
+  .titel dd { margin: 0; }
+  .inhalt ol { padding-left: 5mm; }
+  .inhalt li { margin-bottom: 1mm; }
+  .schritt { counter-reset: s; list-style: none; padding-left: 0; }
+  .schritt > li { counter-increment: s; position: relative; padding-left: 8mm; margin-bottom: 2.5mm; }
+  .schritt > li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 5.2mm; height: 5.2mm; border-radius: 50%; background: var(--akzent);
+        color: #fff; font-size: 8pt; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+  .pfad { font-weight: 600; }
+  .neueseite { break-before: page; }
+</style>
+</head>
+<body>
+
+
+<section class="titel">
+  <div class="oben">
+    <p class="klein">Deutsche Fassung: <a href="https://github.com/tommx0/dulyinspect/blob/main/docs/Anleitung-Docker-Synology.pdf">docs/Anleitung-Docker-Synology.pdf</a></p>
+    <h1>DulyInspect as a single instance</h1>
+    <div class="unter">Setup with Docker and in Synology Container Manager</div>
+    <p style="max-width: 130mm">This guide describes how to run all of DulyInspect, app and server, as <b>one</b> container:
+      on a Linux server with Docker or on a Synology DiskStation. It covers all environment variables, the data folder,
+      HTTPS, backups and updates.</p>
+    <p class="klein" style="max-width: 130mm">The app is available in German and English and follows the browser language (switchable at the bottom of every page). This guide quotes the German labels, with the English label in brackets where they first appear.</p>
+  </div>
+  <dl>
+    <dt>As of</dt><dd>2 November 2026 · app 2.89.0</dd>
+    <dt>Repository</dt><dd>github.com/tommx0/dulyinspect</dd>
+    <dt>Image</dt><dd>dulyinspect</dd>
+    <dt>Licence</dt><dd>GNU AGPL-3.0, free software (file LICENSE in the repository)</dd>
+    <dt>Status</dt><dd>Pre-release: tested automatically on Intel/AMD (amd64, GitHub workflow) and ARM (arm64); Safari/iOS and real Synology devices still pending (section 10)</dd>
+  </dl>
+</section>
+
+<section class="inhalt">
+  <h2>Contents</h2>
+  <ol>
+    <li>Overview</li>
+    <li>Requirements</li>
+    <li>Building and providing the image</li>
+    <li>Environment variables</li>
+    <li>Data folder and shares</li>
+    <li>Running with Docker (Linux server)</li>
+    <li>Synology Container Manager</li>
+    <li>Backups</li>
+    <li>Updates</li>
+    <li>Known limitations and error messages</li>
+  </ol>
+</section>
+
+<h2>1. Overview</h2>
+<p>The image contains everything DulyInspect needs: the app (browser interface), the database (PostgreSQL), sign-in, file storage,
+  real-time sync and the server functions. To the outside there is only <b>one port (8080)</b> and <b>one data folder (<code>/data</code>)</b>.</p>
+<ul>
+  <li><b>One instance per container:</b> one company, one database, one admin area. There are no tenants as in the Coolify stack.</li>
+  <li><b>The first admin</b> is created in the browser on the first visit, protected by a setup key from the data folder (optionally from environment variables for automated installs).</li>
+  <li><b>Updates</b> only replace the container. All data stays in the data folder, and the container backs up the database automatically before every version change.</li>
+  <li><b>Licence:</b> free software under the GNU AGPL-3.0. Use is free of charge, including in companies. Anyone who distributes a modified version
+    or offers it as a service must publish their source code. In the app, „Lizenz“ (licence) at the bottom of every page leads to the licence text.</li>
+  <li><b>HTTPS</b> is provided by a reverse proxy in front of the container; on a Synology, the built-in one. Without HTTPS the camera (QR scanning) and installing the app on a phone do not work.</li>
+</ul>
+
+<h2>2. Requirements</h2>
+<table>
+  <tr><th style="width: 34%">Item</th><th>Requirement</th></tr>
+  <tr><td>Processor</td><td>Intel/AMD (<code>x86_64</code>, image for <code>linux/amd64</code>) or 64-bit ARM (<code>aarch64</code>, image for <code>linux/arm64</code>).
+    The image must match the platform. Check via SSH with <code>uname -m</code>; on a Synology also under <span class="pfad">Info Center → General</span>.</td></tr>
+  <tr><td>Memory</td><td>Measured at around 500–600 MB in operation. Recommended: at least 1.5 GB free, i.e. a device with 2 GB of RAM or more (4 GB is better).</td></tr>
+  <tr><td>Disk space</td><td>Image around 1.9 GB; the transfer file is around 0.35 GB (GitHub download as ZIP; the unpacked <code>.tar</code> is around 1.2 GB). On top of that the data: database under 100 MB at first, photos and reports depending on use. Plus the backups.</td></tr>
+  <tr><td>Docker</td><td>Linux: Docker Engine 24 or later with the Compose plugin. Synology: DSM 7.2 or later with the <b>Container Manager</b> package.</td></tr>
+  <tr><td>Internet</td><td>On the <b>first start</b> and the first time user management is opened, the container downloads program libraries. It then needs outbound internet access (section 10).</td></tr>
+  <tr><td>Address and certificate</td><td>A name such as <code>inspection.example.com</code> that points to the server, and a certificate (Let's Encrypt), for use on site and on the road.</td></tr>
+</table>
+
+<h2>3. Building and providing the image</h2>
+<p>The image is handed over as a file (<code>.tar</code>). There are two ways to create it.</p>
+<h3>3.1 Via GitHub (recommended for Intel/AMD)</h3>
+<ol class="schritt">
+  <li>In the repository <code>tommx0/dulyinspect</code> on GitHub: <span class="pfad">Actions → Build image (amd64) → Run workflow</span>.</li>
+  <li>The run takes about 10–15 minutes. It builds the image, starts it as a trial and checks first start, sign-in, file storage,
+    real-time connection, backup, update and data retention. The file is only produced if everything passes.</li>
+  <li>On the run's page, under <b>Artifacts</b>, download <code>dulyinspect-&lt;version&gt;-amd64</code>. This is a ZIP file.
+    Unpacking it gives the <code>.tar</code> file for the import (section 6 or 7.3). The file is available for download for 5 days.</li>
+</ol>
+<p class="klein">With „Also publish to ghcr.io“ the image is also pushed to the private GitHub registry. This permanently uses storage
+  of the GitHub account (around 0.35 GB per version).</p>
+<h3>3.2 Locally with build.sh</h3>
+<p>The script <code>build.sh</code> builds the image from the app source in the repository's <code>app/</code> folder and saves it as a <code>.tar</code> file.</p>
+<pre><code>git clone https://github.com/tommx0/dulyinspect.git
+cd dulyinspect
+./build.sh linux/arm64      # for ARM
+./build.sh linux/amd64      # for Intel/AMD (on a Mac with Apple silicon see below)
+test/smoke-test.sh dulyinspect:latest   # optional: the same checks as on GitHub</code></pre>
+<p>Result: <code>out/dulyinspect-&lt;version&gt;-&lt;platform&gt;.tar</code>, tagged <code>dulyinspect:&lt;version&gt;</code>
+  and <code>dulyinspect:latest</code>. The app version included is listed in <code>app/SOURCE</code>.</p>
+<div class="achtung">
+  <p><b>Building for Intel/AMD on a Mac with Apple silicon:</b> Docker Desktop must be able to run x86 programs:
+    turn on <span class="pfad">Docker Desktop → Settings → General → “Use Rosetta for x86_64/amd64 emulation on Apple Silicon”</span> and restart Docker.
+    Without this setting the build stops with <code>exec format error</code>.</p>
+</div>
+<p>On a Linux server with Docker, the image can also be built directly on the server (same commands, choose the matching platform). No file transfer is needed then.</p>
+
+<h2>4. Environment variables</h2>
+<table>
+  <tr><th style="width: 28%">Variable</th><th style="width: 13%">Required</th><th>Meaning</th></tr>
+  <tr><td><code>APP_URL</code></td><td>yes</td><td>The address at which the app is opened in the browser, exactly as typed, with <code>https://</code> and without a path,
+    e.g. <code>https://inspection.example.com</code>. It is used for the app's connection to the server, for sign-in and for the QR codes on labels and reports.
+    Default: <code>http://localhost:8080</code> (for testing only).</td></tr>
+  <tr><td><code>ADMIN_EMAIL</code></td><td>no</td><td>Login name (email address) of the first admin. Default: <code>admin@lokal</code>.</td></tr>
+  <tr><td><code>ADMIN_PASSWORD</code></td><td>no</td><td>For automated installs only: creates the first admin at startup; at least 10 characters. Without this variable you create the admin in the browser (section 7.7).</td></tr>
+  <tr><td><code>ADMIN_NAME</code></td><td>no</td><td>Display name of the admin. Default: <code>Administrator</code>.</td></tr>
+  <tr><td><code>ADMIN_CHANGE_PASSWORD</code></td><td>no</td><td><code>yes</code> (default): the admin must choose their own password at first sign-in. <code>no</code>: the start password stays valid.</td></tr>
+  <tr><td><code>ADMIN_TWO_FACTOR</code></td><td>no</td><td><code>yes</code>: the admin must set up an authenticator app at first sign-in. Default: <code>no</code>
+    (can be switched on later in the app under „Benutzer“ (users)).</td></tr>
+  <tr><td><code>SETUP_WITHOUT_KEY</code></td><td>no</td><td><code>yes</code>: the initial setup in the browser does not ask for the setup key. <b>For testing only</b> on your own computer: whoever opens the page first becomes admin.</td></tr>
+  <tr><td><code>MAX_ACTIVE_USERS</code></td><td>no</td><td>Maximum number of users active at the same time (per licence). Default: <code>2</code>.</td></tr>
+</table>
+<p class="klein">The former German names (<code>APP_ADRESSE</code>, <code>ADMIN_PASSWORT</code>, <code>ADMIN_PASSWORT_AENDERN</code>, <code>ADMIN_ZWEI_FAKTOR</code>,
+  <code>MAX_AKTIVE_BENUTZER</code>, <code>EINRICHTUNG_OHNE_SCHLUESSEL</code>) and the values <code>ja</code>/<code>nein</code> still work as aliases.</p>
+<div class="hinweis">
+  <p><b>The first admin is created exactly once:</b> on the very first start, while no account exists yet. After that the
+    <code>ADMIN_*</code> variables have no effect. Changing them later does not reset a password. Remove <code>ADMIN_PASSWORD</code> from the configuration
+    after the first start, because container settings can be read by every admin of the server or the Synology.</p>
+</div>
+<p><b>The normal case:</b> without <code>ADMIN_PASSWORD</code> the container does not create a user. On the first visit the app shows the <b>Ersteinrichtung</b> (initial setup) form:
+  there you create the first admin and print the encryption key sheet. So that no stranger gets there before you, the form asks for the
+  <b>Einrichtungsschlüssel</b> (setup key). It is in the file <code>SETUP_KEY.txt</code> in the data folder (on a Synology in File Station under
+  <code>docker/dulyinspect/data</code>) and in the container log. As soon as the admin has been created, the container deletes the file.
+  After that, the app's <b>Inbetriebnahme</b> (commissioning wizard) guides you through company details, installations to inspect, checklists, legal notice and privacy policy, appearance, labels and users.</p>
+<p><b>Changing the address:</b> adjust <code>APP_URL</code> and recreate the container. The app picks up the new address the next time it loads.
+  QR labels that have already been printed still contain the old address, though. The address should therefore be settled before the first labels are printed.</p>
+<p class="klein">All other values (keys, database passwords) are generated by the container on first start and stored in the data folder. You do not set them.</p>
+
+<h2>5. Data folder and shares</h2>
+<p>Everything that must persist lives in the container under <code>/data</code>. This path is mapped to a folder on the server or the Synology
+  (called <code>data</code> below). The container creates the subfolders itself on first start and sets the permissions.
+  An existing data folder with the former German names (<code>geheim/</code>, <code>sicherung/</code> etc.) is renamed automatically on the next start.</p>
+<table>
+  <tr><th style="width: 22%">Subfolder</th><th>Contents</th></tr>
+  <tr><td><code>postgres/</code></td><td>Database. Never copy or open it while the container is running (section 8).</td></tr>
+  <tr><td><code>storage/</code></td><td>Photos, signatures, inspection reports (PDF), certificates and evidence, logo.</td></tr>
+  <tr><td><code>storage-xattr/</code></td><td>Metadata about the files (type, cache). Only used if the folder does not support extended attributes, e.g. with Docker Desktop or an SMB/NFS share. Part of the data; do not delete.</td></tr>
+  <tr><td><code>secrets/</code></td><td>Keys and passwords of the instance (<code>instance.env</code>). <b>Never delete:</b> without them all sign-ins become invalid, and encrypted entries
+    in the database can no longer be read. Include in every backup and keep confidential.</td></tr>
+  <tr><td><code>backups/</code></td><td>Database backups: automatically before every version change (<code>pre-*.sql.gz</code>, the last 5)
+    and the scheduled ones (<code>live-*.sql.gz</code>, section 8).</td></tr>
+  <tr><td><code>caddy/</code>, <code>version</code>, <code>.lock</code></td><td>Internal housekeeping (web server, last set-up version, lock).</td></tr>
+</table>
+<div class="achtung">
+  <p><b>A data folder belongs to exactly one container.</b> A second container on the same folder would corrupt the database. The container
+    prevents this itself: it exits with <code>ERROR: /data is already in use by another container. Stop the other one first.</code> So when updating, always stop the old container first.</p>
+</div>
+<p>Inside the folder the files belong to various internal users of the container. In the server's file view they therefore show
+  unfamiliar owners or appear unreadable. That is correct. Do not change owners or permissions from outside.</p>
+
+<h2>6. Running with Docker (Linux server)</h2>
+<div class="hinweis"><p><b>Docker Desktop (Mac, Windows):</b> use a named Docker volume instead of a folder from the computer (<code>dulyinspect-data:/data</code> plus a <code>volumes:</code> section, see README). Docker Desktop cannot keep Linux file owners on a host folder, and Postgres then refuses to start (<code>ERROR: /data cannot keep file owners …</code>). Linux servers and Synology shared folders are not affected.</p></div>
+<ol class="schritt">
+  <li>Create a folder, e.g. <code>/opt/dulyinspect</code>, and copy the file <code>docker-compose.yml</code> from the repository into it.</li>
+  <li>Load the image (not needed if it was built on the server):
+    <pre><code>docker load -i dulyinspect-2.89.0-amd64.tar</code></pre></li>
+  <li>Enter the environment variables in <code>docker-compose.yml</code> (section 4), above all <code>APP_URL</code>.</li>
+  <li>Start and follow the log:
+    <pre><code>cd /opt/dulyinspect
+docker compose up -d
+docker compose logs -f</code></pre>
+    The container is ready once the log shows <code>Setup complete, app 2.89.0 at https://….</code> On first start this takes about 10–30 seconds.</li>
+  <li>Put a reverse proxy with HTTPS in front (Caddy, nginx, Traefik …) that forwards to <code>http://127.0.0.1:8090</code>.
+    It must pass <b>WebSocket</b> through (headers <code>Upgrade</code> and <code>Connection</code>), otherwise real-time sync between several inspectors does not work.
+    Port 8090 should only be reachable locally, i.e. <code>"127.0.0.1:8090:8080"</code> in <code>ports</code> if the proxy runs on the same server.</li>
+  <li>Open the address in the browser and create the first admin (section 7.7). <code>cat data/SETUP_KEY.txt</code> shows the setup key.</li>
+</ol>
+<p>The compose file from the repository:</p>
+<pre><code>services:
+  dulyinspect:
+    image: dulyinspect:latest
+    container_name: dulyinspect
+    restart: unless-stopped
+    ports:
+      - "8090:8080"            # left: port on the server/NAS, right: always 8080
+    volumes:
+      - ./data:/data           # all data; never delete on updates
+    environment:
+      APP_URL: "https://inspection.example.com"   # address the app is opened at in the browser
+      MAX_ACTIVE_USERS: "2"
+      # The first admin is created in the browser on first visit (setup key: data/SETUP_KEY.txt).
+      # Only for automated installs: create the admin at startup (first start only)
+      # ADMIN_EMAIL: "admin@lokal"
+      # ADMIN_NAME: "Administrator"
+      # ADMIN_PASSWORD: "at-least-10-characters"
+    stop_grace_period: 60s</code></pre>
+<p>Without Compose, the same works with a single command:</p>
+<pre><code>docker run -d --name dulyinspect --restart unless-stopped --stop-timeout 60 \
+  -p 8090:8080 -v /opt/dulyinspect/data:/data \
+  -e APP_URL=https://inspection.example.com \
+  dulyinspect:latest</code></pre>
+<p>Useful commands: <code>docker compose stop</code> (clean stop), <code>docker compose start</code>, <code>docker compose logs --tail 100</code>.
+  Do not stop the container with <code>docker kill</code> or <code>docker rm -f</code>. It survives that, but then needs a database recovery on the next start.</p>
+
+<h2>7. Synology Container Manager</h2>
+<p class="klein">The labels follow DSM 7.2 in English. Menu items may be named slightly differently in other versions.</p>
+
+<h3>7.1 Install Container Manager and check the platform</h3>
+<ol class="schritt">
+  <li><span class="pfad">Package Center</span> → install <b>Container Manager</b>. This creates the shared folder <code>docker</code>.</li>
+  <li><span class="pfad">Info Center → General</span>: read the processor. Intel, AMD or Celeron means image <code>amd64</code>; an ARM processor (e.g. Realtek RTD1619B) means <code>arm64</code>.</li>
+</ol>
+
+<h3>7.2 Set up the share and folders</h3>
+<ol class="schritt">
+  <li>In <span class="pfad">File Station</span>, inside the folder <code>docker</code>, create the subfolder <code>dulyinspect</code> and in it the folder <code>data</code>.
+    Result: <code>/docker/dulyinspect/data</code> (on the volume: <code>/volume1/docker/dulyinspect/data</code>).</li>
+  <li><span class="pfad">Control Panel → Shared Folder → docker → Edit → Permissions</span>: access for administrators only.
+    The folder contains the instance keys in <code>data/secrets</code>, and the compose file may contain the start password.</li>
+  <li>Do <b>not</b> share <code>docker</code> with ordinary users via SMB or AFP, and do not change anything by hand in the <code>data</code> folder.</li>
+  <li>For backups (section 8) a Btrfs volume is recommended. It also makes snapshots of the share possible.</li>
+</ol>
+
+<h3>7.3 Import the image</h3>
+<ol class="schritt">
+  <li>Copy the file <code>dulyinspect-&lt;version&gt;-amd64.tar</code> (or <code>-arm64</code>) into the <code>docker</code> share, e.g. with File Station (Upload).</li>
+  <li><span class="pfad">Container Manager → Image → Add → Add From File</span> and select the file. The import takes a few minutes.</li>
+  <li>Afterwards <code>dulyinspect</code> appears in the list with the tags <code>latest</code> and the version number.</li>
+</ol>
+<p class="klein">Alternatively via SSH (<span class="pfad">Control Panel → Terminal &amp; SNMP → Enable SSH service</span>):
+  <code>sudo docker load -i /volume1/docker/dulyinspect-2.89.0-amd64.tar</code></p>
+
+<h3>7.4 Create a project (recommended)</h3>
+<p>A project is a compose file managed by Container Manager. That way all settings are in one place, and updates are easier.</p>
+<ol class="schritt">
+  <li><span class="pfad">Container Manager → Project → Create</span>.</li>
+  <li><b>Project name:</b> <code>dulyinspect</code> · <b>Path:</b> <code>/docker/dulyinspect</code> · <b>Source:</b> “Create docker-compose.yml”.</li>
+  <li>Paste the compose file from section 6 and adjust the values:
+    <ul>
+      <li><code>APP_URL</code>: the future HTTPS address (section 7.6), e.g. <code>https://inspection.example.com</code>.</li>
+      <li>Port to the left of <code>:8080</code>: a free port on the Synology, e.g. <code>8090</code>. Ports 5000/5001 are used by DSM itself.</li>
+      <li>Leave <code>./data:/data</code> as it is: <code>./</code> refers to the project folder <code>/docker/dulyinspect</code>.</li>
+    </ul></li>
+  <li>Skip the page for the web portal settings (Web Station); do not set anything up there.</li>
+  <li><b>Done</b> with “Start the project once it is created”. Container Manager creates and starts the container.</li>
+  <li><span class="pfad">Container → dulyinspect → Log</span>: wait for <code>Setup complete, app 2.89.0 at ….</code></li>
+</ol>
+
+<h3>7.5 Alternative: container without a project</h3>
+<p>If you prefer clicking: <span class="pfad">Image → dulyinspect:latest → Run</span>.</p>
+<ul>
+  <li><b>General Settings:</b> container name <code>dulyinspect</code>, turn on “Enable auto-restart”.</li>
+  <li><b>Port Settings:</b> local port <code>8090</code> → container port <code>8080</code>, TCP.</li>
+  <li><b>Volume Settings:</b> “Add Folder” → <code>docker/dulyinspect/data</code> → mount path <code>/data</code>, not read-only.</li>
+  <li><b>Environment:</b> add the variables from section 4 one by one.</li>
+  <li><b>Network:</b> <code>bridge</code> (default).</li>
+</ul>
+
+<h3>7.6 HTTPS via the Synology reverse proxy</h3>
+<ol class="schritt">
+  <li>Point the name (e.g. <code>inspection.example.com</code>) to the Synology in DNS. For access from outside, the router forwards port 443 to the Synology.
+    For use on site only, an entry in the internal DNS is enough.</li>
+  <li><span class="pfad">Control Panel → Login Portal → Advanced → Reverse Proxy → Create</span>:
+    <table>
+      <tr><th style="width: 30%"></th><th>Source</th><th>Destination</th></tr>
+      <tr><td>Protocol</td><td>HTTPS</td><td>HTTP</td></tr>
+      <tr><td>Hostname</td><td><code>inspection.example.com</code></td><td><code>localhost</code></td></tr>
+      <tr><td>Port</td><td>443</td><td>8090</td></tr>
+    </table>
+    Under Source, turn on “Enable HSTS”.</li>
+  <li>In the same entry: <span class="pfad">Custom Header → Create → WebSocket</span>. This adds <code>Upgrade</code> and <code>Connection</code>.
+    <b>Without this step</b> inspectors do not see each other's changes immediately, only on the next reload.</li>
+  <li><span class="pfad">Control Panel → Security → Certificate → Add</span> → “Add a new certificate” → “Get a certificate from Let's Encrypt”
+    for <code>inspection.example.com</code>. Then, under <span class="pfad">Settings</span>, assign the certificate to the reverse proxy entry.
+    Let's Encrypt needs port 80 from outside for this.</li>
+  <li>Do not expose port 8090 to the internet, i.e. do not forward it in the router. The Synology firewall can additionally restrict it to <code>localhost</code>.</li>
+</ol>
+
+<h3>7.7 Initial setup and commissioning</h3>
+<ol class="schritt">
+  <li>In File Station, open <code>docker/dulyinspect/data/SETUP_KEY.txt</code> and copy the key.
+    It is also in the log: <span class="pfad">Container Manager → Container → dulyinspect → Log</span>,
+    in the line <code>Initial setup in the browser at …, setup key: XXXX-XXXX-…</code>.</li>
+  <li>Open <code>https://inspection.example.com</code>. In the <b>Ersteinrichtung</b> (initial setup) form, enter the key, your name, your email address (future login name) and a password.</li>
+  <li>Download the encryption <b>Schlüsselblatt</b> (key sheet), print it and keep it safe: without it, encrypted data cannot be recovered.</li>
+  <li>After that, the <b>Inbetriebnahme</b> (commissioning wizard) guides you step by step through the setup. Every step can be skipped and done later under
+    <span class="pfad">Einstellungen → Inbetriebnahme</span> (settings → commissioning).</li>
+  <li>On the phone, open the address and install it via “Add to Home Screen”. Only then does offline use work reliably, especially on the iPhone.</li>
+</ol>
+
+<h2>8. Backups</h2>
+<p>The database files under <code>data/postgres</code> must <b>not</b> be copied while the container is running. Such a copy may be unusable.
+  These three methods are safe, ideally combined:</p>
+<h3>8.1 Daily database backup (Task Scheduler)</h3>
+<p>The container comes with a backup script. While running, it writes a complete, consistent backup of the database to
+  <code>data/backups/live-&lt;time&gt;.sql.gz</code> and keeps the last 14 (adjustable).</p>
+<ol class="schritt">
+  <li><span class="pfad">Control Panel → Task Scheduler → Create → Scheduled Task → User-defined script</span>.</li>
+  <li><b>General:</b> task “DulyInspect backup”, user <code>root</code>.</li>
+  <li><b>Schedule:</b> daily, e.g. 02:30.</li>
+  <li><b>Task Settings → User-defined script:</b>
+    <pre><code>docker exec dulyinspect /usr/local/lib/instance/backup.sh 14</code></pre>
+    Optionally turn on “Send run details by email” and “Send run details only when the script terminates abnormally”; the Synology then reports failed backups.</li>
+</ol>
+<p>On a Linux server, do the same with cron, e.g. <code>30 2 * * * docker exec dulyinspect /usr/local/lib/instance/backup.sh 14</code>.</p>
+
+<h3>8.2 Backup to another device (Hyper Backup)</h3>
+<p>With <b>Hyper Backup</b> (or <code>rsync</code>/<code>restic</code> on Linux), back up these folders regularly, e.g. daily after the database backup, to another device
+  or to the cloud:</p>
+<ul>
+  <li><code>docker/dulyinspect/data/backups</code>: the database backups</li>
+  <li><code>docker/dulyinspect/data/storage</code>: photos, reports, evidence</li>
+  <li><code>docker/dulyinspect/data/secrets</code>: the instance keys</li>
+  <li><code>docker/dulyinspect/docker-compose.yml</code>: configuration</li>
+</ul>
+<p>The backups contain personal data and the instance keys. Therefore encrypt the backup destination (in Hyper Backup: “Client-side encryption”).</p>
+
+<h3>8.3 Snapshots (Btrfs)</h3>
+<p>With <b>Snapshot Replication</b>, the <code>docker</code> share can be captured as a snapshot, e.g. every hour. A snapshot captures the data folder
+  at a single moment. When restored, the database behaves as after a power failure and repairs itself on start.
+  Snapshots are handy for going back quickly, but do not replace a backup to another device.</p>
+
+<h3>8.4 Restoring</h3>
+<ol class="schritt">
+  <li>Stop the container (<span class="pfad">Project → Action → Stop</span> or <code>docker compose stop</code>).</li>
+  <li>Restore the complete <code>data</code> folder from a snapshot or from a backup that was taken with the container <b>stopped</b>
+    or as a snapshot.</li>
+  <li>Start the container. It checks the database state and version itself.</li>
+</ol>
+<div class="achtung">
+  <p>Restoring an instance from the <code>.sql.gz</code> files alone (e.g. on new hardware without a snapshot) is not yet described as a finished procedure
+    and has not been tested. Until then, keep snapshots or a copy of the whole data folder taken with the container stopped as the basis, and the database backups in addition.</p>
+</div>
+
+<h2>9. Updates</h2>
+<p>An update only replaces the image. On the first start with a new app version, the following happens automatically:</p>
+<ol>
+  <li>Backup of the database to <code>data/backups/pre-&lt;version&gt;-&lt;timestamp&gt;.sql.gz</code>. If this fails, the container does not start.</li>
+  <li>Update of the database to the new version (one transaction per step; on an error the previous state is kept).</li>
+  <li>Start of the app with the new version. Devices fetch it without asking: immediately the next time the app is opened, otherwise on the next
+    page change or when the app goes to the background. <b>Never during an inspection:</b> as long as an inspection is open on a device
+    or an inspection page is displayed, the old version stays until the inspection is completed.</li>
+</ol>
+<h3>Synology</h3>
+<ol class="schritt">
+  <li>Build a new image file (section 3) and import it (section 7.3). It again carries the tag <code>latest</code>.</li>
+  <li><span class="pfad">Project → dulyinspect → Action → Stop</span>, then <span class="pfad">Action → Build</span>. The container is recreated from the new image.
+    Alternatively via SSH: <code>cd /volume1/docker/dulyinspect &amp;&amp; sudo docker compose up -d --force-recreate</code>.</li>
+  <li>In the log, look for <code>Update 2.86.0 → …: backup to …</code> and <code>Setup complete</code>.</li>
+</ol>
+<h3>Docker</h3>
+<pre><code>docker load -i dulyinspect-&lt;new version&gt;-amd64.tar   # or build again
+cd /opt/dulyinspect
+docker compose up -d          # detects the new image and recreates the container
+docker compose logs -f</code></pre>
+<p>The container refuses to <b>go back to an older version</b> once the database has been updated (<code>… (older image?)</code>).
+  In that case use the image of the new version again, or restore the backup from before the update (section 8.4).</p>
+<p>Old images take up around 2 GB each. Images no longer in use can be deleted under <span class="pfad">Container Manager → Image</span>
+  (or with <code>docker image prune</code>). Keep the previous version for a few days to be safe.</p>
+
+<h2>10. Known limitations and error messages</h2>
+<h3>Status of this pre-release</h3>
+<ul>
+  <li><b>Tested</b> automatically on Intel/AMD (amd64, with every build on GitHub) and ARM (arm64): first start, sign-in, photos/files,
+    real-time connection, backup, update with backup, data retention, locks. <b>Not yet</b> on a real Synology device: the menu items in section 7
+    follow DSM 7.2 but have not been clicked through on a device.</li>
+  <li><b>Safari/iPhone:</b> real-time sync has not yet been checked in Safari; Chrome has been checked.</li>
+  <li><b>No demo mode, no preview version:</b> the image is built for production use. There is no „Vorschauversion“ (preview version) notice or watermark,
+    and demo mode is permanently off. New versions load without asking (section 9).</li>
+  <li><b>Internet access:</b> the server functions download libraries from the internet (npm) on first use. Without outbound access, creating the first admin from the variables
+    and user management fail.</li>
+  <li><b>Postgres major version:</b> if a future image changes the database's major version (e.g. 15 to 17), the container does not start with old data
+    (<code>ERROR: The data was created by Postgres …</code>). A separate guide will follow for this case; the data stays unchanged.</li>
+</ul>
+<h3>Log messages</h3>
+<table>
+  <tr><th style="width: 42%">Message</th><th>Meaning and remedy</th></tr>
+  <tr><td><code>ERROR: /data is already in use by another container. Stop the other one first.</code></td><td>A second container is using the same data folder. Stop the other one, then start again.</td></tr>
+  <tr><td><code>ERROR: The database has schema …, this image only knows up to … (older image?)</code></td><td>The image is older than the data. Use the newer image.</td></tr>
+  <tr><td><code>ERROR: The data was created by Postgres …, this image has Postgres …</code></td><td>Change of the database major version, see above. Nothing has been changed.</td></tr>
+  <tr><td><code>Backup failed – start aborted.</code></td><td>Usually not enough disk space. Free up space and start again.</td></tr>
+  <tr><td><code>ERROR in migration … – data unchanged, backup in /data/backups.</code></td><td>The database update failed; the previous state is kept. Send the log to support.</td></tr>
+  <tr><td><code>ERROR creating the admin: …</code></td><td>Usually a password that is too short (under 10 characters) or no internet access. Correct the variable and restart.</td></tr>
+  <tr><td><code>Initial setup in the browser at …, setup key: XXXX-XXXX-… (also in data/SETUP_KEY.txt)</code></td><td>Not an error: create the first admin in the browser with this setup key (section 7.7).</td></tr>
+  <tr><td><code>First admin … created.</code></td><td>Not an error: the first admin was created from <code>ADMIN_PASSWORD</code>. Now remove the variable from the configuration.</td></tr>
+</table>
+<h3>Common problems</h3>
+<table>
+  <tr><th style="width: 42%">Problem</th><th>Cause and remedy</th></tr>
+  <tr><td>Camera or QR scanning does not work, the app cannot be installed</td><td>The app is running without HTTPS. Open it via the reverse proxy with a certificate (section 7.6).</td></tr>
+  <tr><td>Changes by other inspectors only appear after a reload</td><td>The WebSocket headers are missing in the reverse proxy (section 7.6, step 3).</td></tr>
+  <tr><td>Sign-in works, then the error „keine Verbindung“ (no connection)</td><td><code>APP_URL</code> does not match the address in the browser. Adjust it and recreate the container.</td></tr>
+  <tr><td>Container does not start, port in use</td><td>Change the left port (8090) to a free one, in the reverse proxy as well.</td></tr>
+</table>
+
+</body>
+</html>

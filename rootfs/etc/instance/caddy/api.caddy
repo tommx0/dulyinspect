@@ -1,0 +1,64 @@
+# API routes as in the multi-tenant router of the app (tuerpruefung: infra/mandanten/Caddyfile), services on 127.0.0.1.
+(cors) {
+	@preflight method OPTIONS
+	handle @preflight {
+		header Access-Control-Allow-Origin "*"
+		header Access-Control-Allow-Methods "GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS"
+		header Access-Control-Allow-Headers "{http.request.header.Access-Control-Request-Headers}"
+		header Access-Control-Max-Age "3600"
+		respond 204
+	}
+	header >Access-Control-Allow-Origin "*"
+	header >Access-Control-Expose-Headers "Content-Range, Content-Location, Content-Type, Location, Range-Unit, X-Supabase-Api-Version"
+}
+
+# API descriptions stay internal (no OpenAPI at /rest/v1/, no GraphQL, no Realtime tenant API)
+(api) {
+	header -Server
+	handle_path /rest/v1/* {
+		import cors
+		@description path /
+		@graphql_in header_regexp Content-Profile (?i)graphql
+		@graphql_out header_regexp Accept-Profile (?i)graphql
+		respond @description 404
+		respond @graphql_in 404
+		respond @graphql_out 404
+		reverse_proxy 127.0.0.1:3000
+	}
+	handle_path /auth/v1/* {
+		import cors
+		reverse_proxy 127.0.0.1:9999 {
+			header_up X-Real-IP {client_ip}
+		}
+	}
+	handle_path /storage/v1/* {
+		import cors
+		@description path /documentation /documentation/*
+		respond @description 404
+		reverse_proxy 127.0.0.1:5000 {
+			header_up X-Forwarded-Prefix /storage/v1
+			header_up -X-Forwarded-Path
+		}
+	}
+	handle_path /realtime/v1/api/* {
+		import cors
+		rewrite * /api{path}
+		@internal path /api/openapi /api/openapi/* /api/tenants /api/tenants/*
+		respond @internal 404
+		# Realtime tenant "einzel" (setup.sh)
+		reverse_proxy 127.0.0.1:4000 {
+			header_up Host einzel.realtime
+		}
+	}
+	handle_path /realtime/v1/* {
+		import cors
+		rewrite * /socket{path}
+		reverse_proxy 127.0.0.1:4000 {
+			header_up Host einzel.realtime
+		}
+	}
+	handle_path /functions/v1/* {
+		import cors
+		reverse_proxy 127.0.0.1:9000
+	}
+}

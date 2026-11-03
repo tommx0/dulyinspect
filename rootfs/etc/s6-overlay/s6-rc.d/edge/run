@@ -1,0 +1,13 @@
+#!/bin/bash
+exec 2>&1
+source /usr/local/lib/instance/common.sh
+load_secrets
+# Only these values reach the functions (functions-main passes them on to the workers).
+# MAX_AKTIVE_BENUTZER is the name the app's functions read.
+SERVICE_ENV=(
+  SUPABASE_URL=http://127.0.0.1:8001 SUPABASE_PUBLIC_URL="$APP_URL"
+  SUPABASE_ANON_KEY="$ANON_KEY" SUPABASE_SERVICE_ROLE_KEY="$SERVICE_ROLE_KEY"
+  SUPABASE_DB_URL="postgres://postgres:$PW_POSTGRES@127.0.0.1:5432/postgres"
+  MAX_AKTIVE_BENUTZER="$(getenv MAX_ACTIVE_USERS 2 MAX_AKTIVE_BENUTZER)" DENO_DIR=/var/cache/edge
+)
+run_as edge edge-runtime start --main-service /etc/instance/functions-main --ip 127.0.0.1 --port 9000

@@ -1,0 +1,18 @@
+#!/bin/bash
+exec 2>&1
+source /usr/local/lib/instance/common.sh
+load_secrets
+cd /opt/storage
+SERVICE_ENV=(
+  DATABASE_URL="postgres://supabase_storage_admin:$PW_STORAGE@127.0.0.1:5432/postgres"
+  AUTH_JWT_SECRET="$JWT_SECRET" PGRST_JWT_SECRET="$JWT_SECRET" ANON_KEY="$ANON_KEY" SERVICE_KEY="$SERVICE_ROLE_KEY"
+  POSTGREST_URL=http://127.0.0.1:3000 STORAGE_PUBLIC_URL="$APP_URL"
+  SERVER_HOST=127.0.0.1 SERVER_PORT=5000 SERVER_REGION=local MULTI_TENANT=false DB_INSTALL_ROLES=false
+  DATABASE_SEARCH_PATH=storage DATABASE_MAX_CONNECTIONS=6 STORAGE_BACKEND=file FILE_STORAGE_BACKEND_PATH=/data/storage
+  # Bucket and tenant "einzel" are part of the paths under /data/storage: keep them
+  STORAGE_S3_REGION=local GLOBAL_S3_BUCKET=einzel TENANT_ID=einzel
+  UPLOAD_FILE_SIZE_LIMIT=52428800 UPLOAD_FILE_SIZE_LIMIT_STANDARD=52428800 UPLOAD_SIGNED_URL_EXPIRATION_TIME=120
+  XATTR_FALLBACK="$(getenv XATTR_FALLBACK)"
+  TUS_URL_PATH=/upload/resumable ENABLE_IMAGE_TRANSFORMATION=false REQUEST_ALLOW_X_FORWARDED_PATH=true NODE_ENV=production
+)
+run_as storage node --require /usr/local/lib/instance/xattr-fallback.cjs dist/start/server.js

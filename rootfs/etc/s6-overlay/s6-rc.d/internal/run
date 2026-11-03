@@ -1,0 +1,7 @@
+#!/bin/bash
+exec 2>&1
+source /usr/local/lib/instance/common.sh
+load_secrets
+# Only for the Edge Functions (SUPABASE_URL), not reachable from outside
+SERVICE_ENV=(XDG_DATA_HOME=/tmp/caddy-internal XDG_CONFIG_HOME=/tmp/caddy-internal)
+run_as web caddy run --config /etc/instance/caddy/internal.caddy --adapter caddyfile

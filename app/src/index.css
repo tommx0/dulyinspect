@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+/* Farben: Anthrazit + Gelb.
+   Gelb nur als Fläche/Akzent hinter dunklem Text – weiße Schrift auf Gelb ist nicht lesbar. */
+@theme {
+  --color-marke: #1c1c1c;
+  --color-marke-dunkel: #000000;
+  --color-akzent: #fce400;
+  --color-akzent-hell: #fef9c3;
+}
+
+@layer base {
+  body {
+    @apply bg-stone-50 text-marke antialiased;
+    accent-color: var(--color-marke);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-akzent);
+    outline-offset: 2px;
+  }
+  label {
+    @apply block text-sm font-medium text-slate-700;
+  }
+  input:not([type="checkbox"]):not([type="radio"]), select, textarea {
+    @apply mt-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-base shadow-sm
+      focus:border-marke focus:ring-3 focus:ring-akzent focus:outline-none disabled:bg-slate-100;
+  }
+  /* Safari ignoriert Innenabstände nativer Auswahllisten (Feld niedriger als Textfelder): eigene Darstellung mit Pfeil */
+  select {
+    @apply appearance-none bg-no-repeat pr-10;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+  }
+  /* Safari zeigt in leeren Datumsfeldern das heutige Datum grau an – das wirkt wie ein eingetragener Wert */
+  input[type="date"][value=""]:not(:focus)::-webkit-datetime-edit {
+    color: transparent;
+  }
+}
+
+/* Tailwind v4: eigene Klassen als @utility, damit sie per @apply kombinierbar sind */
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold
+    transition disabled:cursor-not-allowed disabled:opacity-50;
+}
+@utility btn-primaer { @apply btn bg-marke text-white hover:bg-marke-dunkel; }
+/* Text-Link: Anthrazit, kräftige Unterstreichung in der Akzentfarbe, beim Zeigen hinterlegt */
+@utility link {
+  @apply rounded-sm font-semibold text-marke underline decoration-akzent decoration-[3px] underline-offset-4 transition-colors
+    hover:bg-akzent-hell hover:decoration-marke;
+}
+@utility btn-sekundaer { @apply btn border border-slate-300 bg-white text-slate-700 hover:bg-slate-50; }
+@utility btn-gefahr { @apply btn bg-red-600 text-white hover:bg-red-700; }
+@utility karte { @apply rounded-lg border border-slate-200 bg-white shadow-sm; }
+/* Ganze Zeile einer Liste ist klickbar: Fläche beim Zeigen und Tippen, Pfeil am Ende (<Weiter />, Element mit `group`) */
+@utility zeile {
+  @apply flex w-full items-center gap-3 px-4 py-3 text-left transition-colors
+    hover:bg-akzent-hell/60 active:bg-akzent-hell disabled:cursor-default disabled:hover:bg-transparent;
+}
+/* Kachel in einem Raster (<Kacheln>): Karte, deren Fläche klickbar ist (Element mit `group`) */
+@utility kachel {
+  @apply karte flex h-full w-full flex-col gap-2 p-4 text-left transition
+    hover:border-slate-300 hover:bg-akzent-hell/40 hover:shadow-md active:bg-akzent-hell;
+}

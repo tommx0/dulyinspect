@@ -1,0 +1,21 @@
+# DulyInspect single instance. Guide: docs/Docker-Synology-Guide.pdf (German: docs/Anleitung-Docker-Synology.pdf)
+# Docker: docker compose up -d   ·   Synology: Container Manager → Project → Create, paste this content
+services:
+  dulyinspect:
+    image: dulyinspect:latest
+    container_name: dulyinspect
+    restart: unless-stopped
+    ports:
+      - "8090:8080"            # left: port on the server/NAS, right: always 8080
+    volumes:
+      - ./data:/data           # all data; never delete on updates
+    environment:
+      APP_URL: "https://inspection.example.com"   # address the app is opened at in the browser
+      MAX_ACTIVE_USERS: "2"
+      # The first admin is created in the browser on first visit (setup key: data/SETUP_KEY.txt).
+      # Only for automated installs: create the admin at startup (first start only)
+      # ADMIN_EMAIL: "admin@lokal"
+      # ADMIN_NAME: "Administrator"
+      # ADMIN_PASSWORD: "at-least-10-characters"
+    # Let Postgres shut down cleanly (usually takes less than 10 s)
+    stop_grace_period: 60s

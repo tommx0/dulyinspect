@@ -1,0 +1,6383 @@
+{
+ "_info": {
+  "stand": "2026-11-03",
+  "status": "ENTWURF – Grenzwerte aus öffentlichen Sekundärquellen (DGUV 208-022, Fachartikel, Herstellerunterlagen); einmalig mit dem aktuellen Normtext abgleichen",
+  "hinweis": "Normnahe Beispiel-Checklisten als Startpunkt. Grenzwerte mit \"verifizieren\": true sind Platzhalter und müssen anhand der gültigen Norm-/Herstellerangaben bestätigt werden. Format entspricht checkliste_version.punkte (Spezifikation Abschnitt 6). Bedingte Punkte: \"nur_wenn\" mit ist | ist_nicht | in (Ja/Nein, Auswahl, i.O./n.i.O./entfällt), mangel (Antwort ergibt einen Mangel) oder unter | ueber (Messwert), Gruppen mit alle (UND) bzw. eine (ODER); Bezug nur auf vorherige Punkte derselben Checkliste. \"wirkungen\" machen einen Punkt abhängig von früheren Antworten zur Pflicht, heben die Mangelstufe an oder ersetzen Grenzwerte. Punkte „Betreiber sofort informiert“ erscheinen nur, wenn ein sicherheitsrelevanter Punkt einen Mangel ergibt. Anlagentypen: ohne \"anlagenart\" sind es Türen mit einer Prüfart (checkliste, intervall_monate); andere Arten listen ihre Prüfarten unter \"pruefarten\". Die Vorlagen zu Sicherheitsbeleuchtung, Brandmelde-, Alarm-, Rauch- und Wärmeabzugsanlagen, Rauchwarnmeldern, elektrischen Anlagen, ortsveränderlichen Geräten, Photovoltaikanlagen, Brandschutzbegehungen und Feuerlöschern sind ein unabgestimmter Vorschlag und müssen fachlich abgenommen werden. Prüfarten können mit \"elemente\" (keine | alle | anteil), \"elemente_anteil\" und \"elemente_zyklus_monate\" festlegen, wie die Elemente (Leuchten, Melder, RWA-Komponenten) geprüft werden. Wortlaut der Prüfpunkte, Hinweise und Beschreibungen am 2026-11-03 eigenständig neu formuliert (keine Übernahme aus Normtexten oder fremden Checklisten); Normen werden nur mit Nummer genannt.",
+  "quellen": [
+   "DGUV Information 208-022 Türen und Tore, Abschnitt 6 (Kraftgrenzwerte): https://vorschriften.bgn-branchenwissen.de/daten/dguv/208_022/6.htm",
+   "FeuerTrutz: Panik- und Notausgangsverschlüsse nach DIN EN 179 und DIN EN 1125: https://www.feuertrutz.de/panik-und-notausgangsverschluesse-fuer-tueren",
+   "FTA-Richtlinie Anforderungen der EN 16005 (Low-Energy 67 N, 1,69 J, 3 s): https://www.fta-online.de/fileadmin/inhalte/fta/download/Richtlinien/16_20-06-18__16FTA_Richtl_EN16005_nCI.pdf",
+   "PROTECTOR: Neue Norm für elektronisch gesteuerte Fluchttüren (EN 13637, 15 s / 180 s): https://www.protector.de/neue-norm-fuer-elektronisch-gesteuerte-fluchttueren"
+  ]
+ },
+ "anlagentypen": [
+  {
+   "id": "tt-flucht-mech",
+   "name": "Fluchttür mit Notausgangs-/Paniktürverschluss (EN 179 / EN 1125)",
+   "kategorie": "fluchttuer",
+   "checkliste": "cl-flucht-mech",
+   "intervall_monate": 12
+  },
+  {
+   "id": "tt-flucht-elt",
+   "name": "Fluchttür mit elektrischer Verriegelung (EltVTR / EN 13637)",
+   "kategorie": "fluchttuer",
+   "checkliste": "cl-flucht-elt",
+   "intervall_monate": 12
+  },
+  {
+   "id": "tt-auto-schiebe",
+   "name": "Automatische Schiebetür (DIN 18650 / EN 16005)",
+   "kategorie": "automatiktuer",
+   "checkliste": "cl-auto-schiebe",
+   "intervall_monate": 12
+  },
+  {
+   "id": "tt-auto-dreh",
+   "name": "Automatische Drehflügeltür (DIN 18650 / EN 16005)",
+   "kategorie": "automatiktuer",
+   "checkliste": "cl-auto-dreh",
+   "intervall_monate": 12
+  },
+  {
+   "id": "tt-feststell",
+   "name": "Feuer-/Rauchschutztür mit Feststellanlage (DIN 14677)",
+   "kategorie": "sonstige",
+   "checkliste": "cl-feststell",
+   "intervall_monate": 12
+  },
+  {
+   "id": "tt-sibe-zb",
+   "name": "Sicherheitsbeleuchtung mit Zentral-/Gruppenbatterie (CPS/LPS)",
+   "anlagenart": "sicherheitsbeleuchtung",
+   "pruefarten": [
+    {
+     "name": "Monatliche Funktionsprüfung",
+     "checkliste": "cl-sibe-funktion",
+     "intervall_monate": 1,
+     "elemente": "keine"
+    },
+    {
+     "name": "Jährliche Prüfung",
+     "checkliste": "cl-sibe-zb-jahr",
+     "intervall_monate": 12,
+     "elemente": "alle"
+    }
+   ]
+  },
+  {
+   "id": "tt-sibe-eb",
+   "name": "Sicherheitsbeleuchtung mit Einzelbatterieleuchten",
+   "anlagenart": "sicherheitsbeleuchtung",
+   "pruefarten": [
+    {
+     "name": "Monatliche Funktionsprüfung",
+     "checkliste": "cl-sibe-funktion",
+     "intervall_monate": 1,
+     "elemente": "keine"
+    },
+    {
+     "name": "Jährliche Prüfung",
+     "checkliste": "cl-sibe-eb-jahr",
+     "intervall_monate": 12,
+     "elemente": "alle"
+    }
+   ]
+  },
+  {
+   "id": "tt-bma",
+   "name": "Brandmeldeanlage (DIN 14675)",
+   "anlagenart": "bma",
+   "pruefarten": [
+    {
+     "name": "Inspektion",
+     "checkliste": "cl-bma-inspektion",
+     "intervall_monate": 3,
+     "elemente": "anteil",
+     "elemente_anteil": 25,
+     "elemente_zyklus_monate": 12
+    },
+    {
+     "name": "Wartung",
+     "checkliste": "cl-bma-wartung",
+     "intervall_monate": 12,
+     "elemente": "anteil",
+     "elemente_anteil": 25,
+     "elemente_zyklus_monate": 12,
+     "schliesst_ein": "Inspektion"
+    }
+   ]
+  },
+  {
+   "id": "tt-ema",
+   "name": "Einbruchmeldeanlage (EMA)",
+   "anlagenart": "ema",
+   "pruefarten": [
+    {
+     "name": "Inspektion und Wartung",
+     "checkliste": "cl-ema-jahr",
+     "intervall_monate": 12,
+     "elemente": "alle"
+    }
+   ]
+  },
+  {
+   "id": "tt-rwa",
+   "name": "Natürliche Rauch- und Wärmeabzugsanlage (NRA, DIN 18232-2)",
+   "anlagenart": "rwa",
+   "pruefarten": [
+    {
+     "name": "Wartung und Funktionsprüfung",
+     "checkliste": "cl-rwa-wartung",
+     "intervall_monate": 12,
+     "elemente": "alle"
+    }
+   ]
+  },
+  {
+   "id": "tt-mra",
+   "name": "Maschinelle Rauch- und Wärmeabzugsanlage (MRA, DIN 18232-5)",
+   "anlagenart": "rwa",
+   "pruefarten": [
+    {
+     "name": "Wartung und Funktionsprüfung",
+     "checkliste": "cl-mra-wartung",
+     "intervall_monate": 12,
+     "elemente": "alle"
+    }
+   ]
+  },
+  {
+   "id": "tt-rwm",
+   "name": "Rauchwarnmelder (DIN 14676-1)",
+   "anlagenart": "rauchwarnmelder",
+   "pruefarten": [
+    {
+     "name": "Erstinstallation",
+     "schliesst_ein": "Wartung",
+     "checkliste": "cl-rwm-erst",
+     "intervall_monate": 120,
+     "elemente": "alle"
+    },
+    {
+     "name": "Wartung",
+     "checkliste": "cl-rwm-wartung",
+     "intervall_monate": 12,
+     "elemente": "alle"
+    }
+   ]
+  },
+  {
+   "id": "tt-elektro",
+   "name": "Elektrische Anlage (DIN VDE 0100-600 / 0105-100)",
+   "anlagenart": "elektro",
+   "pruefarten": [
+    {
+     "name": "Erstprüfung",
+     "schliesst_ein": "Wiederholungsprüfung",
+     "checkliste": "cl-el-erst",
+     "intervall_monate": 120,
+     "elemente": "alle"
+    },
+    {
+     "name": "Wiederholungsprüfung",
+     "checkliste": "cl-el-wiederholung",
+     "intervall_monate": 48,
+     "elemente": "alle"
+    }
+   ]
+  },
+  {
+   "id": "tt-geraete",
+   "name": "Ortsveränderliche elektrische Geräte (DIN EN 50678 / 50699)",
+   "anlagenart": "geraete",
+   "pruefarten": [
+    {
+     "name": "Wiederholungsprüfung",
+     "checkliste": "cl-ge-0702",
+     "intervall_monate": 12,
+     "elemente": "alle"
+    },
+    {
+     "name": "Prüfung nach Instandsetzung",
+     "checkliste": "cl-ge-0701",
+     "intervall_monate": 120,
+     "elemente": "anteil",
+     "elemente_anteil": 1,
+     "elemente_zyklus_monate": 120
+    }
+   ]
+  },
+  {
+   "id": "tt-pv",
+   "name": "PV-Anlage ohne Speicher (DIN EN 62446-1 / VDE 0126-23-1)",
+   "anlagenart": "pv",
+   "pruefarten": [
+    {
+     "name": "Inbetriebnahmeprüfung",
+     "schliesst_ein": "Wartung und Wiederholungsprüfung",
+     "checkliste": "cl-pv-i",
+     "intervall_monate": 120,
+     "elemente": "alle"
+    },
+    {
+     "name": "Wartung und Wiederholungsprüfung",
+     "checkliste": "cl-pv-w",
+     "intervall_monate": 48,
+     "elemente": "alle"
+    }
+   ]
+  },
+  {
+   "id": "tt-pv-speicher",
+   "name": "PV-Anlage mit Batteriespeicher (DIN EN 62446-1 / VDE 0126-23-1)",
+   "anlagenart": "pv",
+   "pruefarten": [
+    {
+     "name": "Inbetriebnahmeprüfung",
+     "schliesst_ein": "Wartung und Wiederholungsprüfung",
+     "checkliste": "cl-pv-is",
+     "intervall_monate": 120,
+     "elemente": "alle"
+    },
+    {
+     "name": "Wartung und Wiederholungsprüfung",
+     "checkliste": "cl-pv-ws",
+     "intervall_monate": 48,
+     "elemente": "alle"
+    }
+   ]
+  },
+  {
+   "id": "tt-brandschutz",
+   "name": "Brandschutzbegehung",
+   "anlagenart": "brandschutz",
+   "pruefarten": [
+    {
+     "name": "Brandschutzbegehung",
+     "checkliste": "cl-bs-begehung",
+     "intervall_monate": 12
+    }
+   ]
+  },
+  {
+   "id": "tt-feuerloescher",
+   "name": "Tragbare Feuerlöscher (DIN 14406-4 / ASR A2.2)",
+   "anlagenart": "feuerloescher",
+   "pruefarten": [
+    {
+     "name": "Instandhaltung",
+     "checkliste": "cl-fl-instandhaltung",
+     "intervall_monate": 24,
+     "elemente": "alle"
+    }
+   ]
+  }
+ ],
+ "checklisten": [
+  {
+   "id": "cl-flucht-mech",
+   "name": "Fluchttür mechanisch (Notausgangs-/Paniktürverschluss)",
+   "beschreibung": "Prüfung mechanischer Fluchttürverschlüsse ohne elektrische Verriegelung: Drücker oder Stoßplatte nach EN 179, Griff- oder Druckstange nach EN 1125.",
+   "punkte": [
+    {
+     "id": "fm-verschlussart",
+     "abschnitt": "Allgemein",
+     "text": "Art des Verschlusses",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "EN 179 Drücker"
+      },
+      {
+       "wert": "EN 179 Stoßplatte"
+      },
+      {
+       "wert": "EN 1125 Griffstange"
+      },
+      {
+       "wert": "EN 1125 Druckstange"
+      },
+      {
+       "wert": "sonstige / unbekannt",
+       "mangel": true,
+       "vorschlag_stufe": 2
+      }
+     ]
+    },
+    {
+     "id": "fm-zulassung",
+     "abschnitt": "Allgemein",
+     "text": "Kennzeichnung (CE / Norm) am Beschlag des Verschlusses angebracht und lesbar",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "fm-kombination",
+     "abschnitt": "Allgemein",
+     "text": "Laut Herstellerunterlagen bilden Beschlag, Schloss und Tür eine zugelassene Kombination",
+     "typ": "status",
+     "pflicht": false,
+     "vorschlag_stufe": 2,
+     "hinweis": "Häufiger Mangel: Komponenten, die nicht zueinander passen."
+    },
+    {
+     "id": "fm-brandschutztuer",
+     "abschnitt": "Allgemein",
+     "text": "Tür ist als Feuer- bzw. Rauchschutztür ausgeführt",
+     "typ": "ja_nein",
+     "pflicht": true
+    },
+    {
+     "id": "fm-schild",
+     "abschnitt": "Kennzeichnung & Umfeld",
+     "text": "Notausgang mit Rettungszeichen gekennzeichnet, Zeichen gut erkennbar",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Siehe ASR A1.3 / DIN EN ISO 7010"
+    },
+    {
+     "id": "fm-bedienhinweis",
+     "abschnitt": "Kennzeichnung & Umfeld",
+     "text": "Am Verschluss ist ein Bedienhinweis angebracht (z. B. „Im Notfall Stange drücken“)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "fm-frei",
+     "abschnitt": "Kennzeichnung & Umfeld",
+     "text": "Fluchtweg auf beiden Seiten frei, Tür weder zugestellt noch blockiert",
+     "typ": "status",
+     "pflicht": true,
+     "foto_bei_nok": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "fm-zusatzsicherung",
+     "abschnitt": "Kennzeichnung & Umfeld",
+     "text": "Keine unzulässige zusätzliche Sicherung durch Riegel, Ketten, Vorhängeschlösser oder Keile",
+     "typ": "status",
+     "pflicht": true,
+     "foto_bei_nok": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "fm-oeffnen",
+     "abschnitt": "Funktion",
+     "text": "Tür öffnet in Fluchtrichtung jederzeit mit einer Handbewegung",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "fm-oeffnen-verschlossen",
+     "abschnitt": "Funktion",
+     "text": "Tür öffnet auch bei abgeschlossenem Schloss",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "fm-kraft-179",
+     "abschnitt": "Funktion",
+     "text": "Entriegelungskraft Drücker, Messpunkt 100 mm von der Drehachse",
+     "typ": "messwert",
+     "einheit": "N",
+     "soll_min": 0,
+     "soll_max": 70,
+     "pflicht": false,
+     "vorschlag_stufe": 2,
+     "nur_wenn": {
+      "punkt": "fm-verschlussart",
+      "ist": "EN 179 Drücker"
+     },
+     "hinweis": "Grenzwert DIN EN 179: höchstens 70 N",
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "fm-oeffnen",
+        "mangel": true
+       },
+       "pflicht": true
+      }
+     ]
+    },
+    {
+     "id": "fm-kraft-179-stoss",
+     "abschnitt": "Funktion",
+     "text": "Entriegelungskraft Stoßplatte",
+     "typ": "messwert",
+     "einheit": "N",
+     "pflicht": false,
+     "vorschlag_stufe": 2,
+     "nur_wenn": {
+      "punkt": "fm-verschlussart",
+      "ist": "EN 179 Stoßplatte"
+     },
+     "hinweis": "Erforderlich, falls die Tür nicht mit einer Handbewegung zu öffnen ist",
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "fm-oeffnen",
+        "mangel": true
+       },
+       "pflicht": true
+      }
+     ]
+    },
+    {
+     "id": "fm-kraft-1125",
+     "abschnitt": "Funktion",
+     "text": "Auslösekraft Griff-/Druckstange, Tür ohne Gegendruck",
+     "typ": "messwert",
+     "einheit": "N",
+     "soll_min": 0,
+     "soll_max": 80,
+     "pflicht": false,
+     "vorschlag_stufe": 2,
+     "nur_wenn": {
+      "punkt": "fm-verschlussart",
+      "in": [
+       "EN 1125 Griffstange",
+       "EN 1125 Druckstange"
+      ]
+     },
+     "hinweis": "Grenzwert DIN EN 1125: höchstens 80 N ohne Vorlast (im Labor mit 1000 N Vorlast: höchstens 220 N)",
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "fm-oeffnen",
+        "mangel": true
+       },
+       "pflicht": true
+      }
+     ]
+    },
+    {
+     "id": "fm-falle",
+     "abschnitt": "Funktion",
+     "text": "Beim Schließen rastet Falle / Riegel sicher im Schließblech ein",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "fm-zurueckstellen",
+     "abschnitt": "Funktion",
+     "text": "Verschluss kehrt nach dem Betätigen von selbst in die Ausgangslage zurück",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "fm-beschlag-befestigung",
+     "abschnitt": "Zustand",
+     "text": "Beschlag sitzt fest, Schrauben vollständig, keine Schäden",
+     "typ": "status",
+     "pflicht": true,
+     "foto_bei_nok": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "fm-baender",
+     "abschnitt": "Zustand",
+     "text": "Bänder / Scharniere sitzen fest, Tür hängt nicht durch und schleift nicht",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "fm-tuerschliesser",
+     "abschnitt": "Zustand",
+     "text": "Türschließer (sofern vorhanden) zieht die Tür kontrolliert und vollständig zu",
+     "typ": "status",
+     "pflicht": false,
+     "vorschlag_stufe": 2,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "fm-brandschutztuer",
+        "ist": "ja"
+       },
+       "pflicht": true,
+       "stufe": 3
+      }
+     ],
+     "hinweis": "Bei Feuer-/Rauchschutztüren vorgeschrieben: Die Tür muss von selbst schließen"
+    },
+    {
+     "id": "fm-dichtungen",
+     "abschnitt": "Zustand",
+     "text": "Keine relevanten Schäden an Dichtungen, Türblatt und Zarge",
+     "typ": "status",
+     "pflicht": false,
+     "foto_bei_nok": true,
+     "vorschlag_stufe": 1,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "fm-brandschutztuer",
+        "ist": "ja"
+       },
+       "pflicht": true,
+       "stufe": 2
+      }
+     ]
+    },
+    {
+     "id": "fm-schmierung",
+     "abschnitt": "Zustand",
+     "text": "Bewegliche Teile leichtgängig (bei Bedarf nach Herstellerangabe geschmiert)",
+     "typ": "status",
+     "pflicht": false,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "fm-brandschutz",
+     "abschnitt": "Brand-/Rauchschutz",
+     "text": "Feuer-/Rauchschutz-Kennzeichnungsschild an der Zarge angebracht, Tür fällt von selbst ins Schloss",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "fm-brandschutztuer",
+      "ist": "ja"
+     }
+    },
+    {
+     "id": "fm-sofort",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber unverzüglich über den gefährlichen Mangel unterrichtet (Fluchtweg nicht sicher nutzbar)",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Wird nur bei einem Mangel an einem sicherheitsrelevanten Punkt angezeigt. In den Bemerkungen eintragen, wer wann informiert wurde.",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "fm-frei",
+        "mangel": true
+       },
+       {
+        "punkt": "fm-zusatzsicherung",
+        "mangel": true
+       },
+       {
+        "punkt": "fm-oeffnen",
+        "mangel": true
+       },
+       {
+        "punkt": "fm-oeffnen-verschlossen",
+        "mangel": true
+       },
+       {
+        "punkt": "fm-brandschutz",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "fm-foto",
+     "abschnitt": "Abschluss",
+     "text": "Übersichtsaufnahme der Tür von der Fluchtseite",
+     "typ": "foto",
+     "pflicht": false
+    },
+    {
+     "id": "fm-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "fm-sofort",
+        "ist": "ja"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-flucht-elt",
+   "name": "Fluchttür mit elektrischer Verriegelung",
+   "beschreibung": "Prüfung elektrischer Verriegelungen an Türen in Rettungswegen nach EltVTR bzw. EN 13637, mechanische Grundfunktion eingeschlossen.",
+   "punkte": [
+    {
+     "id": "fe-zulassung",
+     "abschnitt": "Allgemein",
+     "text": "Zulassung bzw. Konformitätsnachweis für das System liegt beim Betreiber vor",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "fe-pruefbuch",
+     "abschnitt": "Allgemein",
+     "text": "Prüfbuch / Dokumentation liegt vor Ort vor und ist fortgeschrieben",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": false,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "fe-bma-vorhanden",
+     "abschnitt": "Allgemein",
+     "text": "An eine Brandmeldeanlage angeschlossen",
+     "typ": "ja_nein",
+     "pflicht": true
+    },
+    {
+     "id": "fe-verzoegerung-vorhanden",
+     "abschnitt": "Allgemein",
+     "text": "Entriegelung mit Zeitverzögerung eingerichtet",
+     "typ": "ja_nein",
+     "pflicht": true
+    },
+    {
+     "id": "fe-schild",
+     "abschnitt": "Kennzeichnung & Umfeld",
+     "text": "Rettungszeichen angebracht, Not-Auf-Taster gekennzeichnet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "fe-bedienhinweis",
+     "abschnitt": "Kennzeichnung & Umfeld",
+     "text": "Not-Auf-Taster mit lesbarem Bedienhinweis",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "fe-frei",
+     "abschnitt": "Kennzeichnung & Umfeld",
+     "text": "Fluchtweg frei, Not-Auf-Taster unverdeckt und gut zugänglich",
+     "typ": "status",
+     "pflicht": true,
+     "foto_bei_nok": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "fe-notauf",
+     "abschnitt": "Notfunktionen",
+     "text": "Not-Auf-Taster gibt die Tür sofort frei",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "fe-notauf-alarm",
+     "abschnitt": "Notfunktionen",
+     "text": "Betätigen des Not-Auf-Tasters löst ein akustisches/optisches Signal aus",
+     "typ": "status",
+     "pflicht": false,
+     "vorschlag_stufe": 2,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "fe-verzoegerung-vorhanden",
+        "ist": "ja"
+       },
+       "pflicht": true
+      }
+     ],
+     "hinweis": "Bei zeitverzögerter Entriegelung vorgeschrieben"
+    },
+    {
+     "id": "fe-stromausfall",
+     "abschnitt": "Notfunktionen",
+     "text": "Fällt die Spannung aus, wird die Tür entriegelt (Ruhestromprinzip)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "fe-bma",
+     "abschnitt": "Notfunktionen",
+     "text": "Brandmeldeanlage entriegelt die Tür einwandfrei",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "fe-bma-vorhanden",
+      "ist": "ja"
+     }
+    },
+    {
+     "id": "fe-verzoegerung-art",
+     "abschnitt": "Notfunktionen",
+     "text": "Verzögerungsart",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "einfach (t1)"
+      },
+      {
+       "wert": "doppelt (t1 + t2)"
+      }
+     ],
+     "nur_wenn": {
+      "punkt": "fe-verzoegerung-vorhanden",
+      "ist": "ja"
+     }
+    },
+    {
+     "id": "fe-verzoegerung",
+     "abschnitt": "Notfunktionen",
+     "text": "Verzögerungszeit t1 (eingestellt)",
+     "typ": "messwert",
+     "einheit": "s",
+     "soll_min": 0,
+     "soll_max": 15,
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "fe-verzoegerung-art",
+      "ist": "einfach (t1)"
+     },
+     "hinweis": "DIN EN 13637: einfache Verzögerung höchstens 15 s"
+    },
+    {
+     "id": "fe-verzoegerung-t2",
+     "abschnitt": "Notfunktionen",
+     "text": "Gesamtverzögerung t1 + t2 (eingestellt)",
+     "typ": "messwert",
+     "einheit": "s",
+     "soll_min": 0,
+     "soll_max": 180,
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "fe-verzoegerung-art",
+      "ist": "doppelt (t1 + t2)"
+     },
+     "hinweis": "DIN EN 13637: doppelte Verzögerung insgesamt höchstens 180 s, nur mit Dokumentation/Genehmigung"
+    },
+    {
+     "id": "fe-verzoegerung-genehmigung",
+     "abschnitt": "Notfunktionen",
+     "text": "Zeitverzögerung ist genehmigt",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "fe-verzoegerung-vorhanden",
+      "ist": "ja"
+     }
+    },
+    {
+     "id": "fe-wiederverriegelung",
+     "abschnitt": "Notfunktionen",
+     "text": "Erneute Verriegelung nur nach bewusstem Zurücksetzen (Schlüsselschalter o. Ä.)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "fe-verriegelung",
+     "abschnitt": "Funktion",
+     "text": "Im Normalbetrieb verriegelt die Tür wirksam (ohne Freigabe nicht zu öffnen)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "fe-kurzzeit",
+     "abschnitt": "Funktion",
+     "text": "Kurzzeitige Freigabe (Schlüsselschalter / Zutrittskontrolle) arbeitet einwandfrei",
+     "typ": "status",
+     "pflicht": false,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "fe-mechanik",
+     "abschnitt": "Funktion",
+     "text": "Ist die Tür entriegelt, öffnet der mechanische Fluchttürverschluss mit einer Handbewegung",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "fe-spannung",
+     "abschnitt": "Funktion",
+     "text": "Versorgungsspannung Steuerung",
+     "typ": "messwert",
+     "einheit": "V",
+     "pflicht": false,
+     "vorschlag_stufe": 2,
+     "hinweis": "Erforderlich, falls die Entriegelung bei Spannungsausfall versagt",
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "fe-stromausfall",
+        "mangel": true
+       },
+       "pflicht": true
+      }
+     ]
+    },
+    {
+     "id": "fe-montage",
+     "abschnitt": "Zustand",
+     "text": "Verriegelungselement, Taster und Leitungen sitzen fest, keine Schäden",
+     "typ": "status",
+     "pflicht": true,
+     "foto_bei_nok": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "fe-manipulation",
+     "abschnitt": "Zustand",
+     "text": "Kein Hinweis auf Manipulation oder Überbrückung",
+     "typ": "status",
+     "pflicht": true,
+     "foto_bei_nok": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "fe-sofort",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber unverzüglich über den gefährlichen Mangel unterrichtet (Fluchtweg nicht sicher nutzbar)",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Wird nur bei einem Mangel an einem sicherheitsrelevanten Punkt angezeigt. In den Bemerkungen eintragen, wer wann informiert wurde.",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "fe-frei",
+        "mangel": true
+       },
+       {
+        "punkt": "fe-notauf",
+        "mangel": true
+       },
+       {
+        "punkt": "fe-stromausfall",
+        "mangel": true
+       },
+       {
+        "punkt": "fe-bma",
+        "mangel": true
+       },
+       {
+        "punkt": "fe-mechanik",
+        "mangel": true
+       },
+       {
+        "punkt": "fe-manipulation",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "fe-foto",
+     "abschnitt": "Abschluss",
+     "text": "Übersichtsaufnahme (Tür mit Not-Auf-Taster)",
+     "typ": "foto",
+     "pflicht": false
+    },
+    {
+     "id": "fe-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "fe-sofort",
+        "ist": "ja"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-auto-schiebe",
+   "name": "Automatische Schiebetür",
+   "beschreibung": "Prüfung kraftbetätigter Schiebetüren durch Sachkundige nach ASR A1.7, DIN 18650 / EN 16005, einschließlich einer ggf. vorhandenen Fluchtwegfunktion.",
+   "punkte": [
+    {
+     "id": "as-fluchtweg",
+     "abschnitt": "Allgemein",
+     "text": "Tür befindet sich im Flucht- und Rettungsweg",
+     "typ": "ja_nein",
+     "pflicht": true
+    },
+    {
+     "id": "as-unterlagen",
+     "abschnitt": "Allgemein",
+     "text": "Betriebsanleitung / Prüfbuch liegt beim Betreiber vor",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": false,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "as-typenschild",
+     "abschnitt": "Allgemein",
+     "text": "Typenschild / CE-Kennzeichnung angebracht",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "as-kennzeichnung",
+     "abschnitt": "Kennzeichnung & Umfeld",
+     "text": "Glasflächen gekennzeichnet, Hinweisschilder (z. B. „Automatische Tür“) angebracht",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "as-umfeld",
+     "abschnitt": "Kennzeichnung & Umfeld",
+     "text": "Verkehrsfläche frei, Bewegungsbereich der Flügel ohne Gegenstände",
+     "typ": "status",
+     "pflicht": true,
+     "foto_bei_nok": true,
+     "vorschlag_stufe": 2,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "as-fluchtweg",
+        "ist": "ja"
+       },
+       "stufe": 3
+      }
+     ]
+    },
+    {
+     "id": "as-oeffnungsmelder",
+     "abschnitt": "Sensorik",
+     "text": "Bewegungsmelder / Impulsgeber auf Innen- und Außenseite sprechen zuverlässig an",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "as-anwesenheit",
+     "abschnitt": "Sensorik",
+     "text": "Anwesenheitssensor / Lichtschranke verhindert das Schließen, solange sich eine Person im Durchgang befindet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "as-nebenschliesskante",
+     "abschnitt": "Sensorik",
+     "text": "Nebenschließkanten wirksam abgesichert (Schutzflügel, Abstände oder Sensorik)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "as-reversieren",
+     "abschnitt": "Sensorik",
+     "text": "Trifft die Tür beim Schließen auf ein Hindernis, reversiert sie",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "as-sensortest",
+     "abschnitt": "Sensorik",
+     "text": "Selbsttest / Überwachung der Sensoren aktiv (sofern vom Hersteller vorgesehen)",
+     "typ": "status",
+     "pflicht": false,
+     "vorschlag_stufe": 2,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "as-fluchtweg",
+        "ist": "ja"
+       },
+       "pflicht": true,
+       "stufe": 3
+      }
+     ],
+     "hinweis": "Im Flucht- und Rettungsweg vorgeschrieben (Sensorik muss überwacht sein)"
+    },
+    {
+     "id": "as-kraft-statisch",
+     "abschnitt": "Kräfte & Geschwindigkeit",
+     "text": "Statische Schließkraft, Hauptschließkante",
+     "typ": "messwert",
+     "einheit": "N",
+     "soll_min": 0,
+     "soll_max": 150,
+     "pflicht": true,
+     "foto_bei_nok": false,
+     "vorschlag_stufe": 3,
+     "hinweis": "DIN EN 16005 / DGUV 208-022: statisch höchstens 150 N (dynamisch ≤ 400 N für ≤ 0,75 s, Restkraft nach 5 s < 80 N)"
+    },
+    {
+     "id": "as-oeffnungszeit",
+     "abschnitt": "Kräfte & Geschwindigkeit",
+     "text": "Eingestellte Offenhaltezeit (angemessen)",
+     "typ": "messwert",
+     "einheit": "s",
+     "pflicht": false,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "as-lauf",
+     "abschnitt": "Kräfte & Geschwindigkeit",
+     "text": "Flügellauf ruhig, kein Ruckeln, keine Schleifgeräusche",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "as-breakout",
+     "abschnitt": "Fluchtweg & Notfunktionen",
+     "text": "Fluchtwegfunktion: Bei Störung / Stromausfall öffnet die Tür selbsttätig oder die Break-out-Funktion greift",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Über redundanten Antrieb, Notakku oder Break-out-Funktion.",
+     "nur_wenn": {
+      "punkt": "as-fluchtweg",
+      "ist": "ja"
+     }
+    },
+    {
+     "id": "as-akku",
+     "abschnitt": "Fluchtweg & Notfunktionen",
+     "text": "Notakku / Notstromversorgung geprüft (Tür öffnet bei getrenntem Netz)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "as-fluchtweg",
+      "ist": "ja"
+     }
+    },
+    {
+     "id": "as-bma",
+     "abschnitt": "Fluchtweg & Notfunktionen",
+     "text": "Ansteuerung über Brandmeldeanlage / Rauchmelder (sofern vorhanden) arbeitet einwandfrei",
+     "typ": "status",
+     "pflicht": false,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "as-notaus",
+     "abschnitt": "Fluchtweg & Notfunktionen",
+     "text": "Not-Halt / Not-Auf (sofern vorhanden) arbeitet einwandfrei",
+     "typ": "status",
+     "pflicht": false,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "as-programmschalter",
+     "abschnitt": "Fluchtweg & Notfunktionen",
+     "text": "Programmschalter: sämtliche Betriebsarten arbeiten einwandfrei, Schalter vor Unbefugten geschützt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "as-fluchtweg",
+        "ist": "ja"
+       },
+       "stufe": 3
+      }
+     ]
+    },
+    {
+     "id": "as-verriegelung",
+     "abschnitt": "Fluchtweg & Notfunktionen",
+     "text": "In Nachtstellung verriegelt die Tür, Fluchtwegfunktion bleibt bestehen (sofern gefordert)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "as-fluchtweg",
+      "ist": "ja"
+     }
+    },
+    {
+     "id": "as-fuehrungen",
+     "abschnitt": "Mechanik & Zustand",
+     "text": "Laufwagen, Laufschiene, Bodenführung einwandfrei und nicht verschlissen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "as-riemen",
+     "abschnitt": "Mechanik & Zustand",
+     "text": "Zahnriemen / Antriebselemente gespannt, keine Schäden",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "as-befestigung",
+     "abschnitt": "Mechanik & Zustand",
+     "text": "Antrieb, Abdeckung und Flügel sicher befestigt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "as-glas",
+     "abschnitt": "Mechanik & Zustand",
+     "text": "Verglasung ohne Schäden (keine Sprünge oder Kantenausbrüche)",
+     "typ": "status",
+     "pflicht": true,
+     "foto_bei_nok": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "as-elektrik",
+     "abschnitt": "Mechanik & Zustand",
+     "text": "Keine sichtbaren Schäden an elektrischen Anschlüssen und Leitungen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "as-sofort",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber unverzüglich unterrichtet, Tür bis zur Instandsetzung stillgelegt bzw. gesichert",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Wird nur bei einem Mangel an einem sicherheitsrelevanten Punkt angezeigt. In den Bemerkungen eintragen, wer wann informiert wurde.",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "as-anwesenheit",
+        "mangel": true
+       },
+       {
+        "punkt": "as-nebenschliesskante",
+        "mangel": true
+       },
+       {
+        "punkt": "as-reversieren",
+        "mangel": true
+       },
+       {
+        "punkt": "as-kraft-statisch",
+        "mangel": true
+       },
+       {
+        "punkt": "as-breakout",
+        "mangel": true
+       },
+       {
+        "punkt": "as-akku",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "as-foto",
+     "abschnitt": "Abschluss",
+     "text": "Übersichtsaufnahme der Tür",
+     "typ": "foto",
+     "pflicht": false
+    },
+    {
+     "id": "as-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "as-sofort",
+        "ist": "ja"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-auto-dreh",
+   "name": "Automatische Drehflügeltür",
+   "beschreibung": "Prüfung kraftbetätigter Drehflügeltüren durch Sachkundige nach ASR A1.7, DIN 18650 / EN 16005.",
+   "punkte": [
+    {
+     "id": "ad-betriebsart",
+     "abschnitt": "Allgemein",
+     "text": "Betriebsart Antrieb",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "Vollautomatik"
+      },
+      {
+       "wert": "Low-Energy"
+      },
+      {
+       "wert": "Servo / Kraftunterstützung"
+      }
+     ]
+    },
+    {
+     "id": "ad-fluchtweg",
+     "abschnitt": "Allgemein",
+     "text": "Tür liegt im Flucht- und Rettungsweg",
+     "typ": "ja_nein",
+     "pflicht": true
+    },
+    {
+     "id": "ad-rauchschutztuer",
+     "abschnitt": "Allgemein",
+     "text": "Tür ist als Feuer- bzw. Rauchschutztür ausgeführt",
+     "typ": "ja_nein",
+     "pflicht": true
+    },
+    {
+     "id": "ad-unterlagen",
+     "abschnitt": "Allgemein",
+     "text": "Betriebsanleitung / Prüfbuch liegt beim Betreiber vor",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": false,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "ad-kennzeichnung",
+     "abschnitt": "Kennzeichnung & Umfeld",
+     "text": "Hinweisschilder angebracht, Schwenkbereich bei Bedarf am Boden gekennzeichnet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "ad-umfeld",
+     "abschnitt": "Kennzeichnung & Umfeld",
+     "text": "Schwenkbereich ohne Hindernisse",
+     "typ": "status",
+     "pflicht": true,
+     "foto_bei_nok": true,
+     "vorschlag_stufe": 2,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "ad-fluchtweg",
+        "ist": "ja"
+       },
+       "stufe": 3
+      }
+     ]
+    },
+    {
+     "id": "ad-impuls",
+     "abschnitt": "Sensorik",
+     "text": "Impulsgeber (Taster, Radar, Funk) sprechen zuverlässig an",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "ad-sensor-oeffnen",
+     "abschnitt": "Sensorik",
+     "text": "Sicherheitssensor der Öffnungsseite (Flügelsensor) hält bei Hindernis an bzw. bremst ab",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "ad-sensor-schliessen",
+     "abschnitt": "Sensorik",
+     "text": "Sicherheitssensor der Schließseite lässt die Tür bei Hindernis reversieren",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "ad-nebenschliesskante",
+     "abschnitt": "Sensorik",
+     "text": "Nebenschließkante auf der Bandseite abgesichert (Fingerklemmschutz)",
+     "typ": "status",
+     "pflicht": true,
+     "foto_bei_nok": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "ad-kraft",
+     "abschnitt": "Kräfte & Geschwindigkeit",
+     "text": "Statische Kraft an der Hauptschließkante",
+     "typ": "messwert",
+     "einheit": "N",
+     "soll_min": 0,
+     "soll_max": 150,
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "ad-betriebsart",
+      "ist_nicht": "Low-Energy"
+     },
+     "hinweis": "DIN EN 16005 / DGUV 208-022: statisch max. 150 N"
+    },
+    {
+     "id": "ad-kraft-le",
+     "abschnitt": "Kräfte & Geschwindigkeit",
+     "text": "Kraft zum Anhalten des Flügels (Low-Energy)",
+     "typ": "messwert",
+     "einheit": "N",
+     "soll_min": 0,
+     "soll_max": 67,
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "ad-betriebsart",
+      "ist": "Low-Energy"
+     },
+     "hinweis": "DIN EN 16005 (Low-Energy): max. 67 N an der Hauptschließkante, kinetische Energie max. 1,69 J"
+    },
+    {
+     "id": "ad-oeffnungszeit",
+     "abschnitt": "Kräfte & Geschwindigkeit",
+     "text": "Öffnungszeit bis zur Öffnungsdämpfung bzw. bis 80° (Low-Energy)",
+     "typ": "messwert",
+     "einheit": "s",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "soll_min": 3,
+     "nur_wenn": {
+      "punkt": "ad-betriebsart",
+      "ist": "Low-Energy"
+     },
+     "hinweis": "DIN EN 16005 (Low-Energy): mindestens 3 s, abhängig vom Flügelgewicht länger (Tabelle F.1)"
+    },
+    {
+     "id": "ad-endlagen",
+     "abschnitt": "Kräfte & Geschwindigkeit",
+     "text": "Endlagen auf/zu richtig eingestellt, Tür schließt ganz",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "ad-rauchschutztuer",
+        "ist": "ja"
+       },
+       "stufe": 3
+      }
+     ],
+     "hinweis": "Schließt eine Feuer-/Rauchschutztür nicht vollständig, ist das ein gefährlicher Mangel"
+    },
+    {
+     "id": "ad-manuell",
+     "abschnitt": "Fluchtweg & Notfunktionen",
+     "text": "Bei Stromausfall von Hand in Fluchtrichtung zu öffnen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "ad-fluchtweg",
+      "ist": "ja"
+     }
+    },
+    {
+     "id": "ad-fluchtverschluss",
+     "abschnitt": "Fluchtweg & Notfunktionen",
+     "text": "Fluchttürverschluss / E-Öffner (sofern vorhanden) gibt die Tür im Notfall frei",
+     "typ": "status",
+     "pflicht": false,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "ad-fluchtweg",
+      "ist": "ja"
+     }
+    },
+    {
+     "id": "ad-rauchschutz",
+     "abschnitt": "Fluchtweg & Notfunktionen",
+     "text": "Bei Brandalarm schließt die Tür selbsttätig",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "ad-rauchschutztuer",
+      "ist": "ja"
+     }
+    },
+    {
+     "id": "ad-programmschalter",
+     "abschnitt": "Fluchtweg & Notfunktionen",
+     "text": "Programmschalter: Betriebsarten arbeiten einwandfrei, vor Unbefugten geschützt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "ad-fluchtweg",
+        "ist": "ja"
+       },
+       "stufe": 3
+      }
+     ]
+    },
+    {
+     "id": "ad-gestaenge",
+     "abschnitt": "Mechanik & Zustand",
+     "text": "Gestänge / Gleitschiene sitzt fest, keine Schäden",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "ad-baender",
+     "abschnitt": "Mechanik & Zustand",
+     "text": "Bänder sitzen fest, Flügel hängt nicht durch",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "ad-befestigung",
+     "abschnitt": "Mechanik & Zustand",
+     "text": "Antrieb und Abdeckung sicher befestigt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "ad-elektrik",
+     "abschnitt": "Mechanik & Zustand",
+     "text": "Keine sichtbaren Schäden an elektrischen Anschlüssen und Leitungen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "ad-sofort",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber unverzüglich unterrichtet, Tür bis zur Instandsetzung stillgelegt bzw. gesichert",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Wird nur bei einem Mangel an einem sicherheitsrelevanten Punkt angezeigt. In den Bemerkungen eintragen, wer wann informiert wurde.",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "ad-sensor-oeffnen",
+        "mangel": true
+       },
+       {
+        "punkt": "ad-sensor-schliessen",
+        "mangel": true
+       },
+       {
+        "punkt": "ad-kraft",
+        "mangel": true
+       },
+       {
+        "punkt": "ad-kraft-le",
+        "mangel": true
+       },
+       {
+        "punkt": "ad-manuell",
+        "mangel": true
+       },
+       {
+        "punkt": "ad-rauchschutz",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "ad-foto",
+     "abschnitt": "Abschluss",
+     "text": "Übersichtsaufnahme der Tür",
+     "typ": "foto",
+     "pflicht": false
+    },
+    {
+     "id": "ad-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "ad-sofort",
+        "ist": "ja"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-feststell",
+   "name": "Feststellanlage an Feuer-/Rauchschutztür",
+   "beschreibung": "Jährliche Prüfung und Wartung von Feststellanlagen nach DIN 14677. Hinweis: Die monatliche Kontrolle durch den Betreiber bleibt davon unberührt.",
+   "punkte": [
+    {
+     "id": "fs-zulassung",
+     "abschnitt": "Allgemein",
+     "text": "Schild zu Zulassung/Abnahme an Tür bzw. Zarge angebracht",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "fs-abnahme",
+     "abschnitt": "Allgemein",
+     "text": "Abnahmeprotokoll liegt beim Betreiber vor",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": false,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "fs-fluegel",
+     "abschnitt": "Allgemein",
+     "text": "Anzahl Türflügel",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "einflügelig"
+      },
+      {
+       "wert": "zweiflügelig"
+      }
+     ]
+    },
+    {
+     "id": "fs-melder-anzahl",
+     "abschnitt": "Melder",
+     "text": "Anzahl der Rauchmelder (Sturz / Decke)",
+     "typ": "messwert",
+     "einheit": "Stk",
+     "pflicht": true,
+     "soll_min": 1,
+     "vorschlag_stufe": 3,
+     "hinweis": "Laut DIBt-Richtlinie Feststellanlagen ist mindestens ein Rauchmelder (Sturzmelder) vorgeschrieben"
+    },
+    {
+     "id": "fs-melder-ausloesung",
+     "abschnitt": "Melder",
+     "text": "Jeder Melder mit Prüfgas ausgelöst → Tür schließt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "fs-melder-alter",
+     "abschnitt": "Melder",
+     "text": "Vom Hersteller vorgegebene Austauschfrist der Melder nicht überschritten",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "fs-melder-verschmutzung",
+     "abschnitt": "Melder",
+     "text": "Melder sauber, weder abgedeckt noch überstrichen",
+     "typ": "status",
+     "pflicht": true,
+     "foto_bei_nok": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "fs-handausloesung",
+     "abschnitt": "Funktion",
+     "text": "Handauslösetaster hebt die Feststellung auf, Tür schließt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "fs-stromausfall",
+     "abschnitt": "Funktion",
+     "text": "Fällt die Spannung aus, wird die Feststellung aufgehoben",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "fs-schliessen",
+     "abschnitt": "Funktion",
+     "text": "Tür schließt nach dem Auslösen von selbst ganz, Schloss rastet ein",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "fs-schliessfolge",
+     "abschnitt": "Funktion",
+     "text": "Zweiflügelige Türen: Schließfolgeregelung arbeitet einwandfrei",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "fs-fluegel",
+      "ist": "zweiflügelig"
+     }
+    },
+    {
+     "id": "fs-schliessbereich",
+     "abschnitt": "Funktion",
+     "text": "Schließbereich frei von Keilen und Gegenständen",
+     "typ": "status",
+     "pflicht": true,
+     "foto_bei_nok": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "fs-montage",
+     "abschnitt": "Zustand",
+     "text": "Komponenten sitzen fest, Leitungen ohne Schäden, keine unzulässigen Veränderungen",
+     "typ": "status",
+     "pflicht": true,
+     "foto_bei_nok": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "fs-sofort",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber unverzüglich unterrichtet, Feststellanlage bis zur Instandsetzung außer Betrieb (Tür bleibt geschlossen)",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Wird nur bei einem Mangel an einem sicherheitsrelevanten Punkt angezeigt. In den Bemerkungen eintragen, wer wann informiert wurde.",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "fs-melder-anzahl",
+        "mangel": true
+       },
+       {
+        "punkt": "fs-melder-ausloesung",
+        "mangel": true
+       },
+       {
+        "punkt": "fs-melder-verschmutzung",
+        "mangel": true
+       },
+       {
+        "punkt": "fs-handausloesung",
+        "mangel": true
+       },
+       {
+        "punkt": "fs-stromausfall",
+        "mangel": true
+       },
+       {
+        "punkt": "fs-schliessen",
+        "mangel": true
+       },
+       {
+        "punkt": "fs-schliessfolge",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "fs-foto",
+     "abschnitt": "Abschluss",
+     "text": "Übersichtsfoto",
+     "typ": "foto",
+     "pflicht": false
+    },
+    {
+     "id": "fs-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "fs-sofort",
+        "ist": "ja"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-sibe-funktion",
+   "name": "Sicherheitsbeleuchtung – Funktionsprüfung",
+   "beschreibung": "Regelmäßige Funktionsprüfung (etwa monatlich) von Zentral-, Gruppen- und Einzelbatteriesystemen. Vorschlag auf Grundlage von DIN VDE V 0108-100-1 / DIN EN 50172 – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "sf-anzeigen",
+     "abschnitt": "Anlage",
+     "text": "Zentrale bzw. Ladekontrollen der Leuchten melden Betriebsbereitschaft",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "sf-stoerungen",
+     "abschnitt": "Anlage",
+     "text": "Keine anstehenden Störmeldungen (Anzeige, Speicher der Prüfeinrichtung)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Mit automatischer Prüfeinrichtung: Prüfprotokoll seit der vorigen Prüfung kontrollieren."
+    },
+    {
+     "id": "sf-umschaltung",
+     "abschnitt": "Funktionstest",
+     "text": "Bei nachgestelltem Netzausfall wird auf Batteriebetrieb umgeschaltet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "sf-sicherheitsleuchten",
+     "abschnitt": "Funktionstest",
+     "text": "Sämtliche Sicherheitsleuchten sind im Batteriebetrieb eingeschaltet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "sf-rettungszeichen",
+     "abschnitt": "Funktionstest",
+     "text": "Rettungszeichenleuchten in Betrieb und deutlich zu erkennen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "sf-ausfaelle",
+     "abschnitt": "Funktionstest",
+     "text": "Zahl der ausgefallenen Leuchten",
+     "typ": "messwert",
+     "einheit": "Stück",
+     "pflicht": true,
+     "soll_min": 0,
+     "soll_max": 0,
+     "vorschlag_stufe": 2,
+     "hinweis": "Bei vollständig funktionierenden Leuchten 0 eintragen"
+    },
+    {
+     "id": "sf-ausfaelle-massnahme",
+     "abschnitt": "Funktionstest",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "text": "Ausgefallene Leuchten repariert oder Reparatur beim Betreiber in Auftrag gegeben",
+     "hinweis": "Betroffene Leuchten in den Bemerkungen aufführen",
+     "nur_wenn": {
+      "punkt": "sf-ausfaelle",
+      "ueber": 0
+     }
+    },
+    {
+     "id": "sf-rueckschaltung",
+     "abschnitt": "Funktionstest",
+     "text": "Nach dem Test zurück im Netzbetrieb, Batterie wird geladen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "sf-pruefbuch",
+     "abschnitt": "Abschluss",
+     "text": "Prüfergebnis im Prüfbuch dokumentiert",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "sf-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "sf-ausfaelle",
+        "ueber": 0
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-sibe-zb-jahr",
+   "name": "Sicherheitsbeleuchtung – Jährliche Prüfung (Zentral-/Gruppenbatterie)",
+   "beschreibung": "Prüfung einmal jährlich mit Betriebsdauertest für Zentral- und Gruppenbatterieanlagen (CPS/LPS). Vorschlag auf Grundlage von DIN VDE V 0108-100-1 / DIN EN 50172 – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "sz-pruefbuch",
+     "abschnitt": "Unterlagen",
+     "text": "Prüfbuch liegt vor und wird lückenlos geführt",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "sz-doku",
+     "abschnitt": "Unterlagen",
+     "text": "Anlagendokumentation einschließlich Liste der Stromkreise und Leuchten liegt vor",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "sz-raum",
+     "abschnitt": "Zentrale / Stromversorgung",
+     "text": "Aufstellraum erreichbar, trocken, gelüftet und ohne Brandlasten",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "sz-batterie",
+     "abschnitt": "Zentrale / Stromversorgung",
+     "text": "Batterie ohne erkennbare Schäden, ohne Korrosion und ohne Elektrolytaustritt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "sz-batteriealter",
+     "abschnitt": "Zentrale / Stromversorgung",
+     "text": "Gebrauchsdauer der Batterie laut Hersteller nicht überschritten",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Das Einbaudatum ist in den Anlagendaten hinterlegt."
+    },
+    {
+     "id": "sz-laden",
+     "abschnitt": "Zentrale / Stromversorgung",
+     "text": "Ladeeinrichtung und Anzeigen störungsfrei",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "sz-spannung",
+     "abschnitt": "Zentrale / Stromversorgung",
+     "text": "Batteriespannung bei Netzbetrieb (Erhaltungsladung)",
+     "typ": "messwert",
+     "einheit": "V",
+     "pflicht": false,
+     "hinweis": "Sollwert nach Angabe des Batterieherstellers."
+    },
+    {
+     "id": "sz-beschriftung",
+     "abschnitt": "Zentrale / Stromversorgung",
+     "text": "Stromkreise und Sicherungen klar und eindeutig gekennzeichnet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "sz-nenndauer",
+     "abschnitt": "Betriebsdauertest",
+     "text": "Nennbetriebsdauer gemäß Anlagendokumentation",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "1 h"
+      },
+      {
+       "wert": "3 h"
+      },
+      {
+       "wert": "8 h"
+      },
+      {
+       "wert": "andere"
+      }
+     ],
+     "hinweis": "Legt den Grenzwert für die erreichte Betriebsdauer fest; bei „andere“ gilt kein Grenzwert"
+    },
+    {
+     "id": "sz-dauertest",
+     "abschnitt": "Betriebsdauertest",
+     "text": "Betriebsdauertest für die gesamte Nennbetriebsdauer ausgeführt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "sz-dauer",
+     "abschnitt": "Betriebsdauertest",
+     "text": "Erreichte Betriebsdauer",
+     "typ": "messwert",
+     "einheit": "min",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Mindestwert ist die Nennbetriebsdauer (1 h = 60, 3 h = 180, 8 h = 480 min)",
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "sz-nenndauer",
+        "ist": "1 h"
+       },
+       "soll_min": 60
+      },
+      {
+       "wenn": {
+        "punkt": "sz-nenndauer",
+        "ist": "3 h"
+       },
+       "soll_min": 180
+      },
+      {
+       "wenn": {
+        "punkt": "sz-nenndauer",
+        "ist": "8 h"
+       },
+       "soll_min": 480
+      }
+     ]
+    },
+    {
+     "id": "sz-ende",
+     "abschnitt": "Betriebsdauertest",
+     "text": "Bei Ablauf der Betriebsdauer sind alle Leuchten noch eingeschaltet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "sz-wiederaufladung",
+     "abschnitt": "Betriebsdauertest",
+     "text": "Zurück im Netzbetrieb, Wiederaufladung hat begonnen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "sz-leuchten",
+     "abschnitt": "Leuchten",
+     "text": "Alle Leuchten vorhanden, ohne Beschädigung und sicher befestigt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "sz-zeichen",
+     "abschnitt": "Leuchten",
+     "text": "Rettungszeichen richtig, Pfeilrichtung passt zum Verlauf des Fluchtwegs",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "sz-lux",
+     "abschnitt": "Leuchten",
+     "text": "Beleuchtungsstärke am Rettungsweg (Stichprobe auf der Mittellinie)",
+     "typ": "messwert",
+     "einheit": "lx",
+     "pflicht": false,
+     "hinweis": "DIN EN 1838: bei Rettungswegen bis 2 m Breite mind. 1 lx auf der Mittellinie",
+     "soll_min": 1,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "sz-sofort",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber umgehend darüber unterrichtet, dass die Sicherheitsbeleuchtung nicht für die volle Betriebsdauer gesichert ist (Ersatzmaßnahmen erforderlich)",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Wird nur bei einem Mangel an einem sicherheitsrelevanten Prüfpunkt angezeigt. Informierte Person und Zeitpunkt in den Bemerkungen notieren.",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "sz-batterie",
+        "mangel": true
+       },
+       {
+        "punkt": "sz-dauer",
+        "mangel": true
+       },
+       {
+        "punkt": "sz-ende",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "sz-eintrag",
+     "abschnitt": "Abschluss",
+     "text": "Prüfergebnis im Prüfbuch dokumentiert",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "sz-foto",
+     "abschnitt": "Abschluss",
+     "text": "Gesamtansicht der Zentrale (Foto)",
+     "typ": "foto",
+     "pflicht": false
+    },
+    {
+     "id": "sz-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "sz-sofort",
+        "ist": "ja"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-sibe-eb-jahr",
+   "name": "Sicherheitsbeleuchtung – Jährliche Prüfung (Einzelbatterieleuchten)",
+   "beschreibung": "Prüfung einmal jährlich mit Betriebsdauertest für Einzelbatterieleuchten. Vorschlag auf Grundlage von DIN VDE V 0108-100-1 / DIN EN 50172 – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "se-pruefbuch",
+     "abschnitt": "Unterlagen",
+     "text": "Prüfbuch liegt vor und wird lückenlos geführt",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "se-liste",
+     "abschnitt": "Unterlagen",
+     "text": "Leuchtenliste mit Angabe der Standorte liegt vor",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "se-ladeanzeige",
+     "abschnitt": "Leuchten",
+     "text": "Ladekontrollanzeige leuchtet an jeder Leuchte",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "se-akkualter",
+     "abschnitt": "Leuchten",
+     "text": "Gebrauchsdauer der Akkus laut Hersteller nicht überschritten",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Das Einbaudatum ist auf dem Akku oder in der Leuchtenliste vermerkt."
+    },
+    {
+     "id": "se-leuchten",
+     "abschnitt": "Leuchten",
+     "text": "Alle Leuchten vorhanden, ohne Beschädigung und sicher befestigt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "se-zeichen",
+     "abschnitt": "Leuchten",
+     "text": "Rettungszeichen richtig, Pfeilrichtung passt zum Verlauf des Fluchtwegs",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "se-nenndauer",
+     "abschnitt": "Betriebsdauertest",
+     "text": "Nennbetriebsdauer gemäß Anlagendokumentation",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "1 h"
+      },
+      {
+       "wert": "3 h"
+      },
+      {
+       "wert": "8 h"
+      },
+      {
+       "wert": "andere"
+      }
+     ],
+     "hinweis": "Legt den Grenzwert für die erreichte Betriebsdauer fest; bei „andere“ gilt kein Grenzwert"
+    },
+    {
+     "id": "se-dauertest",
+     "abschnitt": "Betriebsdauertest",
+     "text": "Betriebsdauertest für die gesamte Nennbetriebsdauer ausgeführt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "se-dauer",
+     "abschnitt": "Betriebsdauertest",
+     "text": "Erreichte Betriebsdauer (Leuchte mit der kürzesten Dauer)",
+     "typ": "messwert",
+     "einheit": "min",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Mindestwert ist die Nennbetriebsdauer (1 h = 60, 3 h = 180, 8 h = 480 min)",
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "se-nenndauer",
+        "ist": "1 h"
+       },
+       "soll_min": 60
+      },
+      {
+       "wenn": {
+        "punkt": "se-nenndauer",
+        "ist": "3 h"
+       },
+       "soll_min": 180
+      },
+      {
+       "wenn": {
+        "punkt": "se-nenndauer",
+        "ist": "8 h"
+       },
+       "soll_min": 480
+      }
+     ]
+    },
+    {
+     "id": "se-ausfaelle",
+     "abschnitt": "Betriebsdauertest",
+     "text": "Zahl der Leuchten, die vor Ablauf der Betriebsdauer erloschen sind",
+     "typ": "messwert",
+     "einheit": "Stück",
+     "pflicht": true,
+     "soll_min": 0,
+     "soll_max": 0,
+     "vorschlag_stufe": 3,
+     "hinweis": "0 eintragen, wenn jede Leuchte die Betriebsdauer schafft"
+    },
+    {
+     "id": "se-ausfaelle-massnahme",
+     "abschnitt": "Betriebsdauertest",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "text": "Ausgefallene Leuchten bzw. Akkus ersetzt oder Ersatz beim Betreiber in Auftrag gegeben",
+     "hinweis": "Betroffene Leuchten in den Bemerkungen aufführen",
+     "nur_wenn": {
+      "punkt": "se-ausfaelle",
+      "ueber": 0
+     }
+    },
+    {
+     "id": "se-eintrag",
+     "abschnitt": "Abschluss",
+     "text": "Prüfergebnis im Prüfbuch dokumentiert",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "se-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "se-ausfaelle",
+        "ueber": 0
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-bma-inspektion",
+   "name": "Brandmeldeanlage – Inspektion",
+   "beschreibung": "Regelmäßige Inspektion (etwa vierteljährlich) mit Funktionsprüfung eines Teils der Melder. Vorschlag auf Grundlage von DIN 14675 / DIN VDE 0833-1 und -2 – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "bi-zentrale",
+     "abschnitt": "Zentrale",
+     "text": "Betriebsanzeige störungsfrei, keine Abschaltungen ohne Grund",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "bi-speicher",
+     "abschnitt": "Zentrale",
+     "text": "Ereignisspeicher seit der vorigen Inspektion ausgelesen, Ursachen von Alarmen und Störungen ermittelt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "bi-energie",
+     "abschnitt": "Zentrale",
+     "text": "Energieversorgung: Netz und Batterie störungsfrei, Batterie ohne erkennbare Schäden",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "bi-ue",
+     "abschnitt": "Feuerwehr",
+     "text": "Anlage über eine Übertragungseinrichtung mit der Feuerwehr verbunden",
+     "typ": "ja_nein",
+     "pflicht": true
+    },
+    {
+     "id": "bi-probealarm",
+     "abschnitt": "Feuerwehr",
+     "text": "Probealarm an die Leitstelle nach vorheriger Anmeldung erfolgreich übertragen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "bi-ue",
+      "ist": "ja"
+     }
+    },
+    {
+     "id": "bi-fsd",
+     "abschnitt": "Feuerwehr",
+     "text": "Feuerwehr-Schlüsseldepot, Bedienfeld und Anzeigetableau einsatzbereit",
+     "typ": "status",
+     "pflicht": false,
+     "vorschlag_stufe": 2,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "bi-ue",
+        "ist": "ja"
+       },
+       "pflicht": true
+      }
+     ],
+     "hinweis": "Vorgeschrieben, wenn die Anlage auf die Feuerwehr aufgeschaltet ist"
+    },
+    {
+     "id": "bi-laufkarten",
+     "abschnitt": "Feuerwehr",
+     "text": "Feuerwehr-Laufkarten komplett und auf aktuellem Stand",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "bi-ue",
+        "ist": "ja"
+       },
+       "stufe": 3
+      }
+     ]
+    },
+    {
+     "id": "bi-frei",
+     "abschnitt": "Melder",
+     "text": "Melder weder abgedeckt noch verstellt oder beschädigt, frei zugänglich (Begehung)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "bi-nutzung",
+     "abschnitt": "Melder",
+     "text": "Keine geänderte Nutzung, die andere oder zusätzliche Melder notwendig macht",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "bi-rueckstellung",
+     "abschnitt": "Abschluss",
+     "text": "Abschaltungen nach der Prüfung aufgehoben, Anlage im Normalbetrieb",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "bi-sofort",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber umgehend darüber unterrichtet, dass die Brandmeldung nur eingeschränkt funktioniert (Ersatzmaßnahmen wie Brandwache veranlassen)",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Wird nur bei einem Mangel an einem sicherheitsrelevanten Prüfpunkt angezeigt. Informierte Person und Zeitpunkt in den Bemerkungen notieren.",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "bi-energie",
+        "mangel": true
+       },
+       {
+        "punkt": "bi-probealarm",
+        "mangel": true
+       },
+       {
+        "punkt": "bi-rueckstellung",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "bi-betriebsbuch",
+     "abschnitt": "Abschluss",
+     "text": "Inspektion im Betriebsbuch dokumentiert",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "bi-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "bi-sofort",
+        "ist": "ja"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-bma-wartung",
+   "name": "Brandmeldeanlage – Wartung",
+   "beschreibung": "Wartung einmal jährlich für Zentrale, Energieversorgung, Alarmierung und Brandfallsteuerungen. Vorschlag auf Grundlage von DIN 14675 / DIN VDE 0833-1 und -2 – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "bw-zentrale",
+     "abschnitt": "Zentrale und Energieversorgung",
+     "text": "Zentrale gesäubert, Anzeigen und Bedienelemente einsatzbereit",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "bw-batterie",
+     "abschnitt": "Zentrale und Energieversorgung",
+     "text": "Gebrauchsdauer der Batterie nicht überschritten, Kapazitätstest bestanden",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "bw-spannung",
+     "abschnitt": "Zentrale und Energieversorgung",
+     "text": "Batteriespannung bei Netzbetrieb",
+     "typ": "messwert",
+     "einheit": "V",
+     "pflicht": false,
+     "hinweis": "Pflichtangabe, wenn die Batterie den Kapazitätstest nicht besteht",
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "bw-batterie",
+        "mangel": true
+       },
+       "pflicht": true
+      }
+     ]
+    },
+    {
+     "id": "bw-netzausfall",
+     "abschnitt": "Zentrale und Energieversorgung",
+     "text": "Bei Netzausfall wird auf Batteriebetrieb umgeschaltet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "bw-signalgeber",
+     "abschnitt": "Alarmierung",
+     "text": "Signalgeber in sämtlichen Bereichen klar zu hören bzw. zu sehen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "bw-steuerungen",
+     "abschnitt": "Brandfallsteuerungen",
+     "text": "Brandfallsteuerungen (z. B. Aufzug, Lüftung, Feststellanlagen, Türen) angesteuert und kontrolliert",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "bw-ue",
+     "abschnitt": "Brandfallsteuerungen",
+     "text": "Übertragungseinrichtung und Feuerwehr-Peripherie kontrolliert",
+     "typ": "status",
+     "pflicht": false,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "bw-doku",
+     "abschnitt": "Dokumentation",
+     "text": "Anlagendokumentation und Laufkarten aktuell",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "bw-sofort",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber umgehend darüber unterrichtet, dass Brandmeldung oder Alarmierung nur eingeschränkt funktioniert (Ersatzmaßnahmen veranlassen)",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Wird nur bei einem Mangel an einem sicherheitsrelevanten Prüfpunkt angezeigt. Informierte Person und Zeitpunkt in den Bemerkungen notieren.",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "bw-batterie",
+        "mangel": true
+       },
+       {
+        "punkt": "bw-netzausfall",
+        "mangel": true
+       },
+       {
+        "punkt": "bw-signalgeber",
+        "mangel": true
+       },
+       {
+        "punkt": "bw-steuerungen",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "bw-betriebsbuch",
+     "abschnitt": "Abschluss",
+     "text": "Wartung im Betriebsbuch dokumentiert",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "bw-foto",
+     "abschnitt": "Abschluss",
+     "text": "Gesamtansicht der Zentrale (Foto)",
+     "typ": "foto",
+     "pflicht": false
+    },
+    {
+     "id": "bw-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "bw-sofort",
+        "ist": "ja"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-ema-jahr",
+   "name": "Alarmanlage – Inspektion und Wartung",
+   "beschreibung": "Inspektion und Wartung einmal jährlich für eine Einbruchmeldeanlage, dabei werden alle Melder geprüft. Vorschlag auf Grundlage von DIN VDE 0833-1 und -3 bzw. VdS 2311 – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "ea-zentrale",
+     "abschnitt": "Zentrale",
+     "text": "Anzeigen störungsfrei, Ereignisspeicher ausgelesen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "ea-energie",
+     "abschnitt": "Zentrale",
+     "text": "Energieversorgung: Netz und Batterie störungsfrei, Gebrauchsdauer der Batterie nicht überschritten",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "ea-sabotage",
+     "abschnitt": "Zentrale",
+     "text": "Sabotageüberwachung der Zentrale und der Gehäuse greift",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "ea-scharf",
+     "abschnitt": "Bedienung",
+     "text": "Scharf- und Unscharfschaltung arbeitet, Zwangsläufigkeit ist gewährleistet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "ea-nsl",
+     "abschnitt": "Alarmierung",
+     "text": "Anlage mit einer Notruf- und Serviceleitstelle verbunden",
+     "typ": "ja_nein",
+     "pflicht": true
+    },
+    {
+     "id": "ea-probealarm",
+     "abschnitt": "Alarmierung",
+     "text": "Probealarm an die Leitstelle nach vorheriger Anmeldung erfolgreich übertragen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "ea-nsl",
+      "ist": "ja"
+     }
+    },
+    {
+     "id": "ea-signalgeber",
+     "abschnitt": "Alarmierung",
+     "text": "Innen- und Außensignalgeber einsatzbereit",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "ea-nsl",
+        "ist": "nein"
+       },
+       "stufe": 3
+      }
+     ],
+     "hinweis": "Ist keine Leitstelle aufgeschaltet, alarmieren allein die Signalgeber"
+    },
+    {
+     "id": "ea-veraenderung",
+     "abschnitt": "Objekt",
+     "text": "Keine Umbauten oder geänderte Nutzung, durch die die Überwachung beeinträchtigt wird",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "ea-betriebsbuch",
+     "abschnitt": "Abschluss",
+     "text": "Prüfung im Betriebsbuch dokumentiert",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "ea-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false
+    }
+   ]
+  },
+  {
+   "id": "cl-rwa-wartung",
+   "name": "Natürliche RWA (NRA) – Wartung und Funktionsprüfung",
+   "beschreibung": "Wartung und Funktionsprüfung einmal jährlich, dabei werden alle Rauchabschnitte ausgelöst und alle Komponenten geprüft. Vorschlag auf Grundlage von DIN 18232-2, DIN EN 12101-2 und Herstellerangaben – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "rw-doku",
+     "abschnitt": "Unterlagen",
+     "text": "Anlagendokumentation einschließlich Rauchabschnittsplan und Komponentenliste liegt vor",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "rw-pruefbuch",
+     "abschnitt": "Unterlagen",
+     "text": "Prüfbuch liegt vor, vorige Wartung ist belegt",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "rw-energie",
+     "abschnitt": "Unterlagen",
+     "text": "Art der Energieversorgung",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "elektrisch (24 V DC)"
+      },
+      {
+       "wert": "pneumatisch (CO₂)"
+      },
+      {
+       "wert": "elektrisch und pneumatisch"
+      }
+     ]
+    },
+    {
+     "id": "rw-zentrale",
+     "abschnitt": "Steuerzentrale",
+     "text": "Steuerzentrale ohne Störungsanzeige, Gehäuse unbeschädigt und verschlossen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "nur_wenn": {
+      "punkt": "rw-energie",
+      "in": [
+       "elektrisch (24 V DC)",
+       "elektrisch und pneumatisch"
+      ]
+     }
+    },
+    {
+     "id": "rw-netzausfall",
+     "abschnitt": "Steuerzentrale",
+     "text": "Bei Netzausfall Wechsel auf Akkubetrieb, Auslösung bleibt möglich",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "rw-energie",
+      "in": [
+       "elektrisch (24 V DC)",
+       "elektrisch und pneumatisch"
+      ]
+     }
+    },
+    {
+     "id": "rw-akku",
+     "abschnitt": "Steuerzentrale",
+     "text": "Gebrauchsdauer der Notstromakkus laut Hersteller nicht überschritten",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "nur_wenn": {
+      "punkt": "rw-energie",
+      "in": [
+       "elektrisch (24 V DC)",
+       "elektrisch und pneumatisch"
+      ]
+     },
+     "hinweis": "Das Einbaudatum ist in den Anlagendaten hinterlegt."
+    },
+    {
+     "id": "rw-akkuspannung",
+     "abschnitt": "Steuerzentrale",
+     "text": "Akkuspannung bei Netzbetrieb (Erhaltungsladung)",
+     "typ": "messwert",
+     "einheit": "V",
+     "pflicht": false,
+     "hinweis": "Pflichtangabe, wenn die Anlage bei Netzausfall nicht mehr ausgelöst werden kann",
+     "nur_wenn": {
+      "punkt": "rw-energie",
+      "in": [
+       "elektrisch (24 V DC)",
+       "elektrisch und pneumatisch"
+      ]
+     },
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "rw-netzausfall",
+        "mangel": true
+       },
+       "pflicht": true
+      }
+     ]
+    },
+    {
+     "id": "rw-leitungen",
+     "abschnitt": "Steuerzentrale",
+     "text": "Leitungen und Verteiler ohne erkennbare Schäden, Funktionserhalt wo vorgeschrieben",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "nur_wenn": {
+      "punkt": "rw-energie",
+      "in": [
+       "elektrisch (24 V DC)",
+       "elektrisch und pneumatisch"
+      ]
+     }
+    },
+    {
+     "id": "rw-co2",
+     "abschnitt": "Pneumatik",
+     "text": "CO₂-Flaschen gewogen, Füllgewicht innerhalb der Herstellerangabe",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "rw-energie",
+      "in": [
+       "pneumatisch (CO₂)",
+       "elektrisch und pneumatisch"
+      ]
+     },
+     "hinweis": "Leer- und Füllgewicht sind auf der Flasche angegeben."
+    },
+    {
+     "id": "rw-druckleitung",
+     "abschnitt": "Pneumatik",
+     "text": "Druckleitungen und Verschraubungen ohne Undichtigkeit und Beschädigung",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "nur_wenn": {
+      "punkt": "rw-energie",
+      "in": [
+       "pneumatisch (CO₂)",
+       "elektrisch und pneumatisch"
+      ]
+     }
+    },
+    {
+     "id": "rw-taster",
+     "abschnitt": "Auslösung",
+     "text": "RWA-Taster erreichbar und beschriftet, Abdeckung bzw. Scheibe vorhanden",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "rw-handausloesung",
+     "abschnitt": "Auslösung",
+     "text": "Bei Betätigung des RWA-Tasters öffnen sämtliche Rauchabzugsgeräte des Abschnitts",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "rw-automatik",
+     "abschnitt": "Auslösung",
+     "text": "Automatische Auslösung durch Rauchmelder bzw. Brandmeldeanlage kontrolliert",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "„entfällt“, wenn die Anlage ausschließlich von Hand ausgelöst wird."
+    },
+    {
+     "id": "rw-oeffnungszeit",
+     "abschnitt": "Auslösung",
+     "text": "Dauer bis zur vollständigen Offenstellung (langsamstes Gerät)",
+     "typ": "messwert",
+     "einheit": "s",
+     "pflicht": false,
+     "soll_max": 60,
+     "vorschlag_stufe": 3,
+     "hinweis": "NRWG nach DIN EN 12101-2 sind innerhalb von 60 s offen; abweichende Angaben des Herstellers berücksichtigen."
+    },
+    {
+     "id": "rw-vorrang",
+     "abschnitt": "Auslösung",
+     "text": "RWA-Auslösung geht der Lüftungs- und Wind-/Regenfunktion vor",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "rw-zu",
+     "abschnitt": "Auslösung",
+     "text": "Schließen über die Bedienstelle bzw. Rückstellen arbeitet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "rw-geraete",
+     "abschnitt": "Rauchabzugsgeräte",
+     "text": "Rauchabzugsgeräte, Antriebe und Beschläge ohne Beschädigung, sicher befestigt und leichtgängig",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "rw-oeffnungsweg",
+     "abschnitt": "Rauchabzugsgeräte",
+     "text": "Öffnungsbereich nicht behindert (keine Gitter, kein Lagergut, keine Beschattung, kein Schnee oder Laub)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "rw-dichtung",
+     "abschnitt": "Rauchabzugsgeräte",
+     "text": "Dichtungen und Verglasung einwandfrei, dicht",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "rw-zuluft",
+     "abschnitt": "Zuluft",
+     "text": "Zuluftöffnungen vorhanden, nicht zugestellt und öffnen bei Auslösung bzw. sofort manuell",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "rw-lueftung",
+     "abschnitt": "Lüftung",
+     "text": "Lüftungstaster und Wind-/Regenautomatik arbeiten",
+     "typ": "status",
+     "pflicht": false,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "rw-veraenderung",
+     "abschnitt": "Objekt",
+     "text": "Keine Umbauten oder geänderte Nutzung, durch die die Rauchableitung beeinträchtigt wird",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "rw-sofort",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber umgehend darüber unterrichtet, dass die Rauchableitung nicht zuverlässig funktioniert (Ersatzmaßnahmen veranlassen)",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Wird nur bei einem Mangel an einem sicherheitsrelevanten Prüfpunkt angezeigt. Informierte Person und Zeitpunkt in den Bemerkungen notieren.",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "rw-netzausfall",
+        "mangel": true
+       },
+       {
+        "punkt": "rw-co2",
+        "mangel": true
+       },
+       {
+        "punkt": "rw-handausloesung",
+        "mangel": true
+       },
+       {
+        "punkt": "rw-automatik",
+        "mangel": true
+       },
+       {
+        "punkt": "rw-oeffnungsweg",
+        "mangel": true
+       },
+       {
+        "punkt": "rw-zuluft",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "rw-normal",
+     "abschnitt": "Abschluss",
+     "text": "Anlage nach der Prüfung im Normalbetrieb: Geräte zu, Störungen und Auslösungen zurückgestellt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "rw-eintrag",
+     "abschnitt": "Abschluss",
+     "text": "Prüfung im Prüfbuch dokumentiert",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "rw-foto",
+     "abschnitt": "Abschluss",
+     "text": "Gesamtansicht der Steuerzentrale (Foto)",
+     "typ": "foto",
+     "pflicht": false
+    },
+    {
+     "id": "rw-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "rw-sofort",
+        "ist": "ja"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-mra-wartung",
+   "name": "Maschinelle RWA (MRA) – Wartung und Funktionsprüfung",
+   "beschreibung": "Wartung und Funktionsprüfung einmal jährlich für eine maschinelle Rauch- und Wärmeabzugsanlage mit Ventilatoren, Entrauchungsklappen, Leitungen und Zuluft. Vorschlag auf Grundlage von DIN 18232-5, DIN EN 12101-3, -7, -8 und -10 sowie Herstellerangaben – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "mr-doku",
+     "abschnitt": "Unterlagen",
+     "text": "Anlagendokumentation einschließlich Entrauchungskonzept, Auslegungsvolumenströmen und Komponentenliste liegt vor",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "mr-pruefbuch",
+     "abschnitt": "Unterlagen",
+     "text": "Prüfbuch liegt vor, vorige Wartung und wiederkehrende Prüfung sind belegt",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "mr-schaltschrank",
+     "abschnitt": "Energieversorgung und Steuerung",
+     "text": "Steuerung bzw. Schaltschrank störungsfrei, Betriebs- und Störmeldungen arbeiten",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "mr-einspeisung",
+     "abschnitt": "Energieversorgung und Steuerung",
+     "text": "Wechsel auf Sicherheitsstromversorgung bzw. zweite Einspeisung bei Netzausfall kontrolliert",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Energieversorgung nach DIN EN 12101-10. „entfällt“, wenn im Konzept keine zweite Einspeisung gefordert ist."
+    },
+    {
+     "id": "mr-leitungen",
+     "abschnitt": "Energieversorgung und Steuerung",
+     "text": "Leitungen mit Funktionserhalt (z. B. E30/E90) ohne Beschädigung, Verlegung nicht verändert",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "mr-reparaturschalter",
+     "abschnitt": "Energieversorgung und Steuerung",
+     "text": "Reparaturschalter an den Ventilatoren stehen auf „Ein“ und sind gegen unbefugtes Abschalten gesichert",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "mr-feuerwehr",
+     "abschnitt": "Energieversorgung und Steuerung",
+     "text": "Feuerwehr-Bedienstelle vorhanden und beschriftet, Handschaltung geht der Automatik vor",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "mr-automatik",
+     "abschnitt": "Auslösung",
+     "text": "Automatische Auslösung durch Rauchmelder bzw. Brandmeldeanlage in sämtlichen Rauchabschnitten kontrolliert",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "mr-hand",
+     "abschnitt": "Auslösung",
+     "text": "Handauslösung an den Bedienstellen kontrolliert",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "mr-brandfall",
+     "abschnitt": "Auslösung",
+     "text": "Brandfallsteuerung: Lüftungsanlagen aus, Klappen und Zuluft in Brandfallstellung",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "mr-anlaufzeit",
+     "abschnitt": "Auslösung",
+     "text": "Dauer von der Auslösung bis zum vollen Volumenstrom",
+     "typ": "messwert",
+     "einheit": "s",
+     "pflicht": false,
+     "vorschlag_stufe": 3,
+     "hinweis": "Mit Entrauchungskonzept bzw. Herstellerangabe abgleichen."
+    },
+    {
+     "id": "mr-ventilator",
+     "abschnitt": "Rauchabzugsventilatoren",
+     "text": "Ventilatoren ohne Beschädigung und sicher befestigt, Schwingungsdämpfer und Anschlüsse einwandfrei",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "mr-lauf",
+     "abschnitt": "Rauchabzugsventilatoren",
+     "text": "Drehrichtung stimmt, gleichmäßiger Lauf ohne auffällige Geräusche oder Vibrationen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "mr-antrieb",
+     "abschnitt": "Rauchabzugsventilatoren",
+     "text": "Antrieb (Keilriemen, Kupplung, Lager) gemäß Herstellerangabe gewartet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "mr-klasse",
+     "abschnitt": "Rauchabzugsventilatoren",
+     "text": "Temperaturklasse nach DIN EN 12101-3 (z. B. F400) wie geplant, Typenschild lesbar",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "mr-volumenstrom",
+     "abschnitt": "Rauchabzugsventilatoren",
+     "text": "Gemessener Volumenstrom (Anlage bzw. Rauchabschnitt)",
+     "typ": "messwert",
+     "einheit": "m³/h",
+     "pflicht": false,
+     "vorschlag_stufe": 3,
+     "hinweis": "Pflichtangabe, wenn der Ventilator nicht ruhig bzw. nicht richtig läuft",
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "mr-lauf",
+        "mangel": true
+       },
+       "pflicht": true
+      }
+     ]
+    },
+    {
+     "id": "mr-strom",
+     "abschnitt": "Rauchabzugsventilatoren",
+     "text": "Stromaufnahme der Motoren",
+     "typ": "messwert",
+     "einheit": "A",
+     "pflicht": false,
+     "hinweis": "Pflichtangabe, wenn der Ventilator nicht ruhig bzw. nicht richtig läuft",
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "mr-lauf",
+        "mangel": true
+       },
+       "pflicht": true
+      }
+     ]
+    },
+    {
+     "id": "mr-klappen",
+     "abschnitt": "Entrauchungsklappen und Leitungen",
+     "text": "Entrauchungsklappen gehen bei Auslösung in Brandfallstellung, Stellungsmeldung stimmt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Entrauchungsklappen nach DIN EN 12101-8."
+    },
+    {
+     "id": "mr-kanaele",
+     "abschnitt": "Entrauchungsklappen und Leitungen",
+     "text": "Entrauchungsleitungen ohne Undichtigkeit und Beschädigung, Befestigungen und Kompensatoren einwandfrei",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Entrauchungsleitungen nach DIN EN 12101-7."
+    },
+    {
+     "id": "mr-ausblas",
+     "abschnitt": "Entrauchungsklappen und Leitungen",
+     "text": "Ausblasöffnung nicht behindert, genügend Abstand zu Zuluft- und Fensteröffnungen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "mr-zuluft",
+     "abschnitt": "Zuluft",
+     "text": "Bei Auslösung öffnen die Zuluftöffnungen bzw. laufen die Zuluftventilatoren an, Luft strömt ungehindert nach",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "mr-schuerzen",
+     "abschnitt": "Rauchschürzen",
+     "text": "Anlage mit beweglichen Rauchschürzen ausgestattet",
+     "typ": "ja_nein",
+     "pflicht": true
+    },
+    {
+     "id": "mr-schuerzen-fahrt",
+     "abschnitt": "Rauchschürzen",
+     "text": "Rauchschürzen fahren bei Auslösung ganz aus, Gewebe ohne Beschädigung",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "mr-schuerzen",
+      "ist": "ja"
+     },
+     "hinweis": "Rauchschürzen nach DIN EN 12101-1."
+    },
+    {
+     "id": "mr-veraenderung",
+     "abschnitt": "Objekt",
+     "text": "Keine Umbauten oder geänderte Nutzung, durch die Rauchabschnitte, Zuluft oder Rauchableitung beeinträchtigt werden",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "mr-sofort",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber umgehend darüber unterrichtet, dass die Entrauchung nicht zuverlässig funktioniert (Ersatzmaßnahmen veranlassen)",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Wird nur bei einem Mangel an einem sicherheitsrelevanten Prüfpunkt angezeigt. Informierte Person und Zeitpunkt in den Bemerkungen notieren.",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "mr-einspeisung",
+        "mangel": true
+       },
+       {
+        "punkt": "mr-automatik",
+        "mangel": true
+       },
+       {
+        "punkt": "mr-hand",
+        "mangel": true
+       },
+       {
+        "punkt": "mr-klappen",
+        "mangel": true
+       },
+       {
+        "punkt": "mr-zuluft",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "mr-normal",
+     "abschnitt": "Abschluss",
+     "text": "Anlage nach der Prüfung im Normalbetrieb: Automatik eingeschaltet, Klappen in Betriebsstellung, Störungen zurückgestellt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "mr-eintrag",
+     "abschnitt": "Abschluss",
+     "text": "Prüfung im Prüfbuch dokumentiert",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "mr-foto",
+     "abschnitt": "Abschluss",
+     "text": "Gesamtansicht der Steuerung bzw. des Ventilators (Foto)",
+     "typ": "foto",
+     "pflicht": false
+    },
+    {
+     "id": "mr-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "mr-sofort",
+        "ist": "ja"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-rwm-erst",
+   "name": "Rauchwarnmelder – Erstinstallation",
+   "beschreibung": "Abnahme der neu eingebauten Rauchwarnmelder einer Wohnung, eines Hauses oder einer Liegenschaft. Jeder Melder wird in der Melderliste einzeln abgehakt (Testalarm, fester Sitz, Montageort). Vorschlag auf Basis von DIN 14676-1 und Herstellerangaben – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "rw-e-zugang",
+     "abschnitt": "Objekt",
+     "text": "Alle Räume der Einheit waren zugänglich",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "hinweis": "Nicht betretene Räume samt ihren Meldern als „nicht zugänglich“ erfassen und in den Bemerkungen festhalten."
+    },
+    {
+     "id": "rw-e-nachtermin",
+     "abschnitt": "Objekt",
+     "typ": "text",
+     "pflicht": true,
+     "text": "Unzugängliche Räume und abgesprochener Nachholtermin",
+     "nur_wenn": {
+      "punkt": "rw-e-zugang",
+      "ist": "nein"
+     }
+    },
+    {
+     "id": "rw-e-ausstattung",
+     "abschnitt": "Ausstattung",
+     "text": "Einheit ist wie vorgeschrieben ausgestattet (Schlaf- und Kinderzimmer, als Rettungsweg dienende Flure, ggf. weitere Aufenthaltsräume)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Es gilt die jeweilige Landesbauordnung; die Melderliste muss mit der Ausstattung übereinstimmen."
+    },
+    {
+     "id": "rw-e-montage",
+     "abschnitt": "Ausstattung",
+     "text": "Montageorte passend: mittig an der Decke bzw. mit Mindestabstand zu Wänden und Einbauten, nicht in Küche oder Bad und nicht im Luftzug",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "rw-e-funk",
+     "abschnitt": "Funktion",
+     "text": "Funkvernetzung: Auslösen eines Melders aktiviert sämtliche weiteren Melder der Einheit",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "„entfällt“, wenn die Melder nicht per Funk vernetzt sind."
+    },
+    {
+     "id": "rw-e-erfasst",
+     "abschnitt": "Dokumentation",
+     "text": "Für jeden Melder Seriennummer und Austauschdatum erfasst",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 1,
+     "hinweis": "Beide Angaben finden sich auf dem seitlichen Aufkleber des Melders."
+    },
+    {
+     "id": "rw-e-unterweisung",
+     "abschnitt": "Dokumentation",
+     "text": "Bewohner bzw. Betreiber über Warntöne, Stummschaltung und ihre eigenen Pflichten aufgeklärt",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "rw-e-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false
+    }
+   ]
+  },
+  {
+   "id": "cl-rwm-wartung",
+   "name": "Rauchwarnmelder – Wartung",
+   "beschreibung": "Jährliche Wartung der Rauchwarnmelder. Jeder Melder wird in der Melderliste einzeln abgehakt (Sichtprüfung, Raucheintrittsöffnungen, Testalarm, Batteriewarnung). Vorschlag auf Basis von DIN 14676-1 und Herstellerangaben – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "rw-w-zugang",
+     "abschnitt": "Objekt",
+     "text": "Alle Räume der Einheit waren zugänglich",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "hinweis": "Nicht betretene Räume samt ihren Meldern als „nicht zugänglich“ erfassen und in den Bemerkungen festhalten."
+    },
+    {
+     "id": "rw-w-nachtermin",
+     "abschnitt": "Objekt",
+     "typ": "text",
+     "pflicht": true,
+     "text": "Unzugängliche Räume und abgesprochener Nachholtermin",
+     "nur_wenn": {
+      "punkt": "rw-w-zugang",
+      "ist": "nein"
+     }
+    },
+    {
+     "id": "rw-w-zeitraum",
+     "abschnitt": "Objekt",
+     "text": "Wartung innerhalb des vorgesehenen Zeitfensters (einmal jährlich, ±3 Monate)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1,
+     "hinweis": "Zeitfenster gemäß DIN 14676-1; weicht es ab, Grund in den Bemerkungen angeben."
+    },
+    {
+     "id": "rw-w-anzahl",
+     "abschnitt": "Bestand",
+     "text": "Melderanzahl und Standorte decken sich mit der Liste, kein Melder entfernt oder hinzugekommen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Fehlende oder hinzugekommene Melder in der Melderliste nachtragen."
+    },
+    {
+     "id": "rw-w-nutzung",
+     "abschnitt": "Bestand",
+     "text": "Raumnutzung und Montageorte gleich geblieben, Melder weder abgedeckt noch zugestellt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "rw-w-austausch",
+     "abschnitt": "Bestand",
+     "text": "Bei keinem Melder ist das Austauschdatum erreicht (meist 10 Jahre)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Abgelaufene Melder in der Liste als „defekt“ mit dem Grund „Austauschdatum erreicht“ erfassen."
+    },
+    {
+     "id": "rw-w-funk",
+     "abschnitt": "Funktion",
+     "text": "Funkvernetzung: Auslösen eines Melders aktiviert sämtliche weiteren Melder der Einheit",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "„entfällt“, wenn die Melder nicht per Funk vernetzt sind."
+    },
+    {
+     "id": "rw-w-ersetzt",
+     "abschnitt": "Abschluss",
+     "typ": "ja_nein",
+     "gut": "ja",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "text": "Defekte bzw. abgelaufene Melder vor Ort direkt ausgetauscht",
+     "hinweis": "Andernfalls Betreiber benachrichtigen und Termin für den Ersatz in den Bemerkungen festhalten",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "rw-w-funk",
+        "mangel": true
+       },
+       {
+        "punkt": "rw-w-austausch",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "rw-w-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "rw-w-ersetzt",
+        "ist": "nein"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-el-erst",
+   "name": "Elektrische Anlage – Erstprüfung (DIN VDE 0100-600)",
+   "beschreibung": "Prüfung vor der Erstinbetriebnahme sowie nach Erweiterung oder Änderung: Besichtigen, Erproben und Messen gemäß DIN VDE 0100-600. Die Messwerte für jeden Stromkreis und Verbraucher werden in der Liste der Stromkreise eingetragen und dort mit den Grenzwerten verglichen. Vorschlag – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "el-e-umfang",
+     "abschnitt": "Grundlagen",
+     "text": "Prüfumfang (Anlagenteile, Verteiler, Stromkreise)",
+     "typ": "text",
+     "pflicht": true
+    },
+    {
+     "id": "el-e-messgeraet",
+     "abschnitt": "Grundlagen",
+     "text": "Verwendetes Messgerät (Hersteller, Typ, Seriennummer)",
+     "typ": "text",
+     "pflicht": true
+    },
+    {
+     "id": "el-e-kalibrierung",
+     "abschnitt": "Grundlagen",
+     "text": "Messgerät mit gültiger Kalibrierung",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 2,
+     "hinweis": "Wird ohne kalibriertes Messgerät geprüft, den Grund in den Bemerkungen angeben"
+    },
+    {
+     "id": "el-e-unterlagen",
+     "abschnitt": "Grundlagen",
+     "text": "Dokumentation liegt vor: Übersichtsschaltplan, Stromkreisbeschriftung, Daten der Schutzorgane und Leitungen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "el-e-betriebsmittel",
+     "abschnitt": "Besichtigen",
+     "text": "Auswahl und Errichtung der Betriebsmittel gemäß Herstellerangaben und passend zu den äußeren Einflüssen (Schutzart, mechanische Beanspruchung)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "el-e-basisschutz",
+     "abschnitt": "Besichtigen",
+     "text": "Basisschutz: aktive Teile lückenlos isoliert oder abgedeckt, Abdeckungen und Gehäuse komplett",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "el-e-leitungen",
+     "abschnitt": "Besichtigen",
+     "text": "Leiterquerschnitte nach Strombelastbarkeit und Spannungsfall bemessen und mit den Schutzorganen koordiniert",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "el-e-schutzorgane",
+     "abschnitt": "Besichtigen",
+     "text": "Schutz- und Überwachungseinrichtungen korrekt gewählt und eingestellt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "el-e-kennzeichnung",
+     "abschnitt": "Besichtigen",
+     "text": "Neutral- und Schutzleiter korrekt gekennzeichnet, Stromkreise in den Verteilern beschriftet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "el-e-anschluesse",
+     "abschnitt": "Besichtigen",
+     "text": "Klemmstellen und Verbindungen fest, Leiter ohne Beschädigung, Zugentlastung gegeben",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "el-e-brandschutz",
+     "abschnitt": "Besichtigen",
+     "text": "Leitungsdurchführungen mit fachgerecht verschlossenen Brandabschottungen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "el-e-trennen",
+     "abschnitt": "Besichtigen",
+     "text": "Trenn- und Schaltgeräte vorhanden, korrekt angeordnet, gekennzeichnet und erreichbar",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "el-e-potential",
+     "abschnitt": "Besichtigen",
+     "text": "Schutzpotentialausgleich über die Haupterdungsschiene (Wasser, Gas, Heizung, Erder, Gebäudekonstruktion)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "el-e-zusatzpot",
+     "abschnitt": "Besichtigen",
+     "text": "Zusätzlicher Schutzpotentialausgleich an den Stellen, wo er gefordert ist",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "„entfällt“, wenn keine Forderung besteht"
+    },
+    {
+     "id": "el-e-rcd",
+     "abschnitt": "Besichtigen",
+     "text": "Zusätzlicher Schutz über RCD mit IΔN ≤ 30 mA an den Stellen, wo er gefordert ist",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "unter anderem Steckdosen bis 32 A, Leuchten-Endstromkreise in Wohnungen, Räume mit Badewanne oder Dusche, Außenbereich (DIN VDE 0100-410, -701)"
+    },
+    {
+     "id": "el-e-spd",
+     "abschnitt": "Besichtigen",
+     "text": "Schutz gegen Überspannungen (DIN VDE 0100-443 / -534)",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "vorhanden und in Ordnung"
+      },
+      {
+       "wert": "nicht gefordert"
+      },
+      {
+       "wert": "gefordert, fehlt",
+       "mangel": true,
+       "vorschlag_stufe": 2
+      },
+      {
+       "wert": "Statusanzeige ausgelöst oder defekt",
+       "mangel": true,
+       "vorschlag_stufe": 2
+      }
+     ]
+    },
+    {
+     "id": "el-e-rcd-taste",
+     "abschnitt": "Erproben",
+     "text": "Alle RCD lösen beim Betätigen der Prüftaste aus",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "el-e-funktion",
+     "abschnitt": "Erproben",
+     "text": "Schalt-, Steuer- und Verriegelungseinrichtungen, Not-Aus und Meldeleuchten arbeiten bestimmungsgemäß",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "el-e-drehfeld",
+     "abschnitt": "Erproben",
+     "text": "Drehstromsteckdosen und -anschlüsse mit Rechtsdrehfeld",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "„entfällt“, wenn kein Drehstrom vorhanden ist"
+    },
+    {
+     "id": "el-e-netzform",
+     "abschnitt": "Messen (Anlage)",
+     "text": "Art des Netzsystems am Prüfort",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "TN-C-S"
+      },
+      {
+       "wert": "TN-S"
+      },
+      {
+       "wert": "TN-C"
+      },
+      {
+       "wert": "TT"
+      },
+      {
+       "wert": "IT"
+      }
+     ]
+    },
+    {
+     "id": "el-e-ra",
+     "abschnitt": "Messen (Anlage)",
+     "text": "Erdungswiderstand RA",
+     "typ": "messwert",
+     "einheit": "Ω",
+     "pflicht": false,
+     "hinweis": "Pflichtmessung im TT-System: RA × IΔN ≤ 50 V (DIN VDE 0100-410); der Grenzwert gilt für 30-mA-RCD, bei höherem Bemessungsdifferenzstrom fällt er entsprechend geringer aus",
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "el-e-netzform",
+        "ist": "TT"
+       },
+       "pflicht": true,
+       "soll_max": 1666
+      }
+     ]
+    },
+    {
+     "id": "el-e-pa",
+     "abschnitt": "Messen (Anlage)",
+     "text": "Durchgängigkeit des Schutzpotentialausgleichs zwischen Haupterdungsschiene und fremden leitfähigen Teilen",
+     "typ": "messwert",
+     "einheit": "Ω",
+     "pflicht": false,
+     "hinweis": "Höchsten Messwert eintragen; einen festen Grenzwert gibt es nicht, die Verbindungen müssen aber niederohmig sein"
+    },
+    {
+     "id": "el-e-spannung",
+     "abschnitt": "Messen (Anlage)",
+     "text": "Netzspannung L–N (Außenleiter gegen Neutralleiter)",
+     "typ": "messwert",
+     "einheit": "V",
+     "pflicht": false,
+     "soll_min": 207,
+     "soll_max": 253,
+     "hinweis": "230 V ± 10 % (DIN EN 50160)"
+    },
+    {
+     "id": "el-e-stromkreise",
+     "abschnitt": "Stromkreise und Verbraucher",
+     "text": "Alle Stromkreise und Verbraucher gemessen, Werte in der Liste erfasst und bewertet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Die Messwerte (RPE, Riso, Zs, Ik, RCD) werden unten in der Liste der Stromkreise geführt; Werte außerhalb der Grenzwerte gelten dort automatisch als Mängel."
+    },
+    {
+     "id": "el-e-ergebnis",
+     "abschnitt": "Abschluss",
+     "text": "Anlage erfüllt DIN VDE 0100 und darf in Betrieb gehen",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "el-e-betreiber",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber umgehend benachrichtigt",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 3,
+     "hinweis": "Bei gefährlichen Mängeln die betroffenen Anlagenteile freischalten oder sichern",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "el-e-ergebnis",
+        "ist": "nein"
+       },
+       {
+        "punkt": "el-e-basisschutz",
+        "mangel": true
+       },
+       {
+        "punkt": "el-e-potential",
+        "mangel": true
+       },
+       {
+        "punkt": "el-e-rcd",
+        "mangel": true
+       },
+       {
+        "punkt": "el-e-rcd-taste",
+        "mangel": true
+       },
+       {
+        "punkt": "el-e-schutzorgane",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "el-e-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "el-e-kalibrierung",
+        "ist": "nein"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-el-wiederholung",
+   "name": "Elektrische Anlage – Wiederholungsprüfung (DIN VDE 0105-100)",
+   "beschreibung": "Wiederkehrende Prüfung der elektrischen Anlage gemäß DIN VDE 0105-100 (DGUV Vorschrift 3: Richtwert 4 Jahre, Betriebsstätten besonderer Art jedes Jahr). Geänderte oder erweiterte Teile der Anlage so prüfen wie bei der Erstprüfung nach DIN VDE 0100-600. Messwerte für jeden Stromkreis in der Liste der Stromkreise. Vorschlag – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "el-w-umfang",
+     "abschnitt": "Grundlagen",
+     "text": "Prüfumfang (Anlagenteile, Verteiler, Stromkreise)",
+     "typ": "text",
+     "pflicht": true
+    },
+    {
+     "id": "el-w-messgeraet",
+     "abschnitt": "Grundlagen",
+     "text": "Verwendetes Messgerät (Hersteller, Typ, Seriennummer)",
+     "typ": "text",
+     "pflicht": true
+    },
+    {
+     "id": "el-w-kalibrierung",
+     "abschnitt": "Grundlagen",
+     "text": "Messgerät mit gültiger Kalibrierung",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 2,
+     "hinweis": "Wird ohne kalibriertes Messgerät geprüft, den Grund in den Bemerkungen angeben"
+    },
+    {
+     "id": "el-w-vorpruefung",
+     "abschnitt": "Grundlagen",
+     "text": "Anlagenunterlagen und Protokoll der vorigen Prüfung vorhanden",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "el-w-geaendert",
+     "abschnitt": "Grundlagen",
+     "text": "Wurde die Anlage seit der vorigen Prüfung geändert oder erweitert?",
+     "typ": "ja_nein",
+     "pflicht": true
+    },
+    {
+     "id": "el-w-aenderung",
+     "abschnitt": "Grundlagen",
+     "text": "Art der Änderung – geänderte Teile gemäß DIN VDE 0100-600 geprüft",
+     "typ": "text",
+     "pflicht": true,
+     "nur_wenn": {
+      "punkt": "el-w-geaendert",
+      "ist": "ja"
+     }
+    },
+    {
+     "id": "el-w-zustand",
+     "abschnitt": "Besichtigen",
+     "text": "Betriebsmittel ohne sichtbare Schäden, Abdeckungen und Gehäuse komplett, Basisschutz vorhanden",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "el-w-ueberhitzung",
+     "abschnitt": "Besichtigen",
+     "text": "Klemmstellen, Schutzorgane und Leitungen ohne Hinweise auf Überhitzung (Verfärbung, Geruch)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "el-w-schutzorgane",
+     "abschnitt": "Besichtigen",
+     "text": "Schutzorgane unverändert und auf die Leitungen abgestimmt, keine Sicherungen überbrückt oder geflickt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "el-w-kennzeichnung",
+     "abschnitt": "Besichtigen",
+     "text": "Stromkreisbeschriftung und Warnhinweise auf aktuellem Stand und gut lesbar",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "el-w-zugang",
+     "abschnitt": "Besichtigen",
+     "text": "Verteiler erreichbar, frei von abgestellten Gegenständen und verschlossen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "el-w-potential",
+     "abschnitt": "Besichtigen",
+     "text": "Schutzpotentialausgleich lückenlos, Anschlüsse fest und ohne Beschädigung",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "el-w-brandschutz",
+     "abschnitt": "Besichtigen",
+     "text": "Brandabschottungen an Leitungsdurchführungen intakt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "el-w-umgebung",
+     "abschnitt": "Besichtigen",
+     "text": "Nutzung und Umgebungsbedingungen gleich geblieben bzw. Betriebsmittel dafür weiter geeignet (Feuchte, Staub, Beanspruchung)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "el-w-rcd-taste",
+     "abschnitt": "Erproben",
+     "text": "Alle RCD lösen beim Betätigen der Prüftaste aus",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "el-w-funktion",
+     "abschnitt": "Erproben",
+     "text": "Schalt-, Steuer- und Verriegelungseinrichtungen, Not-Aus und Meldeleuchten arbeiten bestimmungsgemäß",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "el-w-drehfeld",
+     "abschnitt": "Erproben",
+     "text": "Drehstromsteckdosen und -anschlüsse mit Rechtsdrehfeld",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "„entfällt“, wenn kein Drehstrom vorhanden ist"
+    },
+    {
+     "id": "el-w-netzform",
+     "abschnitt": "Messen (Anlage)",
+     "text": "Art des Netzsystems am Prüfort",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "TN-C-S"
+      },
+      {
+       "wert": "TN-S"
+      },
+      {
+       "wert": "TN-C"
+      },
+      {
+       "wert": "TT"
+      },
+      {
+       "wert": "IT"
+      }
+     ]
+    },
+    {
+     "id": "el-w-ra",
+     "abschnitt": "Messen (Anlage)",
+     "text": "Erdungswiderstand RA",
+     "typ": "messwert",
+     "einheit": "Ω",
+     "pflicht": false,
+     "hinweis": "Pflichtmessung im TT-System: RA × IΔN ≤ 50 V (DIN VDE 0100-410); der Grenzwert gilt für 30-mA-RCD, bei höherem Bemessungsdifferenzstrom fällt er entsprechend geringer aus",
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "el-w-netzform",
+        "ist": "TT"
+       },
+       "pflicht": true,
+       "soll_max": 1666
+      }
+     ]
+    },
+    {
+     "id": "el-w-pa",
+     "abschnitt": "Messen (Anlage)",
+     "text": "Durchgängigkeit des Schutzpotentialausgleichs zwischen Haupterdungsschiene und fremden leitfähigen Teilen",
+     "typ": "messwert",
+     "einheit": "Ω",
+     "pflicht": false,
+     "hinweis": "Höchsten Messwert eintragen; einen festen Grenzwert gibt es nicht, die Verbindungen müssen aber niederohmig sein"
+    },
+    {
+     "id": "el-w-spannung",
+     "abschnitt": "Messen (Anlage)",
+     "text": "Netzspannung L–N (Außenleiter gegen Neutralleiter)",
+     "typ": "messwert",
+     "einheit": "V",
+     "pflicht": false,
+     "soll_min": 207,
+     "soll_max": 253,
+     "hinweis": "230 V ± 10 % (DIN EN 50160)"
+    },
+    {
+     "id": "el-w-stromkreise",
+     "abschnitt": "Stromkreise und Verbraucher",
+     "text": "Alle Stromkreise und Verbraucher gemessen, Werte in der Liste erfasst und bewertet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Die Messwerte (RPE, Riso, Zs, Ik, RCD) werden unten in der Liste der Stromkreise geführt; Werte außerhalb der Grenzwerte gelten dort automatisch als Mängel."
+    },
+    {
+     "id": "el-w-frist",
+     "abschnitt": "Abschluss",
+     "text": "Empfohlener Zeitraum bis zur nächsten Wiederholungsprüfung",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "4 Jahre"
+      },
+      {
+       "wert": "2 Jahre"
+      },
+      {
+       "wert": "1 Jahr"
+      }
+     ],
+     "hinweis": "DGUV Vorschrift 3, Tabelle 1A: 4 Jahre; Betriebsstätten, Räume und Anlagen besonderer Art 1 Jahr"
+    },
+    {
+     "id": "el-w-ergebnis",
+     "abschnitt": "Abschluss",
+     "text": "Anlage ordnungsgemäß, darf weiter betrieben werden",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "el-w-betreiber",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber umgehend benachrichtigt",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 3,
+     "hinweis": "Bei gefährlichen Mängeln die betroffenen Anlagenteile freischalten oder sichern",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "el-w-ergebnis",
+        "ist": "nein"
+       },
+       {
+        "punkt": "el-w-zustand",
+        "mangel": true
+       },
+       {
+        "punkt": "el-w-ueberhitzung",
+        "mangel": true
+       },
+       {
+        "punkt": "el-w-schutzorgane",
+        "mangel": true
+       },
+       {
+        "punkt": "el-w-rcd-taste",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "el-w-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "el-w-kalibrierung",
+        "ist": "nein"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-ge-0701",
+   "name": "Ortsveränderliche Geräte – Prüfung nach Instandsetzung (DIN EN 50678 / VDE 0701)",
+   "beschreibung": "Prüfung elektrischer Geräte nach Instandsetzung oder Änderung gemäß DIN EN 50678 (VDE 0701). Zu prüfen sind nur die instandgesetzten Geräte: in der Geräteliste unter „alle Geräte“ suchen oder scannen, für jedes Gerät Sichtprüfung, Messungen und Funktionsprüfung. Vorschlag – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "ge-i-instandsetzung",
+     "abschnitt": "Instandsetzung",
+     "text": "Instandgesetzte Geräte und Art der Reparatur bzw. Änderung",
+     "typ": "text",
+     "pflicht": true
+    },
+    {
+     "id": "ge-i-ersatzteile",
+     "abschnitt": "Instandsetzung",
+     "text": "Ersatzteile den Originalteilen gleichwertig, Vorgaben des Herstellers beachtet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "ge-i-aufschriften",
+     "abschnitt": "Instandsetzung",
+     "text": "Sicherheitsrelevante Aufschriften und Kennzeichnungen nach der Reparatur vorhanden und gut lesbar",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "ge-i-messgeraet",
+     "abschnitt": "Grundlagen",
+     "text": "Verwendetes Messgerät (Hersteller, Typ, Seriennummer)",
+     "typ": "text",
+     "pflicht": true
+    },
+    {
+     "id": "ge-i-kalibrierung",
+     "abschnitt": "Grundlagen",
+     "text": "Messgerät mit gültiger Kalibrierung",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 2,
+     "hinweis": "Wird ohne kalibriertes Messgerät geprüft, den Grund in den Bemerkungen angeben"
+    },
+    {
+     "id": "ge-i-verfahren",
+     "abschnitt": "Grundlagen",
+     "text": "Verfahren zur Messung von Schutzleiter- und Berührungsstrom",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "Differenzstromverfahren"
+      },
+      {
+       "wert": "direktes Verfahren"
+      },
+      {
+       "wert": "Ersatzableitstromverfahren"
+      }
+     ],
+     "hinweis": "Ersatzableitstromverfahren nur für Geräte ohne netzspannungsabhängige Schalter; Geräte mit Netzteil oder Elektronik im Differenz- oder direkten Verfahren messen"
+    },
+    {
+     "id": "ge-i-isospannung",
+     "abschnitt": "Grundlagen",
+     "text": "Messspannung bei der Isolationsmessung",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "500 V DC"
+      },
+      {
+       "wert": "250 V DC (Schutzklasse III / SELV)"
+      },
+      {
+       "wert": "nicht gemessen (Schutzleiter- bzw. Berührungsstrom gemessen)"
+      }
+     ],
+     "hinweis": "Könnte die Isolationsmessung das Gerät schädigen oder arbeiten Schalter netzspannungsabhängig, stattdessen Schutzleiter- bzw. Berührungsstrom messen"
+    },
+    {
+     "id": "ge-i-liste",
+     "abschnitt": "Geräte",
+     "text": "Sämtliche instandgesetzten Geräte in der Geräteliste geprüft (Sichtprüfung, Messung, Funktion)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "ge-i-plakette",
+     "abschnitt": "Abschluss",
+     "text": "Geprüfte Geräte mit Prüfplakette samt nächstem Prüftermin versehen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "ge-i-maengel",
+     "abschnitt": "Abschluss",
+     "text": "Mangelhafte Geräte",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "keine"
+      },
+      {
+       "wert": "außer Betrieb genommen und als defekt gekennzeichnet"
+      },
+      {
+       "wert": "an den Betreiber übergeben, nicht gesperrt",
+       "mangel": true,
+       "vorschlag_stufe": 3
+      }
+     ],
+     "hinweis": "Geräte mit gefährlichen Mängeln sind von der weiteren Benutzung auszuschließen"
+    },
+    {
+     "id": "ge-i-betreiber",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber umgehend benachrichtigt",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "ge-i-maengel",
+      "in": [
+       "außer Betrieb genommen und als defekt gekennzeichnet",
+       "an den Betreiber übergeben, nicht gesperrt"
+      ]
+     }
+    },
+    {
+     "id": "ge-i-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "ge-i-kalibrierung",
+        "ist": "nein"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-ge-0702",
+   "name": "Ortsveränderliche Geräte – Wiederholungsprüfung (DIN EN 50699 / VDE 0702)",
+   "beschreibung": "Wiederholungsprüfung elektrischer Geräte gemäß DIN EN 50699 (VDE 0702). Für jedes Gerät in der Geräteliste: Sichtprüfung, Messungen (Schutzleiterwiderstand, Isolationswiderstand, Schutzleiter- bzw. Berührungsstrom) und Funktionsprüfung; welche Grenzwerte gelten, hängt von der Schutzklasse ab. Vorschlag – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "ge-w-messgeraet",
+     "abschnitt": "Grundlagen",
+     "text": "Verwendetes Messgerät (Hersteller, Typ, Seriennummer)",
+     "typ": "text",
+     "pflicht": true
+    },
+    {
+     "id": "ge-w-kalibrierung",
+     "abschnitt": "Grundlagen",
+     "text": "Messgerät mit gültiger Kalibrierung",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 2,
+     "hinweis": "Wird ohne kalibriertes Messgerät geprüft, den Grund in den Bemerkungen angeben"
+    },
+    {
+     "id": "ge-w-verfahren",
+     "abschnitt": "Grundlagen",
+     "text": "Verfahren zur Messung von Schutzleiter- und Berührungsstrom",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "Differenzstromverfahren"
+      },
+      {
+       "wert": "direktes Verfahren"
+      },
+      {
+       "wert": "Ersatzableitstromverfahren"
+      }
+     ],
+     "hinweis": "Ersatzableitstromverfahren nur für Geräte ohne netzspannungsabhängige Schalter; Geräte mit Netzteil oder Elektronik im Differenz- oder direkten Verfahren messen"
+    },
+    {
+     "id": "ge-w-isospannung",
+     "abschnitt": "Grundlagen",
+     "text": "Messspannung bei der Isolationsmessung",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "500 V DC"
+      },
+      {
+       "wert": "250 V DC (Schutzklasse III / SELV)"
+      },
+      {
+       "wert": "nicht gemessen (Schutzleiter- bzw. Berührungsstrom gemessen)"
+      }
+     ],
+     "hinweis": "Könnte die Isolationsmessung das Gerät schädigen oder arbeiten Schalter netzspannungsabhängig, stattdessen Schutzleiter- bzw. Berührungsstrom messen"
+    },
+    {
+     "id": "ge-w-vollstaendig",
+     "abschnitt": "Geräte",
+     "text": "Sämtliche Geräte des Bestands geprüft; nicht auffindbare Geräte als „nicht zugänglich“ erfasst",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "ge-w-neu",
+     "abschnitt": "Geräte",
+     "text": "Neu vorgefundene, bisher nicht erfasste Geräte in die Geräteliste aufgenommen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1,
+     "hinweis": "„entfällt“, wenn keine neuen Geräte vorhanden waren"
+    },
+    {
+     "id": "ge-w-plakette",
+     "abschnitt": "Abschluss",
+     "text": "Geprüfte Geräte mit Prüfplakette samt nächstem Prüftermin versehen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "ge-w-maengel",
+     "abschnitt": "Abschluss",
+     "text": "Mangelhafte Geräte",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "keine"
+      },
+      {
+       "wert": "außer Betrieb genommen und als defekt gekennzeichnet"
+      },
+      {
+       "wert": "an den Betreiber übergeben, nicht gesperrt",
+       "mangel": true,
+       "vorschlag_stufe": 3
+      }
+     ],
+     "hinweis": "Geräte mit gefährlichen Mängeln sind von der weiteren Benutzung auszuschließen"
+    },
+    {
+     "id": "ge-w-betreiber",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber umgehend benachrichtigt",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 3,
+     "nur_wenn": {
+      "punkt": "ge-w-maengel",
+      "in": [
+       "außer Betrieb genommen und als defekt gekennzeichnet",
+       "an den Betreiber übergeben, nicht gesperrt"
+      ]
+     }
+    },
+    {
+     "id": "ge-w-frist",
+     "abschnitt": "Abschluss",
+     "text": "Prüfintervall für den Gerätebestand",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "6 Monate"
+      },
+      {
+       "wert": "12 Monate"
+      },
+      {
+       "wert": "24 Monate"
+      },
+      {
+       "wert": "3 Monate (Baustelle)"
+      }
+     ],
+     "hinweis": "DGUV Vorschrift 3, Tabelle 1B: Richtwert 6 Monate, auf Baustellen 3 Monate; liegt die Fehlerquote unter 2 %, verlängerbar – in Werkstätten bis 1 Jahr, in Büros bis 2 Jahre"
+    },
+    {
+     "id": "ge-w-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "ge-w-kalibrierung",
+        "ist": "nein"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-pv-i",
+   "name": "PV-Anlage – Inbetriebnahmeprüfung (DIN EN 62446-1 / VDE 0126-23-1)",
+   "beschreibung": "Erstprüfung vor Inbetriebnahme gemäß DIN EN 62446-1 (VDE 0126-23-1), Prüfungen der Kategorie 1: Unterlagen, Sichtprüfung, AC-Seite gemäß DIN VDE 0100-600, Messungen je Strang (Leerlaufspannung, Strom, Isolationswiderstand) in der Liste der Stränge, Funktionstest. Vorschlag – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "pv-i-umfang",
+     "abschnitt": "Grundlagen",
+     "text": "Prüfumfang (Generatorfeld, Wechselrichter, Speicher, AC-Anschluss)",
+     "typ": "text",
+     "pflicht": true
+    },
+    {
+     "id": "pv-i-messgeraet",
+     "abschnitt": "Grundlagen",
+     "text": "Verwendetes Messgerät (Hersteller, Typ, Seriennummer)",
+     "typ": "text",
+     "pflicht": true
+    },
+    {
+     "id": "pv-i-kalibrierung",
+     "abschnitt": "Grundlagen",
+     "text": "Kalibrierung des Messgeräts vorhanden und gültig",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 2,
+     "hinweis": "Wird ohne gültige Kalibrierung gemessen, den Grund unter Bemerkungen angeben"
+    },
+    {
+     "id": "pv-i-einstrahlung",
+     "abschnitt": "Grundlagen",
+     "text": "Bestrahlungsstärke in Modulebene bei den Strangmessungen",
+     "typ": "messwert",
+     "einheit": "W/m²",
+     "pflicht": false,
+     "hinweis": "Dient dem Vergleich der Strangströme; wechselt die Bewölkung, Strangmessungen wiederholen"
+    },
+    {
+     "id": "pv-i-modultemperatur",
+     "abschnitt": "Grundlagen",
+     "text": "Temperatur der Module bei den Strangmessungen",
+     "typ": "messwert",
+     "einheit": "°C",
+     "pflicht": false
+    },
+    {
+     "id": "pv-i-doku-system",
+     "abschnitt": "Dokumentation",
+     "text": "Anlagendaten lückenlos angegeben: Anlagenleistung, Module, Wechselrichter, Errichter, Inbetriebnahmedatum",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-i-doku-plan",
+     "abschnitt": "Dokumentation",
+     "text": "Übersichtsschaltplan liegt vor, mit Strangaufteilung, Leitungen sowie Schutz- und Trenneinrichtungen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-i-doku-datenblaetter",
+     "abschnitt": "Dokumentation",
+     "text": "Datenblätter der Module und Wechselrichter sowie Montage- und Wartungsanleitung vorhanden",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-i-doku-netz",
+     "abschnitt": "Dokumentation",
+     "text": "Netzbetreiber-Anmeldung, Einheitenzertifikat bzw. Nachweis des NA-Schutzes, Eintrag im Marktstammdatenregister",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-i-generator",
+     "abschnitt": "Besichtigen DC",
+     "text": "Module, Unterkonstruktion und Befestigungen ohne Schäden und gemäß Herstellerangaben montiert; Dachhaut dicht",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "pv-i-dc-leitungen",
+     "abschnitt": "Besichtigen DC",
+     "text": "DC-Leitungen UV-beständig, geschützt und frei von Scheuerstellen verlegt; Leitungsschleifen klein gehalten",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "pv-i-stecker",
+     "abschnitt": "Besichtigen DC",
+     "text": "Steckverbinder nur mit Gegenstück desselben Herstellers und Typs verbunden (keine Fremdpaarung), ganz eingerastet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "pv-i-strangsicherung",
+     "abschnitt": "Besichtigen DC",
+     "text": "Wo nötig: Strangsicherungen bzw. Rückstromschutz gemäß Herstellerangaben",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "„entfällt“, wenn je Eingang höchstens zwei Stränge parallel geschaltet sind"
+    },
+    {
+     "id": "pv-i-dc-trennung",
+     "abschnitt": "Besichtigen DC",
+     "text": "DC-Lasttrennschalter vorhanden, für Gleichstrom ausgelegt und beschriftet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "pv-i-spd",
+     "abschnitt": "Besichtigen DC",
+     "text": "Überspannungsschutz auf DC- und AC-Seite",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "vorhanden und in Ordnung"
+      },
+      {
+       "wert": "nicht gefordert"
+      },
+      {
+       "wert": "gefordert, fehlt",
+       "mangel": true,
+       "vorschlag_stufe": 2
+      },
+      {
+       "wert": "Statusanzeige ausgelöst oder defekt",
+       "mangel": true,
+       "vorschlag_stufe": 2
+      }
+     ],
+     "hinweis": "Ist ein äußerer Blitzschutz vorhanden, Trennungsabstand berücksichtigen (DIN EN 62305-3 Beiblatt 5)"
+    },
+    {
+     "id": "pv-i-erdung",
+     "abschnitt": "Besichtigen DC",
+     "text": "Wo gefordert: Unterkonstruktion an Potentialausgleich bzw. Erdung angeschlossen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-i-kennzeichnung",
+     "abschnitt": "Besichtigen DC",
+     "text": "Kennzeichnung: Warnschilder an Generatoranschlusskasten und DC-Trennstelle, Feuerwehrhinweis mit Lageplan am Hausanschluss",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-i-brandschutz",
+     "abschnitt": "Besichtigen DC",
+     "text": "Leitungen an Brandabschnittsgrenzen abgeschottet, Abstand zu Brandwänden eingehalten",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-i-wr-montage",
+     "abschnitt": "Besichtigen AC",
+     "text": "Wechselrichter sicher befestigt, Kühlung nicht behindert, Umgebungsbedingungen gemäß Herstellerangaben",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-i-ac-schutz",
+     "abschnitt": "Besichtigen AC",
+     "text": "AC-Anschluss: Leitungsschutz und RCD-Typ (Typ A oder B) wie vom Wechselrichterhersteller angegeben",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "pv-i-na-schutz",
+     "abschnitt": "Besichtigen AC",
+     "text": "NA-Schutz nach VDE-AR-N 4105 vorhanden, Einstellung gemäß Vorgabe des Netzbetreibers",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "pv-i-zaehler",
+     "abschnitt": "Besichtigen AC",
+     "text": "Zählerplatz mit Zweirichtungs- bzw. Erzeugungszähler vorhanden",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-i-ac-pruefung",
+     "abschnitt": "Prüfen",
+     "text": "Prüfung der AC-Stromkreise nach DIN VDE 0100-600 erfolgt (Schutzleiter, Isolation, Schleifenimpedanz, RCD)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Falls nötig als separate elektrische Anlage mit Messwerten pro Stromkreis erfassen"
+    },
+    {
+     "id": "pv-i-pa",
+     "abschnitt": "Prüfen",
+     "text": "Durchgängigkeit der Schutz- bzw. Potentialausgleichsleiter an der Unterkonstruktion",
+     "typ": "messwert",
+     "einheit": "Ω",
+     "pflicht": false,
+     "hinweis": "Höchsten Messwert eintragen; Verbindungen müssen niederohmig sein"
+    },
+    {
+     "id": "pv-i-straenge",
+     "abschnitt": "Stränge",
+     "text": "Sämtliche Stränge gemessen (Uoc, Isc bzw. Betriebsstrom, Riso), Werte mit den Richtwerten abgeglichen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Messwerte werden unten in der Liste der Stränge erfasst; Isolationswiderstände unter dem Grenzwert gelten dort automatisch als Mangel."
+    },
+    {
+     "id": "pv-i-polaritaet",
+     "abschnitt": "Stränge",
+     "text": "Polarität jedes Strangs vor dem Zuschalten kontrolliert",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Ein verpolter Strang kann Wechselrichter und Strangsicherungen zerstören"
+    },
+    {
+     "id": "pv-i-funktion",
+     "abschnitt": "Funktion",
+     "text": "Wechselrichter speist ins Netz ein, Anzeige und Monitoring funktionieren, Isolationsüberwachung meldet keinen Fehler",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-i-netztrennung",
+     "abschnitt": "Funktion",
+     "text": "Netztrennung: Fällt das Netz aus, trennt sich der Wechselrichter und stellt die Einspeisung ein",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "pv-i-einweisung",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber unterwiesen (Freischalten, Vorgehen bei Brand, Monitoring), Unterlagen ausgehändigt",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-i-ergebnis",
+     "abschnitt": "Abschluss",
+     "text": "Anlage erfüllt DIN EN 62446-1, Inbetriebnahme möglich",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "pv-i-betreiber",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber umgehend benachrichtigt",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 3,
+     "hinweis": "Liegen gefährliche Mängel vor, Anlage bzw. betroffene Stränge freischalten und sichern",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "pv-i-ergebnis",
+        "ist": "nein"
+       },
+       {
+        "punkt": "pv-i-dc-leitungen",
+        "mangel": true
+       },
+       {
+        "punkt": "pv-i-dc-trennung",
+        "mangel": true
+       },
+       {
+        "punkt": "pv-i-netztrennung",
+        "mangel": true
+       },
+       {
+        "punkt": "pv-i-polaritaet",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "pv-i-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "pv-i-kalibrierung",
+        "ist": "nein"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-pv-w",
+   "name": "PV-Anlage – Wartung und Wiederholungsprüfung (DIN EN 62446-1 / VDE 0126-23-1)",
+   "beschreibung": "Wiederholungsprüfung und Wartung gemäß DIN EN 62446-1 (VDE 0126-23-1) und DIN VDE 0105-100: Sichtkontrolle von Generator, Leitungen und Wechselrichter, Ertrag und Fehlerspeicher, Messungen je Strang in der Liste der Stränge, AC-Seite. Prüfintervall gemäß DGUV Vorschrift 3 bzw. nach Vorgabe von Versicherer und Hersteller anpassen. Vorschlag – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "pv-w-umfang",
+     "abschnitt": "Grundlagen",
+     "text": "Prüfumfang (Generatorfeld, Wechselrichter, Speicher, AC-Anschluss)",
+     "typ": "text",
+     "pflicht": true
+    },
+    {
+     "id": "pv-w-messgeraet",
+     "abschnitt": "Grundlagen",
+     "text": "Verwendetes Messgerät (Hersteller, Typ, Seriennummer)",
+     "typ": "text",
+     "pflicht": true
+    },
+    {
+     "id": "pv-w-kalibrierung",
+     "abschnitt": "Grundlagen",
+     "text": "Kalibrierung des Messgeräts vorhanden und gültig",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 2,
+     "hinweis": "Wird ohne gültige Kalibrierung gemessen, den Grund unter Bemerkungen angeben"
+    },
+    {
+     "id": "pv-w-einstrahlung",
+     "abschnitt": "Grundlagen",
+     "text": "Bestrahlungsstärke in Modulebene bei den Strangmessungen",
+     "typ": "messwert",
+     "einheit": "W/m²",
+     "pflicht": false,
+     "hinweis": "Dient dem Vergleich der Strangströme; wechselt die Bewölkung, Strangmessungen wiederholen"
+    },
+    {
+     "id": "pv-w-modultemperatur",
+     "abschnitt": "Grundlagen",
+     "text": "Temperatur der Module bei den Strangmessungen",
+     "typ": "messwert",
+     "einheit": "°C",
+     "pflicht": false
+    },
+    {
+     "id": "pv-w-doku",
+     "abschnitt": "Dokumentation",
+     "text": "Anlagenunterlagen und letztes Prüfprotokoll liegen vor, Änderungen an der Anlage sind dokumentiert",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-w-ertrag",
+     "abschnitt": "Betrieb",
+     "text": "Ertrag schlüssig (Monitoring, Abgleich mit Vorjahr und erwartetem Ertrag)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-w-jahresertrag",
+     "abschnitt": "Betrieb",
+     "text": "Ertrag in den vergangenen 12 Monaten",
+     "typ": "messwert",
+     "einheit": "kWh",
+     "pflicht": false
+    },
+    {
+     "id": "pv-w-fehlerspeicher",
+     "abschnitt": "Betrieb",
+     "text": "Fehlerspeicher der Wechselrichter abgefragt, keine offenen Fehler (vor allem Isolationsfehler)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-w-module",
+     "abschnitt": "Besichtigen DC",
+     "text": "Module frei von Glasbruch, Verfärbungen, Delamination und Hotspots; keine hinzugekommene Verschattung, Verschmutzung akzeptabel",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "pv-w-unterkonstruktion",
+     "abschnitt": "Besichtigen DC",
+     "text": "Unterkonstruktion und Modulklemmen sitzen fest, ohne Korrosion; Dachhaut dicht",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "pv-w-dc-leitungen",
+     "abschnitt": "Besichtigen DC",
+     "text": "DC-Leitungen und Steckverbinder frei von Scheuerstellen, Tierverbiss und Überhitzungsspuren, sicher befestigt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "pv-w-gak",
+     "abschnitt": "Besichtigen DC",
+     "text": "Generatoranschlusskasten trocken, ohne Überhitzungsspuren, Strangsicherungen intakt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true,
+     "hinweis": "„entfällt“, wenn kein Generatoranschlusskasten vorhanden ist"
+    },
+    {
+     "id": "pv-w-spd",
+     "abschnitt": "Besichtigen DC",
+     "text": "Überspannungsschutz auf DC- und AC-Seite",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "vorhanden und in Ordnung"
+      },
+      {
+       "wert": "nicht vorhanden"
+      },
+      {
+       "wert": "Statusanzeige ausgelöst oder defekt",
+       "mangel": true,
+       "vorschlag_stufe": 2
+      }
+     ]
+    },
+    {
+     "id": "pv-w-dc-trennung",
+     "abschnitt": "Besichtigen DC",
+     "text": "DC-Lasttrennschalter bzw. Feuerwehrschalter lässt sich schalten und ist beschriftet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "pv-w-kennzeichnung",
+     "abschnitt": "Besichtigen DC",
+     "text": "Warnschilder und Feuerwehrhinweis komplett und lesbar",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-w-wr",
+     "abschnitt": "Besichtigen AC",
+     "text": "Wechselrichter: Kühlkörper und Lüfter unverdeckt und sauber, keine auffälligen Geräusche, keine Überhitzung",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-w-ac",
+     "abschnitt": "Besichtigen AC",
+     "text": "AC-Seite nach DIN VDE 0105-100: Leitungen, Schutzorgane und Anschlüsse mängelfrei",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-w-rcd-taste",
+     "abschnitt": "Prüfen",
+     "text": "RCD über die Prüftaste getestet, Auslösung erfolgt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "„entfällt“, wenn keine RCD vorhanden ist"
+    },
+    {
+     "id": "pv-w-straenge",
+     "abschnitt": "Stränge",
+     "text": "Sämtliche Stränge gemessen (Uoc, Isc bzw. Betriebsstrom, Riso), Werte mit den Richtwerten abgeglichen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Messwerte werden unten in der Liste der Stränge erfasst; Isolationswiderstände unter dem Grenzwert gelten dort automatisch als Mangel."
+    },
+    {
+     "id": "pv-w-polaritaet",
+     "abschnitt": "Stränge",
+     "text": "Polarität jedes Strangs vor dem Zuschalten kontrolliert",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Ein verpolter Strang kann Wechselrichter und Strangsicherungen zerstören"
+    },
+    {
+     "id": "pv-w-thermografie",
+     "abschnitt": "Prüfen",
+     "text": "Thermografische Untersuchung des Generatorfelds (Kategorie 2)",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "nicht beauftragt"
+      },
+      {
+       "wert": "durchgeführt, unauffällig"
+      },
+      {
+       "wert": "durchgeführt, Auffälligkeiten",
+       "mangel": true,
+       "vorschlag_stufe": 2
+      }
+     ],
+     "hinweis": "Voraussetzung: Einstrahlung über 600 W/m²; Auffälligkeiten unter Bemerkungen erläutern"
+    },
+    {
+     "id": "pv-w-reinigung",
+     "abschnitt": "Wartung",
+     "text": "Vom Hersteller vorgegebene Wartungsarbeiten erledigt (z. B. Lüfter, Filter, Firmware)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1,
+     "hinweis": "„entfällt“, wenn keine Wartung fällig war"
+    },
+    {
+     "id": "pv-w-frist",
+     "abschnitt": "Abschluss",
+     "text": "Empfohlener Zeitraum bis zur nächsten Wiederholungsprüfung",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "4 Jahre"
+      },
+      {
+       "wert": "2 Jahre"
+      },
+      {
+       "wert": "1 Jahr"
+      }
+     ],
+     "hinweis": "Nach DGUV Vorschrift 3: 4 Jahre; Versicherer und Hersteller fordern häufig eine jährliche Wartung"
+    },
+    {
+     "id": "pv-w-ergebnis",
+     "abschnitt": "Abschluss",
+     "text": "Zustand der Anlage ordnungsgemäß, sie darf weiter betrieben werden",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "pv-w-betreiber",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber umgehend benachrichtigt",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 3,
+     "hinweis": "Liegen gefährliche Mängel vor, Anlage bzw. betroffene Stränge freischalten und sichern",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "pv-w-ergebnis",
+        "ist": "nein"
+       },
+       {
+        "punkt": "pv-w-dc-leitungen",
+        "mangel": true
+       },
+       {
+        "punkt": "pv-w-gak",
+        "mangel": true
+       },
+       {
+        "punkt": "pv-w-dc-trennung",
+        "mangel": true
+       },
+       {
+        "punkt": "pv-w-rcd-taste",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "pv-w-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "pv-w-kalibrierung",
+        "ist": "nein"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-pv-is",
+   "name": "PV-Anlage mit Speicher – Inbetriebnahmeprüfung (DIN EN 62446-1 / VDE 0126-23-1)",
+   "beschreibung": "Erstprüfung vor Inbetriebnahme gemäß DIN EN 62446-1 (VDE 0126-23-1), Prüfungen der Kategorie 1: Unterlagen, Sichtprüfung, AC-Seite gemäß DIN VDE 0100-600, Messungen je Strang (Leerlaufspannung, Strom, Isolationswiderstand) in der Liste der Stränge, Funktionstest, zusätzlich der Batteriespeicher gemäß Herstellerangaben und VDE-AR-E 2510-2. Vorschlag – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "pv-is-umfang",
+     "abschnitt": "Grundlagen",
+     "text": "Prüfumfang (Generatorfeld, Wechselrichter, Speicher, AC-Anschluss)",
+     "typ": "text",
+     "pflicht": true
+    },
+    {
+     "id": "pv-is-messgeraet",
+     "abschnitt": "Grundlagen",
+     "text": "Verwendetes Messgerät (Hersteller, Typ, Seriennummer)",
+     "typ": "text",
+     "pflicht": true
+    },
+    {
+     "id": "pv-is-kalibrierung",
+     "abschnitt": "Grundlagen",
+     "text": "Kalibrierung des Messgeräts vorhanden und gültig",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 2,
+     "hinweis": "Wird ohne gültige Kalibrierung gemessen, den Grund unter Bemerkungen angeben"
+    },
+    {
+     "id": "pv-is-einstrahlung",
+     "abschnitt": "Grundlagen",
+     "text": "Bestrahlungsstärke in Modulebene bei den Strangmessungen",
+     "typ": "messwert",
+     "einheit": "W/m²",
+     "pflicht": false,
+     "hinweis": "Dient dem Vergleich der Strangströme; wechselt die Bewölkung, Strangmessungen wiederholen"
+    },
+    {
+     "id": "pv-is-modultemperatur",
+     "abschnitt": "Grundlagen",
+     "text": "Temperatur der Module bei den Strangmessungen",
+     "typ": "messwert",
+     "einheit": "°C",
+     "pflicht": false
+    },
+    {
+     "id": "pv-is-doku-system",
+     "abschnitt": "Dokumentation",
+     "text": "Anlagendaten lückenlos angegeben: Anlagenleistung, Module, Wechselrichter, Errichter, Inbetriebnahmedatum",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-is-doku-plan",
+     "abschnitt": "Dokumentation",
+     "text": "Übersichtsschaltplan liegt vor, mit Strangaufteilung, Leitungen sowie Schutz- und Trenneinrichtungen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-is-doku-datenblaetter",
+     "abschnitt": "Dokumentation",
+     "text": "Datenblätter der Module und Wechselrichter sowie Montage- und Wartungsanleitung vorhanden",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-is-doku-netz",
+     "abschnitt": "Dokumentation",
+     "text": "Netzbetreiber-Anmeldung, Einheitenzertifikat bzw. Nachweis des NA-Schutzes, Eintrag im Marktstammdatenregister",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-is-generator",
+     "abschnitt": "Besichtigen DC",
+     "text": "Module, Unterkonstruktion und Befestigungen ohne Schäden und gemäß Herstellerangaben montiert; Dachhaut dicht",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "pv-is-dc-leitungen",
+     "abschnitt": "Besichtigen DC",
+     "text": "DC-Leitungen UV-beständig, geschützt und frei von Scheuerstellen verlegt; Leitungsschleifen klein gehalten",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "pv-is-stecker",
+     "abschnitt": "Besichtigen DC",
+     "text": "Steckverbinder nur mit Gegenstück desselben Herstellers und Typs verbunden (keine Fremdpaarung), ganz eingerastet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "pv-is-strangsicherung",
+     "abschnitt": "Besichtigen DC",
+     "text": "Wo nötig: Strangsicherungen bzw. Rückstromschutz gemäß Herstellerangaben",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "„entfällt“, wenn je Eingang höchstens zwei Stränge parallel geschaltet sind"
+    },
+    {
+     "id": "pv-is-dc-trennung",
+     "abschnitt": "Besichtigen DC",
+     "text": "DC-Lasttrennschalter vorhanden, für Gleichstrom ausgelegt und beschriftet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "pv-is-spd",
+     "abschnitt": "Besichtigen DC",
+     "text": "Überspannungsschutz auf DC- und AC-Seite",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "vorhanden und in Ordnung"
+      },
+      {
+       "wert": "nicht gefordert"
+      },
+      {
+       "wert": "gefordert, fehlt",
+       "mangel": true,
+       "vorschlag_stufe": 2
+      },
+      {
+       "wert": "Statusanzeige ausgelöst oder defekt",
+       "mangel": true,
+       "vorschlag_stufe": 2
+      }
+     ],
+     "hinweis": "Ist ein äußerer Blitzschutz vorhanden, Trennungsabstand berücksichtigen (DIN EN 62305-3 Beiblatt 5)"
+    },
+    {
+     "id": "pv-is-erdung",
+     "abschnitt": "Besichtigen DC",
+     "text": "Wo gefordert: Unterkonstruktion an Potentialausgleich bzw. Erdung angeschlossen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-is-kennzeichnung",
+     "abschnitt": "Besichtigen DC",
+     "text": "Kennzeichnung: Warnschilder an Generatoranschlusskasten und DC-Trennstelle, Feuerwehrhinweis mit Lageplan am Hausanschluss",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-is-brandschutz",
+     "abschnitt": "Besichtigen DC",
+     "text": "Leitungen an Brandabschnittsgrenzen abgeschottet, Abstand zu Brandwänden eingehalten",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-is-wr-montage",
+     "abschnitt": "Besichtigen AC",
+     "text": "Wechselrichter sicher befestigt, Kühlung nicht behindert, Umgebungsbedingungen gemäß Herstellerangaben",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-is-ac-schutz",
+     "abschnitt": "Besichtigen AC",
+     "text": "AC-Anschluss: Leitungsschutz und RCD-Typ (Typ A oder B) wie vom Wechselrichterhersteller angegeben",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "pv-is-na-schutz",
+     "abschnitt": "Besichtigen AC",
+     "text": "NA-Schutz nach VDE-AR-N 4105 vorhanden, Einstellung gemäß Vorgabe des Netzbetreibers",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "pv-is-zaehler",
+     "abschnitt": "Besichtigen AC",
+     "text": "Zählerplatz mit Zweirichtungs- bzw. Erzeugungszähler vorhanden",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-is-ac-pruefung",
+     "abschnitt": "Prüfen",
+     "text": "Prüfung der AC-Stromkreise nach DIN VDE 0100-600 erfolgt (Schutzleiter, Isolation, Schleifenimpedanz, RCD)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Falls nötig als separate elektrische Anlage mit Messwerten pro Stromkreis erfassen"
+    },
+    {
+     "id": "pv-is-pa",
+     "abschnitt": "Prüfen",
+     "text": "Durchgängigkeit der Schutz- bzw. Potentialausgleichsleiter an der Unterkonstruktion",
+     "typ": "messwert",
+     "einheit": "Ω",
+     "pflicht": false,
+     "hinweis": "Höchsten Messwert eintragen; Verbindungen müssen niederohmig sein"
+    },
+    {
+     "id": "pv-is-straenge",
+     "abschnitt": "Stränge",
+     "text": "Sämtliche Stränge gemessen (Uoc, Isc bzw. Betriebsstrom, Riso), Werte mit den Richtwerten abgeglichen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Messwerte werden unten in der Liste der Stränge erfasst; Isolationswiderstände unter dem Grenzwert gelten dort automatisch als Mangel."
+    },
+    {
+     "id": "pv-is-polaritaet",
+     "abschnitt": "Stränge",
+     "text": "Polarität jedes Strangs vor dem Zuschalten kontrolliert",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Ein verpolter Strang kann Wechselrichter und Strangsicherungen zerstören"
+    },
+    {
+     "id": "pv-is-funktion",
+     "abschnitt": "Funktion",
+     "text": "Wechselrichter speist ins Netz ein, Anzeige und Monitoring funktionieren, Isolationsüberwachung meldet keinen Fehler",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-is-netztrennung",
+     "abschnitt": "Funktion",
+     "text": "Netztrennung: Fällt das Netz aus, trennt sich der Wechselrichter und stellt die Einspeisung ein",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "pv-is-sp-aufstellung",
+     "abschnitt": "Batteriespeicher",
+     "text": "Aufstellung gemäß Herstellerangaben (Abstände, Belüftung, Temperaturbereich, Tragfähigkeit), nicht in Flucht- und Rettungswegen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "pv-is-sp-unterlagen",
+     "abschnitt": "Batteriespeicher",
+     "text": "Datenblatt, Installationsanleitung sowie Speicherpass bzw. Sicherheitsdatenblatt ausgehändigt; Speicher gekennzeichnet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-is-sp-dc",
+     "abschnitt": "Batteriespeicher",
+     "text": "Leitungen und Schutzorgane auf Batterieseite gemäß Herstellerangaben dimensioniert, Trenneinrichtung vorhanden",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "pv-is-sp-bms",
+     "abschnitt": "Batteriespeicher",
+     "text": "Batteriemanagement meldet keinen Fehler, Ladezustand und Zellspannungen schlüssig",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-is-sp-funktion",
+     "abschnitt": "Batteriespeicher",
+     "text": "Lade- und Entladevorgang in Ordnung, Eigenverbrauchsregelung funktioniert",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-is-sp-ersatzstrom",
+     "abschnitt": "Batteriespeicher",
+     "text": "Not- bzw. Ersatzstrom: Umschaltung getestet, im Inselbetrieb allpolig vom Netz getrennt, Schutz gegen elektrischen Schlag im Inselnetz sichergestellt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "VDE-AR-E 2510-2; „entfällt“ ohne Not- oder Ersatzstromfunktion"
+    },
+    {
+     "id": "pv-is-sp-brandschutz",
+     "abschnitt": "Batteriespeicher",
+     "text": "Aufstellraum: keine Brandlasten direkt daneben, Rauchwarnmelder vorhanden (empfohlen)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-is-einweisung",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber unterwiesen (Freischalten, Vorgehen bei Brand, Monitoring), Unterlagen ausgehändigt",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-is-ergebnis",
+     "abschnitt": "Abschluss",
+     "text": "Anlage erfüllt DIN EN 62446-1, Inbetriebnahme möglich",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "pv-is-betreiber",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber umgehend benachrichtigt",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 3,
+     "hinweis": "Liegen gefährliche Mängel vor, Anlage bzw. betroffene Stränge freischalten und sichern",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "pv-is-ergebnis",
+        "ist": "nein"
+       },
+       {
+        "punkt": "pv-is-dc-leitungen",
+        "mangel": true
+       },
+       {
+        "punkt": "pv-is-netztrennung",
+        "mangel": true
+       },
+       {
+        "punkt": "pv-is-sp-aufstellung",
+        "mangel": true
+       },
+       {
+        "punkt": "pv-is-sp-ersatzstrom",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "pv-is-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "pv-is-kalibrierung",
+        "ist": "nein"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-pv-ws",
+   "name": "PV-Anlage mit Speicher – Wartung und Wiederholungsprüfung (DIN EN 62446-1 / VDE 0126-23-1)",
+   "beschreibung": "Wiederholungsprüfung und Wartung gemäß DIN EN 62446-1 (VDE 0126-23-1) und DIN VDE 0105-100: Sichtkontrolle von Generator, Leitungen und Wechselrichter, Ertrag und Fehlerspeicher, Messungen je Strang in der Liste der Stränge, AC-Seite, zusätzlich Zustand und Funktion des Batteriespeichers. Prüfintervall gemäß DGUV Vorschrift 3 bzw. nach Vorgabe von Versicherer und Hersteller anpassen. Vorschlag – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "pv-ws-umfang",
+     "abschnitt": "Grundlagen",
+     "text": "Prüfumfang (Generatorfeld, Wechselrichter, Speicher, AC-Anschluss)",
+     "typ": "text",
+     "pflicht": true
+    },
+    {
+     "id": "pv-ws-messgeraet",
+     "abschnitt": "Grundlagen",
+     "text": "Verwendetes Messgerät (Hersteller, Typ, Seriennummer)",
+     "typ": "text",
+     "pflicht": true
+    },
+    {
+     "id": "pv-ws-kalibrierung",
+     "abschnitt": "Grundlagen",
+     "text": "Kalibrierung des Messgeräts vorhanden und gültig",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 2,
+     "hinweis": "Wird ohne gültige Kalibrierung gemessen, den Grund unter Bemerkungen angeben"
+    },
+    {
+     "id": "pv-ws-einstrahlung",
+     "abschnitt": "Grundlagen",
+     "text": "Bestrahlungsstärke in Modulebene bei den Strangmessungen",
+     "typ": "messwert",
+     "einheit": "W/m²",
+     "pflicht": false,
+     "hinweis": "Dient dem Vergleich der Strangströme; wechselt die Bewölkung, Strangmessungen wiederholen"
+    },
+    {
+     "id": "pv-ws-modultemperatur",
+     "abschnitt": "Grundlagen",
+     "text": "Temperatur der Module bei den Strangmessungen",
+     "typ": "messwert",
+     "einheit": "°C",
+     "pflicht": false
+    },
+    {
+     "id": "pv-ws-doku",
+     "abschnitt": "Dokumentation",
+     "text": "Anlagenunterlagen und letztes Prüfprotokoll liegen vor, Änderungen an der Anlage sind dokumentiert",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-ws-ertrag",
+     "abschnitt": "Betrieb",
+     "text": "Ertrag schlüssig (Monitoring, Abgleich mit Vorjahr und erwartetem Ertrag)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-ws-jahresertrag",
+     "abschnitt": "Betrieb",
+     "text": "Ertrag in den vergangenen 12 Monaten",
+     "typ": "messwert",
+     "einheit": "kWh",
+     "pflicht": false
+    },
+    {
+     "id": "pv-ws-fehlerspeicher",
+     "abschnitt": "Betrieb",
+     "text": "Fehlerspeicher der Wechselrichter abgefragt, keine offenen Fehler (vor allem Isolationsfehler)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-ws-module",
+     "abschnitt": "Besichtigen DC",
+     "text": "Module frei von Glasbruch, Verfärbungen, Delamination und Hotspots; keine hinzugekommene Verschattung, Verschmutzung akzeptabel",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "pv-ws-unterkonstruktion",
+     "abschnitt": "Besichtigen DC",
+     "text": "Unterkonstruktion und Modulklemmen sitzen fest, ohne Korrosion; Dachhaut dicht",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "pv-ws-dc-leitungen",
+     "abschnitt": "Besichtigen DC",
+     "text": "DC-Leitungen und Steckverbinder frei von Scheuerstellen, Tierverbiss und Überhitzungsspuren, sicher befestigt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "pv-ws-gak",
+     "abschnitt": "Besichtigen DC",
+     "text": "Generatoranschlusskasten trocken, ohne Überhitzungsspuren, Strangsicherungen intakt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true,
+     "hinweis": "„entfällt“, wenn kein Generatoranschlusskasten vorhanden ist"
+    },
+    {
+     "id": "pv-ws-spd",
+     "abschnitt": "Besichtigen DC",
+     "text": "Überspannungsschutz auf DC- und AC-Seite",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "vorhanden und in Ordnung"
+      },
+      {
+       "wert": "nicht vorhanden"
+      },
+      {
+       "wert": "Statusanzeige ausgelöst oder defekt",
+       "mangel": true,
+       "vorschlag_stufe": 2
+      }
+     ]
+    },
+    {
+     "id": "pv-ws-dc-trennung",
+     "abschnitt": "Besichtigen DC",
+     "text": "DC-Lasttrennschalter bzw. Feuerwehrschalter lässt sich schalten und ist beschriftet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "pv-ws-kennzeichnung",
+     "abschnitt": "Besichtigen DC",
+     "text": "Warnschilder und Feuerwehrhinweis komplett und lesbar",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-ws-wr",
+     "abschnitt": "Besichtigen AC",
+     "text": "Wechselrichter: Kühlkörper und Lüfter unverdeckt und sauber, keine auffälligen Geräusche, keine Überhitzung",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-ws-ac",
+     "abschnitt": "Besichtigen AC",
+     "text": "AC-Seite nach DIN VDE 0105-100: Leitungen, Schutzorgane und Anschlüsse mängelfrei",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-ws-rcd-taste",
+     "abschnitt": "Prüfen",
+     "text": "RCD über die Prüftaste getestet, Auslösung erfolgt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "„entfällt“, wenn keine RCD vorhanden ist"
+    },
+    {
+     "id": "pv-ws-straenge",
+     "abschnitt": "Stränge",
+     "text": "Sämtliche Stränge gemessen (Uoc, Isc bzw. Betriebsstrom, Riso), Werte mit den Richtwerten abgeglichen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Messwerte werden unten in der Liste der Stränge erfasst; Isolationswiderstände unter dem Grenzwert gelten dort automatisch als Mangel."
+    },
+    {
+     "id": "pv-ws-polaritaet",
+     "abschnitt": "Stränge",
+     "text": "Polarität jedes Strangs vor dem Zuschalten kontrolliert",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "Ein verpolter Strang kann Wechselrichter und Strangsicherungen zerstören"
+    },
+    {
+     "id": "pv-ws-thermografie",
+     "abschnitt": "Prüfen",
+     "text": "Thermografische Untersuchung des Generatorfelds (Kategorie 2)",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "nicht beauftragt"
+      },
+      {
+       "wert": "durchgeführt, unauffällig"
+      },
+      {
+       "wert": "durchgeführt, Auffälligkeiten",
+       "mangel": true,
+       "vorschlag_stufe": 2
+      }
+     ],
+     "hinweis": "Voraussetzung: Einstrahlung über 600 W/m²; Auffälligkeiten unter Bemerkungen erläutern"
+    },
+    {
+     "id": "pv-ws-reinigung",
+     "abschnitt": "Wartung",
+     "text": "Vom Hersteller vorgegebene Wartungsarbeiten erledigt (z. B. Lüfter, Filter, Firmware)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1,
+     "hinweis": "„entfällt“, wenn keine Wartung fällig war"
+    },
+    {
+     "id": "pv-ws-sp-aufstellung",
+     "abschnitt": "Batteriespeicher",
+     "text": "Aufstellort ohne Veränderung: Abstände, Belüftung und Temperatur eingehalten, keine Brandlasten in der Umgebung",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "pv-ws-sp-zustand",
+     "abschnitt": "Batteriespeicher",
+     "text": "Gehäuse und Anschlüsse ohne Schäden und Verformungen, kein auffälliger Geruch, keine Überhitzungsspuren",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "pv-ws-sp-bms",
+     "abschnitt": "Batteriespeicher",
+     "text": "Fehlerspeicher des Batteriemanagements abgefragt, keine offenen Fehler, Software auf aktuellem Stand",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "pv-ws-sp-kapazitaet",
+     "abschnitt": "Batteriespeicher",
+     "text": "Nutzbare Kapazität und Ladezustand schlüssig (Monitoring, Abgleich mit Vorjahr)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "pv-ws-sp-ersatzstrom",
+     "abschnitt": "Batteriespeicher",
+     "text": "Not- bzw. Ersatzstrom: Umschaltung getestet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "„entfällt“ ohne Not- oder Ersatzstromfunktion"
+    },
+    {
+     "id": "pv-ws-frist",
+     "abschnitt": "Abschluss",
+     "text": "Empfohlener Zeitraum bis zur nächsten Wiederholungsprüfung",
+     "typ": "auswahl",
+     "pflicht": true,
+     "optionen": [
+      {
+       "wert": "4 Jahre"
+      },
+      {
+       "wert": "2 Jahre"
+      },
+      {
+       "wert": "1 Jahr"
+      }
+     ],
+     "hinweis": "Nach DGUV Vorschrift 3: 4 Jahre; Versicherer und Hersteller fordern häufig eine jährliche Wartung"
+    },
+    {
+     "id": "pv-ws-ergebnis",
+     "abschnitt": "Abschluss",
+     "text": "Zustand der Anlage ordnungsgemäß, sie darf weiter betrieben werden",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "pv-ws-betreiber",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber sofort informiert",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 3,
+     "hinweis": "Bei gefährlichen Mängeln: Anlage bzw. betroffene Stränge freischalten und sichern",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "pv-ws-ergebnis",
+        "ist": "nein"
+       },
+       {
+        "punkt": "pv-ws-dc-leitungen",
+        "mangel": true
+       },
+       {
+        "punkt": "pv-ws-gak",
+        "mangel": true
+       },
+       {
+        "punkt": "pv-ws-sp-zustand",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "pv-ws-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "pv-ws-kalibrierung",
+        "ist": "nein"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-bs-begehung",
+   "name": "Brandschutzbegehung",
+   "beschreibung": "Begehung des baulichen, anlagentechnischen und organisatorischen Brandschutzes eines Gebäudes oder Bereichs, z. B. durch die Brandschutzbeauftragte bzw. den Brandschutzbeauftragten (DGUV Information 205-003, vfdb-Richtlinie 12-09/01). Technische Anlagen werden nur in Augenschein genommen und ihre Prüfnachweise kontrolliert; geprüft werden sie als eigene Anlagen. Intervall nach Gefährdungsbeurteilung bzw. Vorgabe von Versicherer und Behörde anpassen. Vorschlag – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "bs-teilnehmer",
+     "abschnitt": "Grundlagen",
+     "text": "Teilnehmer der Begehung (Betreiber, Brandschutzbeauftragte(r), Fachkraft für Arbeitssicherheit)",
+     "typ": "text",
+     "pflicht": true
+    },
+    {
+     "id": "bs-umfang",
+     "abschnitt": "Grundlagen",
+     "text": "Begangene Gebäudeteile, Geschosse und Räume",
+     "typ": "text",
+     "pflicht": true,
+     "hinweis": "Nicht zugängliche Bereiche unter Bemerkungen nennen."
+    },
+    {
+     "id": "bs-vorbegehung",
+     "abschnitt": "Grundlagen",
+     "text": "Mängel der letzten Begehung behoben",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Offene Mängel aus dem letzten Protokoll unter Bemerkungen erneut aufführen; „entfällt“ bei der ersten Begehung."
+    },
+    {
+     "id": "bs-nutzung",
+     "abschnitt": "Grundlagen",
+     "text": "Nutzung entspricht der Baugenehmigung bzw. dem Brandschutzkonzept, keine ungenehmigten Umbauten",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Nutzungsänderungen und Umbauten können ein neues Brandschutzkonzept erfordern."
+    },
+    {
+     "id": "bs-wege-frei",
+     "abschnitt": "Flucht- und Rettungswege",
+     "text": "Flucht- und Rettungswege frei, nicht eingeengt und ohne Brandlasten (Lagerungen, Möbel, Dekoration)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true,
+     "hinweis": "Notwendige Flure und Treppenräume: keine brennbaren Stoffe, keine Zündquellen (ASR A2.3, MBO § 35/36)."
+    },
+    {
+     "id": "bs-wege-breite",
+     "abschnitt": "Flucht- und Rettungswege",
+     "text": "Mindestbreite der Wege und Türen eingehalten",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "ASR A2.3, Tabelle 1; Sonderbauten nach Sonderbauvorschrift."
+    },
+    {
+     "id": "bs-ausgaenge",
+     "abschnitt": "Flucht- und Rettungswege",
+     "text": "Notausgänge und Fluchttüren von innen ohne Hilfsmittel zu öffnen, nicht verschlossen oder zugestellt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "bs-zweiter-rw",
+     "abschnitt": "Flucht- und Rettungswege",
+     "text": "Zweiter Rettungsweg vorhanden und nutzbar (Treppe oder Anleiterstelle der Feuerwehr frei)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3
+    },
+    {
+     "id": "bs-kennzeichnung",
+     "abschnitt": "Flucht- und Rettungswege",
+     "text": "Rettungszeichen vorhanden, gut sichtbar und eindeutig (DIN EN ISO 7010, ASR A1.3)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "bs-sibe-sicht",
+     "abschnitt": "Flucht- und Rettungswege",
+     "text": "Sicherheitsbeleuchtung bzw. langnachleuchtende Kennzeichnung vorhanden und ohne erkennbare Ausfälle",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Nur Sichtkontrolle; die Prüfung der Sicherheitsbeleuchtung ist eine eigene Anlage."
+    },
+    {
+     "id": "bs-plaene",
+     "abschnitt": "Flucht- und Rettungswege",
+     "text": "Flucht- und Rettungspläne aktuell, lagerichtig ausgehängt (DIN ISO 23601)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "bs-tueren-schliessen",
+     "abschnitt": "Bauliche Brandschutzmaßnahmen",
+     "text": "Feuer- und Rauchschutztüren schließen selbsttätig, nicht verkeilt, festgebunden oder unterlegt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true,
+     "hinweis": "Offenhalten nur mit zugelassener Feststellanlage (DIN 14677)."
+    },
+    {
+     "id": "bs-tueren-zustand",
+     "abschnitt": "Bauliche Brandschutzmaßnahmen",
+     "text": "Feuer- und Rauchschutztüren unbeschädigt (Dichtungen, Schließer, Kennzeichnungsschild vorhanden)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "bs-abschottung",
+     "abschnitt": "Bauliche Brandschutzmaßnahmen",
+     "text": "Abschottungen von Leitungs- und Kabeldurchführungen in Brandwänden und Decken geschlossen und gekennzeichnet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true,
+     "hinweis": "Neue, nicht verschlossene Durchführungen fotografieren und den Ort angeben."
+    },
+    {
+     "id": "bs-waende",
+     "abschnitt": "Bauliche Brandschutzmaßnahmen",
+     "text": "Brandwände, Brandabschnitte und Unterdecken ohne Öffnungen oder Beschädigungen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "bs-klappen",
+     "abschnitt": "Bauliche Brandschutzmaßnahmen",
+     "text": "Brandschutzklappen zugänglich, Wartungsnachweis vorhanden",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "„entfällt“, wenn keine Lüftungsanlage vorhanden ist."
+    },
+    {
+     "id": "bs-treppenraum",
+     "abschnitt": "Bauliche Brandschutzmaßnahmen",
+     "text": "Rauchabzug im Treppenraum frei, Auslösestellen gekennzeichnet und erreichbar",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "bs-lagerung",
+     "abschnitt": "Brandlasten und Zündquellen",
+     "text": "Lagerung brennbarer Stoffe nur in dafür vorgesehenen Räumen, Abstände zu Zündquellen eingehalten",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "bs-gefahrstoffe",
+     "abschnitt": "Brandlasten und Zündquellen",
+     "text": "Entzündbare Flüssigkeiten und Gase vorschriftsmäßig gelagert (TRGS 510, Sicherheitsschränke)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "bs-abfall",
+     "abschnitt": "Brandlasten und Zündquellen",
+     "text": "Abfälle regelmäßig entsorgt, Abfallbehälter nicht an Fassaden oder in Fluchtwegen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "bs-elektro",
+     "abschnitt": "Brandlasten und Zündquellen",
+     "text": "Keine erkennbaren elektrischen Gefahren (hintereinandergesteckte Mehrfachsteckdosen, beschädigte Leitungen, offene Verteiler)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "bs-elektro-nachweis",
+     "abschnitt": "Brandlasten und Zündquellen",
+     "text": "Prüfnachweise der elektrischen Anlage und der ortsveränderlichen Geräte aktuell (DGUV Vorschrift 3)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "bs-heissarbeiten",
+     "abschnitt": "Brandlasten und Zündquellen",
+     "text": "Heißarbeiten nur mit Erlaubnisschein, Rauchverbot beachtet",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "bs-loescher",
+     "abschnitt": "Löscheinrichtungen",
+     "text": "Feuerlöscher in ausreichender Zahl vorhanden, gekennzeichnet, erreichbar und mit gültiger Prüfplakette",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true,
+     "hinweis": "Nur Sichtkontrolle; die Instandhaltung der Feuerlöscher ist eine eigene Anlage (ASR A2.2, DIN 14406-4)."
+    },
+    {
+     "id": "bs-wandhydrant",
+     "abschnitt": "Löscheinrichtungen",
+     "text": "Wandhydranten und Steigleitungen zugänglich, gekennzeichnet, Prüfnachweis aktuell",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "„entfällt“, wenn nicht vorhanden."
+    },
+    {
+     "id": "bs-loeschanlage",
+     "abschnitt": "Löscheinrichtungen",
+     "text": "Ortsfeste Löschanlage (Sprinkler, Gaslöschanlage) betriebsbereit, Sprinklerköpfe frei, Prüfnachweis aktuell",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "„entfällt“, wenn nicht vorhanden."
+    },
+    {
+     "id": "bs-bma",
+     "abschnitt": "Anlagentechnik",
+     "text": "Brandmeldeanlage ohne Störung, Melder nicht abgedeckt, Wartung und Prüfung nachgewiesen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "hinweis": "„entfällt“, wenn nicht vorhanden."
+    },
+    {
+     "id": "bs-rwa",
+     "abschnitt": "Anlagentechnik",
+     "text": "Rauch- und Wärmeabzug betriebsbereit, Wartung nachgewiesen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "„entfällt“, wenn nicht vorhanden."
+    },
+    {
+     "id": "bs-sibe-nachweis",
+     "abschnitt": "Anlagentechnik",
+     "text": "Sicherheitsbeleuchtung: Prüfbuch geführt, Prüfungen aktuell",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "„entfällt“, wenn nicht vorhanden."
+    },
+    {
+     "id": "bs-feststell",
+     "abschnitt": "Anlagentechnik",
+     "text": "Feststellanlagen an Brandschutztüren: monatliche Kontrolle und jährliche Prüfung nachgewiesen",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "„entfällt“, wenn nicht vorhanden."
+    },
+    {
+     "id": "bs-pruefsv",
+     "abschnitt": "Anlagentechnik",
+     "text": "Prüfungen nach Prüfverordnung (Sachverständige) fristgerecht, Mängel daraus behoben",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "„entfällt“ bei Gebäuden ohne prüfpflichtige Anlagen."
+    },
+    {
+     "id": "bs-zufahrt",
+     "abschnitt": "Feuerwehr",
+     "text": "Feuerwehrzufahrten, Aufstell- und Bewegungsflächen frei und gekennzeichnet (DIN 4066)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "bs-fsd",
+     "abschnitt": "Feuerwehr",
+     "text": "Feuerwehr-Schlüsseldepot, Bedienfeld und Laufkarten aktuell",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "„entfällt“ ohne Aufschaltung zur Feuerwehr."
+    },
+    {
+     "id": "bs-fw-plaene",
+     "abschnitt": "Feuerwehr",
+     "text": "Feuerwehrpläne aktuell und an die Feuerwehr übergeben (DIN 14095)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "„entfällt“, wenn nicht gefordert."
+    },
+    {
+     "id": "bs-hydrant",
+     "abschnitt": "Feuerwehr",
+     "text": "Hydranten vor dem Gebäude frei zugänglich und beschildert",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "bs-bso",
+     "abschnitt": "Organisation",
+     "text": "Brandschutzordnung Teil A ausgehängt, Teil B und C aktuell (DIN 14096)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "bs-unterweisung",
+     "abschnitt": "Organisation",
+     "text": "Beschäftigte im Brandschutz unterwiesen (mindestens jährlich), Nachweis vorhanden",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "bs-helfer",
+     "abschnitt": "Organisation",
+     "text": "Brandschutzhelfer in ausreichender Zahl benannt und ausgebildet (ASR A2.2, in der Regel 5 %)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "bs-raeumung",
+     "abschnitt": "Organisation",
+     "text": "Räumungsübung durchgeführt (Turnus nach Gefährdungsbeurteilung bzw. Sonderbauvorschrift)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "bs-alarmierung",
+     "abschnitt": "Organisation",
+     "text": "Alarmierung und Sammelplatz festgelegt und bekannt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "bs-sofort",
+     "abschnitt": "Abschluss",
+     "text": "Betreiber sofort über den gefährlichen Mangel informiert",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 3,
+     "hinweis": "Erscheint nur bei einem Mangel an einem sicherheitsrelevanten Punkt. Wen und wann informiert in den Bemerkungen festhalten.",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "bs-wege-frei",
+        "mangel": true
+       },
+       {
+        "punkt": "bs-ausgaenge",
+        "mangel": true
+       },
+       {
+        "punkt": "bs-zweiter-rw",
+        "mangel": true
+       },
+       {
+        "punkt": "bs-tueren-schliessen",
+        "mangel": true
+       },
+       {
+        "punkt": "bs-loescher",
+        "mangel": true
+       },
+       {
+        "punkt": "bs-zufahrt",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "bs-foto",
+     "abschnitt": "Abschluss",
+     "text": "Fotos zur Begehung",
+     "typ": "foto",
+     "pflicht": false
+    },
+    {
+     "id": "bs-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen und Fristen zur Mängelbeseitigung",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "bs-sofort",
+        "ist": "nein"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cl-fl-instandhaltung",
+   "name": "Feuerlöscher – Instandhaltung (DIN 14406-4)",
+   "beschreibung": "Instandhaltung der tragbaren Feuerlöscher nach DIN 14406-4 und ASR A2.2 mindestens alle 2 Jahre. Die einzelnen Löscher werden in der Löscherliste abgehakt (Sichtprüfung, Plombe, Druck bzw. Gewicht, Schlauch und Düse, Instandsetzung nach Herstellerangabe); die Checkliste erfasst Ausstattung, Aufstellung und Kennzeichnung. Vorschlag – fachlich prüfen.",
+   "punkte": [
+    {
+     "id": "fl-sachkunde",
+     "abschnitt": "Grundlagen",
+     "text": "Instandhaltung durch Sachkundigen nach DIN 14406-4 (Nachweis, Hersteller-Schulung)",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "fl-intervall",
+     "abschnitt": "Grundlagen",
+     "text": "Instandhaltung im vorgesehenen Abstand (höchstens 2 Jahre, bei starker Beanspruchung kürzer)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1,
+     "hinweis": "ASR A2.2 Nr. 6.2 und DIN 14406-4; bei Abweichung Grund unter Bemerkungen."
+    },
+    {
+     "id": "fl-bemessung",
+     "abschnitt": "Ausstattung",
+     "text": "Grundausstattung ausreichend: Löschmitteleinheiten passend zu Fläche und Brandgefährdung (ASR A2.2, Tabelle 3)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Löschmitteleinheiten (LE) der Löscher in der Liste erfassen; bei geänderter Nutzung oder Fläche neu bemessen."
+    },
+    {
+     "id": "fl-eignung",
+     "abschnitt": "Ausstattung",
+     "text": "Löschmittel passend zu den Brandklassen der Bereiche (z. B. CO₂ an Elektroanlagen, F-Löscher in Küchen)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "fl-verteilung",
+     "abschnitt": "Ausstattung",
+     "text": "Löscher gleichmäßig verteilt, Laufweg zum nächsten Löscher höchstens 20 m",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "fl-anzahl",
+     "abschnitt": "Ausstattung",
+     "text": "Anzahl und Standorte stimmen mit der Liste überein, keine Löscher entfernt oder ergänzt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Fehlende oder zusätzliche Löscher in der Liste nachführen."
+    },
+    {
+     "id": "fl-standort",
+     "abschnitt": "Aufstellung",
+     "text": "Löscher gut sichtbar, leicht erreichbar und nicht verstellt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 3,
+     "foto_bei_nok": true
+    },
+    {
+     "id": "fl-hoehe",
+     "abschnitt": "Aufstellung",
+     "text": "Griffhöhe 0,80 m bis 1,20 m, Halterung fest",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "fl-zeichen",
+     "abschnitt": "Aufstellung",
+     "text": "Standorte mit Brandschutzzeichen F001 gekennzeichnet (DIN EN ISO 7010), ggf. langnachleuchtend",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "fl-schutz",
+     "abschnitt": "Aufstellung",
+     "text": "Löscher vor Witterung, Frost, Hitze und Beschädigung geschützt (z. B. Schutzhaube, Schrank im Freien)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "fl-ausserbetrieb",
+     "abschnitt": "Instandhaltung",
+     "text": "Nicht mehr instandsetzbare oder veraltete Löscher (z. B. ohne Ersatzteile, Behälter vor 1993 ohne CE) ausgesondert",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2,
+     "hinweis": "Ausgesonderte Löscher in der Liste stilllegen."
+    },
+    {
+     "id": "fl-druckpruefung",
+     "abschnitt": "Instandhaltung",
+     "text": "Fällige Druckbehälterprüfungen bzw. Instandsetzungen (laut Behälter oder Hersteller) erledigt oder beauftragt",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 2
+    },
+    {
+     "id": "fl-ersatz",
+     "abschnitt": "Instandhaltung",
+     "text": "Defekte oder fehlende Löscher sofort ersetzt bzw. Ersatzgerät gestellt",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 3,
+     "hinweis": "Sonst Betreiber informieren und Ersatztermin in den Bemerkungen festhalten.",
+     "nur_wenn": {
+      "eine": [
+       {
+        "punkt": "fl-anzahl",
+        "mangel": true
+       },
+       {
+        "punkt": "fl-standort",
+        "mangel": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "fl-plakette",
+     "abschnitt": "Instandhaltung",
+     "text": "Prüfplakette mit Datum der nächsten Instandhaltung an allen geprüften Löschern angebracht",
+     "typ": "ja_nein",
+     "pflicht": true,
+     "gut": "ja",
+     "vorschlag_stufe": 1
+    },
+    {
+     "id": "fl-unterweisung",
+     "abschnitt": "Organisation",
+     "text": "Beschäftigte in der Handhabung unterwiesen, Brandschutzhelfer benannt (ASR A2.2)",
+     "typ": "status",
+     "pflicht": true,
+     "vorschlag_stufe": 1,
+     "hinweis": "„entfällt“, wenn nicht Teil des Auftrags."
+    },
+    {
+     "id": "fl-foto",
+     "abschnitt": "Abschluss",
+     "text": "Fotos",
+     "typ": "foto",
+     "pflicht": false
+    },
+    {
+     "id": "fl-bemerkung",
+     "abschnitt": "Abschluss",
+     "text": "Bemerkungen",
+     "typ": "text",
+     "pflicht": false,
+     "wirkungen": [
+      {
+       "wenn": {
+        "punkt": "fl-ersatz",
+        "ist": "nein"
+       },
+       "pflicht": true
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

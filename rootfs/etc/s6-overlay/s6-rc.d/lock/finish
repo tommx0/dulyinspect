@@ -1,0 +1,4 @@
+#!/bin/bash
+# 125: do not restart. s6-rc then reports the service as failed and the container stops (S6_BEHAVIOUR_IF_STAGE2_FAILS=2).
+[[ $1 != 0 && $1 != 256 ]] && exit 125
+exit 0

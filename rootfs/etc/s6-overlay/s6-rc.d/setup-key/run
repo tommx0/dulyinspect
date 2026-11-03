@@ -1,0 +1,16 @@
+#!/bin/bash
+# Initial setup in the browser: as soon as the first admin exists, delete the setup key file
+# and remove a key written into konfig.js (SETUP_WITHOUT_KEY=yes).
+exec 2>&1
+source /usr/local/lib/instance/common.sh
+load_secrets
+while [[ -e $SETUP_KEY_FILE ]] || grep -q einrichtungsschluessel /run/instance/konfig.js; do
+  if [[ $(psql_admin -c "select count(*) from auth.users" 2>/dev/null) =~ ^[1-9] ]]; then
+    rm -f "$SETUP_KEY_FILE"
+    write_config
+    echo "First admin created: setup key removed."
+    break
+  fi
+  sleep 5
+done
+exec sleep infinity

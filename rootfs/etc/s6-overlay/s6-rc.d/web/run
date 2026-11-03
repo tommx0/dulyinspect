@@ -1,0 +1,6 @@
+#!/bin/bash
+exec 2>&1
+source /usr/local/lib/instance/common.sh
+load_secrets
+SERVICE_ENV=(XDG_DATA_HOME=/data/caddy XDG_CONFIG_HOME=/data/caddy)
+run_as web caddy run --config /etc/instance/caddy/web.caddy --adapter caddyfile
