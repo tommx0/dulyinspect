@@ -1,0 +1,12 @@
+# Version updates for the GitHub Actions of the workflow (pinned to commit hashes).
+# The app dependencies in app/ are updated in the app repository and come in with sync-app.sh;
+# Dependabot still reports known vulnerabilities in them as security alerts.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
