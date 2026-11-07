@@ -2,13 +2,12 @@
 export const SEITENB: Record<string, string> = {
   // Lizenznachweis
   'Lizenzbedingungen: Zustimmungen': 'Licence terms: acceptances',
-  'Jeder Benutzer akzeptiert die Lizenzbedingungen nach der Erstinstallation und nach jedem Update einmal. Festgehalten werden Zeitpunkt, Benutzer, Version und IP-Adresse.': 'Every user accepts the licence terms once after the initial installation and after every update. The time, user, version and IP address are recorded.',
+  'Jeder Benutzer akzeptiert die Lizenzbedingungen nach der Erstinstallation und nach jedem Update einmal. Festgehalten werden Zeitpunkt, Benutzer und Version.': 'Every user accepts the licence terms once after the initial installation and after every update. The time, user and version are recorded.',
   'Noch keine Zustimmungen erfasst.': 'No acceptances recorded yet.',
   'Datum und Uhrzeit': 'Date and time',
   'Benutzer': 'User',
   'Version': 'Version',
   'Stand': 'Revision',
-  'IP-Adresse': 'IP address',
   'unbekannt': 'unknown',
   // Melder- und Etikettsuche
   'Melder {code}': 'Detector {code}',

@@ -1,5 +1,5 @@
 // Lizenzbedingungen müssen je Benutzer nach der Erstinstallation und nach jedem Update (neue App-Version) einmal akzeptiert werden.
-// Der Nachweis (Benutzer, Zeitpunkt, IP) liegt in der Datenbank (lizenz_akzeptanz). Zusätzlich merkt sich das Gerät die akzeptierte
+// Der Nachweis (Benutzer, Zeitpunkt, Version) liegt in der Datenbank (lizenz_akzeptanz). Zusätzlich merkt sich das Gerät die akzeptierte
 // Version, damit die Abfrage offline nicht wiederkommt; eine ohne Netz erteilte Zustimmung wird später nachgemeldet.
 import { LIZENZBEDINGUNGEN_STAND } from './lizenzbedingungen'
 import { supabase } from './supabase'

@@ -600,13 +600,13 @@ isOneToOne: false
                   ]
                 },"lizenz_akzeptanz": {
                   Row: {
-                    "akzeptiert_am": string,"benutzer_id": string,"benutzer_name": string,"id": string,"ip": string | null,"lizenz_stand": string | null,"user_agent": string | null,"version": string
+                    "akzeptiert_am": string,"benutzer_id": string,"benutzer_name": string,"id": string,"lizenz_stand": string | null,"version": string
                   }
                   Insert: {
-                    "akzeptiert_am"?: string,"benutzer_id": string,"benutzer_name": string,"id"?: string,"ip"?: string | null,"lizenz_stand"?: string | null,"user_agent"?: string | null,"version": string
+                    "akzeptiert_am"?: string,"benutzer_id": string,"benutzer_name": string,"id"?: string,"lizenz_stand"?: string | null,"version": string
                   }
                   Update: {
-                    "akzeptiert_am"?: string,"benutzer_id"?: string,"benutzer_name"?: string,"id"?: string,"ip"?: string | null,"lizenz_stand"?: string | null,"user_agent"?: string | null,"version"?: string
+                    "akzeptiert_am"?: string,"benutzer_id"?: string,"benutzer_name"?: string,"id"?: string,"lizenz_stand"?: string | null,"version"?: string
                   }
                   Relationships: [
                     {
