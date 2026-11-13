@@ -197,10 +197,12 @@ Browser ──HTTPS──▶ reverse proxy ──HTTP──▶ :8080 Caddy (web.
   core ([`core.sql`](rootfs/usr/local/lib/instance/core.sql)) creates the roles and schemas the services and the app expect.
   `postgres` is not a superuser, as with Supabase. LLVM is removed (`jit = off`).
 - **Startup order** (s6-rc): `lock` → `prepare` → `db` → `auth`, `rest`, `storage`, `realtime`, `edge`, `internal` → `setup`
-  → `web`, `setup-key`. If a step fails, the container stops (`S6_BEHAVIOUR_IF_STAGE2_FAILS=2`).
+  → `web`, `setup-key`, `mail-takt`. If a step fails, the container stops (`S6_BEHAVIOUR_IF_STAGE2_FAILS=2`).
   - [`prepare.sh`](rootfs/usr/local/lib/instance/prepare.sh): folders, secrets, `konfig.js`, create the database or back it up before an update.
   - [`setup.sh`](rootfs/usr/local/lib/instance/setup.sh): app migrations, Realtime tenant, first admin or setup key.
   - `setup-key`: deletes `SETUP_KEY.txt` once the first admin exists.
+  - `mail-takt`: once an hour (from minute 5) calls the Edge Function `mail-takt`, which sends the status email when it is
+    due (app 2.92+, Einstellungen → Mail). Missed hours are caught up on the next run.
 - **Isolation**: every service runs as its own user and only gets the variables its run script passes (`S6_KEEP_ENV=0`,
   `run_as` in [`common.sh`](rootfs/usr/local/lib/instance/common.sh)). The superuser is only reachable via the socket for the OS user `postgres`.
 - **Runtime configuration**: the frontend is the same for every instance. Address and public key are in `/konfig.js`, written on

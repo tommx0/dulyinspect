@@ -1,0 +1,21 @@
+#!/bin/bash
+# Mail (app 2.92+): once an hour from minute 5, call the Edge Function mail-takt (status email). The function decides
+# itself whether anything is due and catches up on missed runs, so a restart or a missed hour does no harm.
+# The container has no pg_cron job for this because pg_cron would also need pg_net to call HTTP.
+exec 2>&1
+source /usr/local/lib/instance/common.sh
+load_secrets
+last=""
+while true; do
+  hour=$(date -u +%Y-%m-%dT%H); minute=$((10#$(date -u +%M)))
+  if (( minute >= 5 )) && [[ $hour != "$last" ]]; then
+    last=$hour
+    if ! out=$(curl -fsS --max-time 90 -X POST -H "Authorization: Bearer $SERVICE_ROLE_KEY" -H 'Content-Type: application/json' -d '{}' \
+        http://127.0.0.1:9000/mail-takt 2>&1); then
+      echo "mail-takt failed: ${out:0:300}"
+    elif [[ $out == *'"gesendet"'* || $out == *'"fehler"'* ]]; then
+      echo "mail-takt: ${out:0:300}"
+    fi
+  fi
+  sleep 60
+done
