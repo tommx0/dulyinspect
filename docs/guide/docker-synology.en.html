@@ -315,6 +315,21 @@ docker compose logs -f</code></pre>
   <li>On the phone, open the address and install it via “Add to Home Screen”. Only then does offline use work reliably, especially on the iPhone.</li>
 </ol>
 
+<h3>7.8 Forgotten admin password</h3>
+<p>If there is a second admin, they set a new password under <span class="pfad">Benutzer → Passwort</span>. That is the simplest way, so it is best to create two admin accounts from the start.
+  There is no “forgot password” function by email, and changing <code>ADMIN_PASSWORD</code> later has no effect (section 4).</p>
+<p>If no other admin is available, the <code>reset-admin</code> command in the container helps. It needs access to the container, but no password of the app:</p>
+<ol class="schritt">
+  <li>Synology: <span class="pfad">Container Manager → Container → dulyinspect → Details → Terminal → Create → Launch with command</span>, command <code>bash</code>.
+    Or via SSH: <code>sudo docker exec -it dulyinspect bash</code>. Linux server: <code>docker exec -it dulyinspect bash</code>.</li>
+  <li>Enter <code>reset-admin</code>. The command lists all admins with their email address.</li>
+  <li>Enter <code>reset-admin admin@company.com</code>. The command shows a new one-time password (for example <code>Ab3d-Ef5h-…</code>). It is shown only now and stored nowhere, not in the container log either.</li>
+  <li>Log in with the one-time password. The app asks for a new password of your own right away.</li>
+</ol>
+<p>If the phone with the authenticator app is lost too: <code>reset-admin admin@company.com --two-factor</code>. This also removes the second factors; if two-factor login is required, the app sets up a new authenticator app at the next login.
+  The command only reactivates a deactivated admin when no active admin is left. Every reset is listed in the app under <span class="pfad">System → Logdateien</span> (user “Container (reset-admin)”).</p>
+<p class="hinweis">Whoever has access to the container can read and change the whole instance, with or without this command. So protect access to the Synology (DSM administrators, SSH) or the Docker server.</p>
+
 <h2>8. Backups</h2>
 <p>The database files under <code>data/postgres</code> must <b>not</b> be copied while the container is running. Such a copy may be unusable.
   These three methods are safe, ideally combined:</p>
@@ -418,6 +433,7 @@ docker compose logs -f</code></pre>
   <tr><td>Camera or QR scanning does not work, the app cannot be installed</td><td>The app is running without HTTPS. Open it via the reverse proxy with a certificate (section 7.6).</td></tr>
   <tr><td>Changes by other inspectors only appear after a reload</td><td>The WebSocket headers are missing in the reverse proxy (section 7.6, step 3).</td></tr>
   <tr><td>Sign-in works, then the error „keine Verbindung“ (no connection)</td><td><code>APP_URL</code> does not match the address in the browser. Adjust it and recreate the container.</td></tr>
+  <tr><td>An admin has forgotten the password</td><td>Another admin sets a new one under <span class="pfad">Benutzer → Passwort</span>, otherwise <code>reset-admin</code> in the container (section 7.8).</td></tr>
   <tr><td>Container does not start, port in use</td><td>Change the left port (8090) to a free one, in the reverse proxy as well.</td></tr>
 </table>
 

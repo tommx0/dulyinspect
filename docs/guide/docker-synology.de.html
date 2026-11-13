@@ -313,6 +313,21 @@ docker compose logs -f</code></pre>
   <li>Auf dem Handy die Adresse öffnen und über „Zum Home-Bildschirm“ installieren. Erst dann funktioniert die Offline-Nutzung zuverlässig, besonders auf dem iPhone.</li>
 </ol>
 
+<h3>7.8 Admin-Passwort vergessen</h3>
+<p>Gibt es einen zweiten Admin, setzt er unter <span class="pfad">Benutzer → Passwort</span> ein neues Passwort. Das ist der einfachste Weg; legen Sie deshalb am besten von Anfang an zwei Admin-Zugänge an.
+  Eine Funktion „Passwort vergessen“ per E-Mail gibt es nicht, und ein späteres Ändern von <code>ADMIN_PASSWORD</code> wirkt nicht (Abschnitt 4).</p>
+<p>Ist kein anderer Admin da, hilft der Befehl <code>reset-admin</code> im Container. Er braucht Zugriff auf den Container, aber kein Passwort der App:</p>
+<ol class="schritt">
+  <li>Synology: <span class="pfad">Container Manager → Container → dulyinspect → Details → Terminal → Erstellen → Mit Befehl starten</span>, Befehl <code>bash</code>.
+    Alternativ per SSH: <code>sudo docker exec -it dulyinspect bash</code>. Linux-Server: <code>docker exec -it dulyinspect bash</code>.</li>
+  <li><code>reset-admin</code> eingeben. Der Befehl zeigt alle Admins mit E-Mail-Adresse.</li>
+  <li><code>reset-admin admin@firma.de</code> eingeben. Der Befehl zeigt ein neues Einmal-Passwort (zum Beispiel <code>Ab3d-Ef5h-…</code>). Es wird nur jetzt angezeigt und nirgends gespeichert, auch nicht im Protokoll des Containers.</li>
+  <li>Mit dem Einmal-Passwort anmelden. Die App verlangt sofort ein eigenes neues Passwort.</li>
+</ol>
+<p>Ist auch das Handy mit der Authenticator-App verloren: <code>reset-admin admin@firma.de --two-factor</code>. Das entfernt zusätzlich die zweiten Faktoren; bei Zwei-Faktor-Pflicht richtet die App bei der nächsten Anmeldung eine neue Authenticator-App ein.
+  Einen deaktivierten Admin aktiviert der Befehl nur wieder, wenn kein aktiver Admin mehr übrig ist. Jedes Zurücksetzen steht in der App unter <span class="pfad">System → Logdateien</span> (Benutzer „Container (reset-admin)“).</p>
+<p class="hinweis">Wer Zugriff auf den Container hat, kann die ganze Instanz lesen und ändern, mit oder ohne diesen Befehl. Schützen Sie deshalb den Zugang zur Synology (DSM-Administratoren, SSH) bzw. zum Docker-Server.</p>
+
 <h2>8. Datensicherung</h2>
 <p>Die Datenbankdateien unter <code>data/postgres</code> dürfen <b>nicht</b> im laufenden Betrieb kopiert werden. Eine solche Kopie kann unbrauchbar sein.
   Sicher sind diese drei Wege, am besten kombiniert:</p>
@@ -416,6 +431,7 @@ docker compose logs -f</code></pre>
   <tr><td>Kamera bzw. QR-Scan geht nicht, App lässt sich nicht installieren</td><td>Die App läuft ohne HTTPS. Über den Reverse Proxy mit Zertifikat aufrufen (Abschnitt 7.6).</td></tr>
   <tr><td>Änderungen anderer Prüfer erscheinen erst nach dem Neuladen</td><td>WebSocket-Kopfzeilen im Reverse Proxy fehlen (Abschnitt 7.6, Schritt 3).</td></tr>
   <tr><td>Anmeldung klappt, danach Fehler „keine Verbindung“</td><td><code>APP_URL</code> stimmt nicht mit der Adresse im Browser überein. Anpassen und Container neu erzeugen.</td></tr>
+  <tr><td>Admin hat das Passwort vergessen</td><td>Ein anderer Admin setzt es unter <span class="pfad">Benutzer → Passwort</span> neu, sonst <code>reset-admin</code> im Container (Abschnitt 7.8).</td></tr>
   <tr><td>Container startet nicht, Port belegt</td><td>Den linken Port (8090) auf einen freien ändern, auch im Reverse Proxy.</td></tr>
 </table>
 

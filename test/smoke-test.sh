@@ -2,7 +2,7 @@
 # Smoke test for a built image, without a browser (runs locally and in the GitHub workflow):
 #   test/smoke-test.sh [image]      default dulyinspect:latest
 # Run 1: first start with the admin from ADMIN_*, konfig.js, blocked API descriptions, login, REST with RLS, uploads,
-#        Realtime handshake, backup.sh, volume lock.
+#        Realtime handshake, backup.sh, reset-admin, volume lock.
 # Run 2: simulated update from a version with the German folder and variable names: folders renamed, backup before the
 #        update, data and keys kept, xattr fallback (as on storage without extended attributes, e.g. Docker Desktop on a Mac).
 # Run 3: no ADMIN_PASSWORD – initial setup in the browser with the setup key from data/SETUP_KEY.txt.
@@ -80,6 +80,32 @@ check "Realtime WebSocket (101)" bash -c "curl -s -o /dev/null -w '%{http_code}'
   -H 'Sec-WebSocket-Version: 13' -H 'Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==' '$B/realtime/v1/websocket?apikey=$ANON&vsn=1.0.0' | grep -q 101"
 check "Edge Function reachable" bash -c "curl -s -X POST $B/functions/v1/ersteinrichtung -H 'Content-Type: application/json' -d '{}' | grep -q fehler"
 check "backup.sh" docker exec "$NAME" /usr/local/lib/instance/backup.sh 3
+
+# Emergency password reset from the command line: one-time password, change at next login, log entry
+check "reset-admin lists the admins" bash -c "docker exec $NAME reset-admin | grep -q 'admin@smoke.test'"
+check "reset-admin refuses unknown users" bash -c "! docker exec $NAME reset-admin nobody@smoke.test"
+# A second factor to remove (an unverified TOTP enrolment is enough)
+curl -fsS -X POST "$B/auth/v1/factors" -H "apikey: $ANON" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' \
+  -d '{"factor_type":"totp","friendly_name":"smoke"}' >/dev/null
+RESET=$(docker exec "$NAME" reset-admin ADMIN@smoke.test --two-factor 2>&1)
+NEWPW=$(sed -n 's/^    \([A-Za-z0-9-]\{19\}\)$/\1/p' <<<"$RESET")
+if [[ -n $NEWPW ]]; then ok "reset-admin: one-time password"; else fail "reset-admin: one-time password"; echo "$RESET"; fi
+FACTORS=$(sql "$NAME" "select count(*) from auth.mfa_factors")
+if [[ $FACTORS == 0 ]] && grep -q 'Second factors removed: 1' <<<"$RESET"; then ok "reset-admin --two-factor: factor removed"; else fail "reset-admin --two-factor: factor removed"; fi
+T=$(token); if [[ -z $T ]]; then ok "reset-admin: old password no longer works"; else fail "reset-admin: old password no longer works"; fi
+check "reset-admin: new password works" bash -c "curl -fsS -X POST '$B/auth/v1/token?grant_type=password' -H 'apikey: $ANON' \
+  -H 'Content-Type: application/json' -d '{\"email\":\"admin@smoke.test\",\"password\":\"$NEWPW\"}' | grep -q access_token"
+CHANGE=$(sql "$NAME" "select count(*) from intern.passwort_vorgabe v join benutzer b on b.id = v.benutzer_id where b.email = 'admin@smoke.test'")
+if [[ $CHANGE == 1 ]]; then ok "reset-admin: change at next login"; else fail "reset-admin: change at next login"; fi
+LOGGED=$(sql "$NAME" "select count(*) from log_zeile where zeile like '%reset-admin%Passwort neu gesetzt%admin@smoke.test%'")
+if [[ $LOGGED == 1 ]]; then ok "reset-admin: log entry"; else fail "reset-admin: log entry"; fi
+check "reset-admin: password not in the container log" bash -c "! docker logs $NAME 2>&1 | grep -qF '$NEWPW'"
+# Back to the original password for the rest of the test (as an admin would do at the next login)
+UID_ADMIN=$(sql "$NAME" "select id from benutzer where email = 'admin@smoke.test'")
+SRK=$(docker exec "$NAME" sh -c '. /data/secrets/instance.env; echo $SERVICE_ROLE_KEY')
+docker exec "$NAME" curl -fsS -X PUT "http://127.0.0.1:9999/admin/users/$UID_ADMIN" -H "Authorization: Bearer $SRK" \
+  -H 'Content-Type: application/json' -d '{"password":"smoke-test-12345"}' >/dev/null
+sql "$NAME" "delete from intern.passwort_vorgabe" >/dev/null
 
 # Volume lock: a second container on the same volume must exit without touching the data
 docker run -d --name "$NAME-two" -v "$VOL:/data" "$IMAGE" >/dev/null

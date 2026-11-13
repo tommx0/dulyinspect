@@ -1,0 +1,105 @@
+#!/bin/bash
+# Emergency access when an admin has forgotten the password (or lost the authenticator app) and no other admin can help.
+#   docker exec -it dulyinspect reset-admin                      list the admins
+#   docker exec -it dulyinspect reset-admin <email>              new one-time password, to be changed at the next login
+#   docker exec -it dulyinspect reset-admin <email> --two-factor also remove the second factors (authenticator app lost)
+# Works like "Benutzer → Passwort" in the app (Edge Function admin-benutzer): through the Auth API with the service key,
+# then the "change at next login" mark and an entry in the app's log. The password is shown once and stored nowhere; it does
+# not appear in the container log (docker exec output is not part of it).
+# Whoever can run docker exec controls the whole instance anyway, so this opens no new way in.
+source /usr/local/lib/instance/common.sh
+
+usage() { echo "Usage: reset-admin [<email>] [--two-factor]" >&2; exit 2; }
+EMAIL=""; TWO_FACTOR=no
+for a in "$@"; do
+  case $a in
+    --two-factor) TWO_FACTOR=yes ;;
+    -h|--help) usage ;;
+    -*) echo "Unknown option: $a" >&2; usage ;;
+    *) [[ -z $EMAIL ]] || usage; EMAIL=$a ;;
+  esac
+done
+
+[[ $EUID == 0 ]] || { echo "Run as root: docker exec -it <container> reset-admin …" >&2; exit 1; }
+[[ -f $SECRETS ]] || { echo "No instance data in /data – is this the running DulyInspect container?" >&2; exit 1; }
+load_secrets
+psql_admin -c "select 1" >/dev/null 2>&1 || { echo "The database is not running. Wait until the container log shows \"Setup complete\"." >&2; exit 1; }
+wait_for 30 curl -fs http://127.0.0.1:9999/health || { echo "The Auth service is not running." >&2; exit 1; }
+
+# Admins without the support access (that one is only ever enabled from within the app)
+ADMINS=$(psql_admin -F $'\t' -c "select email, name, case when aktiv then 'active' else 'inactive' end from benutzer
+  where rolle = 'admin' and not support order by aktiv desc, email")
+if [[ -z $EMAIL ]]; then
+  if [[ -z $ADMINS ]]; then echo "There is no admin yet: use the initial setup in the browser (key in data/SETUP_KEY.txt)."; exit 0; fi
+  echo "Admins of this instance:"; sed 's/^/  /' <<<"$ADMINS"
+  echo; echo "New password for one of them: reset-admin <email>   (add --two-factor if the authenticator app is lost too)"
+  exit 0
+fi
+
+ROW=$(psql_admin -F $'\t' -v email="$EMAIL" <<'SQL'
+select id, email, aktiv, zwei_faktor from benutzer where lower(email) = lower(:'email') and rolle = 'admin' and not support
+SQL
+)
+if [[ -z $ROW ]]; then
+  echo "No admin with the email address \"$EMAIL\". Admins of this instance:" >&2
+  sed 's/^/  /' <<<"${ADMINS:-(none)}" >&2
+  echo "Other users get a new password from an admin in the app (Benutzer → Passwort)." >&2
+  exit 1
+fi
+IFS=$'\t' read -r ID EMAIL ACTIVE TF_REQUIRED <<<"$ROW"  # the address as stored, not as typed
+
+# A deactivated admin is only reactivated when no active admin is left (otherwise that admin can do it in the app)
+REACTIVATE=no
+if [[ $ACTIVE == f ]]; then
+  if [[ $(psql_admin -c "select count(*) from benutzer where rolle = 'admin' and aktiv and not support") != 0 ]]; then
+    echo "\"$EMAIL\" is deactivated. An active admin can reactivate it in the app (Benutzer); choose an active admin here." >&2
+    exit 1
+  fi
+  REACTIVATE=yes
+fi
+
+auth_api() { # auth_api <method> <path> [json]
+  curl -fsS -X "$1" "http://127.0.0.1:9999$2" -H "Authorization: Bearer $SERVICE_ROLE_KEY" -H "apikey: $SERVICE_ROLE_KEY" \
+    -H 'Content-Type: application/json' ${3:+--data-binary "$3"}
+}
+
+# One-time password: 16 characters without ones that are easy to confuse (0/O, 1/l/I), in groups of four
+PASSWORD=$(openssl rand -base64 96 | tr -dc 'A-HJ-NP-Za-km-z2-9' | cut -c1-16 | sed 's/.\{4\}/&-/g; s/-$//')
+[[ ${#PASSWORD} == 19 ]] || { echo "Could not generate a password." >&2; exit 1; }
+
+BODY=$(P="$PASSWORD" R="$REACTIVATE" node -e '
+  const e = process.env
+  process.stdout.write(JSON.stringify({ password: e.P, ...(e.R === "yes" ? { ban_duration: "none" } : {}) }))')
+auth_api PUT "/admin/users/$ID" "$BODY" >/dev/null || { echo "The Auth service refused the new password." >&2; exit 1; }
+[[ $REACTIVATE == no ]] || psql_admin -c "update benutzer set aktiv = true where id = '$ID'"
+psql_admin -c "select passwort_aendern_setzen('$ID')" >/dev/null
+
+REMOVED=0
+if [[ $TWO_FACTOR == yes ]]; then
+  FACTORS=$(auth_api GET "/admin/users/$ID/factors") || { echo "Could not read the second factors." >&2; exit 1; }
+  for F in $(node -e '
+      const j = JSON.parse(process.argv[1]); for (const f of (Array.isArray(j) ? j : j.factors ?? [])) console.log(f.id)' "$FACTORS"); do
+    auth_api DELETE "/admin/users/$ID/factors/$F" >/dev/null || { echo "Could not remove a second factor." >&2; exit 1; }
+    REMOVED=$((REMOVED + 1))
+  done
+fi
+
+# Entry in the app's log (System → Logdateien), in the app's language like the entries of the Edge Function
+DETAILS="$EMAIL (bei der nächsten Anmeldung zu ändern)"
+[[ $REACTIVATE == no ]] || DETAILS+="; wieder aktiviert"
+[[ $TWO_FACTOR == no ]] || DETAILS+="; Zwei-Faktor-Anmeldung zurückgesetzt ($REMOVED Faktor(en))"
+psql_admin -v d="$DETAILS" <<'SQL' >/dev/null
+select log_schreiben('Container (reset-admin)', 'Passwort neu gesetzt', :'d')
+SQL
+
+echo "New one-time password for $EMAIL:"
+echo
+echo "    $PASSWORD"
+echo
+echo "Shown only now and stored nowhere. At the next login the app asks for a new password of your own."
+[[ $REACTIVATE == no ]] || echo "The admin was deactivated and has been reactivated."
+if [[ $TWO_FACTOR == yes ]]; then
+  echo "Second factors removed: $REMOVED.$([[ $TF_REQUIRED == t ]] && echo ' Two-factor login stays required: the app sets up a new authenticator app at the next login.')"
+elif [[ $TF_REQUIRED == t ]]; then
+  echo "Two-factor login stays as it is. If the authenticator app is lost too: reset-admin $EMAIL --two-factor"
+fi

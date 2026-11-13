@@ -128,6 +128,22 @@ docker exec dulyinspect /usr/local/lib/instance/backup.sh 14   # keeps the lates
 This writes a consistent database dump to `backups/`. Back up the whole data folder except `postgres/` as well: `storage/`,
 `storage-xattr/` and `secrets/` are needed for a restore. The app also has its own backup („Datensicherung“) that includes files.
 
+## Forgotten admin password
+
+Another admin sets a new password in the app (Benutzer → Passwort). If there is none, use the emergency command in the
+container (no app password needed, only access to the container):
+
+```sh
+docker exec -it dulyinspect reset-admin                          # list the admins
+docker exec -it dulyinspect reset-admin admin@example.com        # new one-time password, to be changed at the next login
+docker exec -it dulyinspect reset-admin admin@example.com --two-factor   # also remove the second factors (phone lost)
+```
+
+The one-time password is shown once and stored nowhere (not in the container log). The reset goes through the Auth API
+like „Passwort“ in the app's user management, marks the password for change at the next login and is written to the app's
+log (System → Logdateien, user „Container (reset-admin)“). A deactivated admin is only reactivated when no active admin is
+left. Changing `ADMIN_PASSWORD` later does not reset anything; there is no password reset by email.
+
 ## Updates
 
 Pull or import the new image and recreate the container (`docker compose up -d`). On the first start with a new app version:

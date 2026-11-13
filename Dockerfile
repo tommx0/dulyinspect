@@ -99,7 +99,7 @@ RUN rm -f /opt/functions/.env
 COPY --from=frontend /app-version.json /opt/app-package.json
 COPY rootfs/ /
 
-RUN chmod 755 /usr/local/lib/instance/*.sh \
+RUN chmod 755 /usr/local/lib/instance/*.sh /usr/local/bin/reset-admin \
     && mkdir -p /var/run/postgresql && chown postgres:postgres /var/run/postgresql
 
 ENV PATH=/usr/lib/postgresql/15/bin:/command:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
