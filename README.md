@@ -144,7 +144,9 @@ docker exec -it dulyinspect reset-admin admin@example.com --two-factor   # also 
 The one-time password is shown once and stored nowhere (not in the container log). The reset goes through the Auth API
 like „Passwort“ in the app's user management, marks the password for change at the next login and is written to the app's
 log (System → Logdateien, user „Container (reset-admin)“). A deactivated admin is only reactivated when no active admin is
-left. Changing `ADMIN_PASSWORD` later does not reset anything; there is no password reset by email.
+left. Changing `ADMIN_PASSWORD` later does not reset anything. From app 2.92 on, users can also reset their own password
+by email („Passwort vergessen?“ on the login page) once a mail server is set up (`SMTP_*` above, or in the app under
+Einstellungen → Mail).
 
 ## Updates
 
