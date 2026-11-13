@@ -427,4 +427,22 @@ export const KOMPONENTENB: Record<string, string> = {
   'Unbekannte Anlagenart „{art}“.': 'Unknown system category “{art}”.',
   '{name} (+{n} Prüfart(en))': '{name} (+{n} inspection type(s))',
   '{name} (Entwurf v{version})': '{name} (draft v{version})',
+  // Passwort vergessen (src/auth.tsx, PasswortAendern)
+  'Der Link zum Zurücksetzen des Passworts ist ungültig, abgelaufen oder schon benutzt. Bitte einen neuen anfordern.': 'The password reset link is invalid, has expired or has already been used. Please request a new one.',
+  'Die Anfrage ließ sich nicht senden. Bitte prüfen Sie die Verbindung und versuchen es erneut.': 'The request could not be sent. Please check the connection and try again.',
+  'Geben Sie die E-Mail-Adresse Ihres Zugangs ein. Wir schicken Ihnen einen Link, mit dem Sie ein neues Passwort festlegen.': 'Enter the email address of your account. We will send you a link to set a new password.',
+  'Gehört {email} zu einem Zugang, kommt in den nächsten Minuten eine Mail mit einem Link zum Festlegen eines neuen Passworts. Der Link gilt eine Stunde.': 'If {email} belongs to an account, an email with a link to set a new password will arrive in the next few minutes. The link is valid for one hour.',
+  'Keine Mail? Bitte auch im Spam-Ordner nachsehen oder den Administrator fragen.': 'No email? Please also check the spam folder or ask your administrator.',
+  'Link anfordern': 'Request link',
+  'Mail ist unterwegs': 'Email on its way',
+  'Passwort vergessen': 'Forgot password',
+  'Passwort vergessen?': 'Forgot password?',
+  'Zurück zur Anmeldung': 'Back to login',
+  'Bitte ein anderes als das bisherige Passwort wählen.': 'Please choose a different password from the previous one.',
+  'Neues Passwort festlegen': 'Set a new password',
+  'Sie haben sich über den Link aus der Mail angemeldet. Bitte legen Sie jetzt ein neues Passwort fest; Anmeldungen auf anderen Geräten werden dabei beendet.': 'You have logged in using the link from the email. Please set a new password now; sessions on other devices will be logged out.',
+  // Fehlerseite (src/components/FehlerSeite.tsx)
+  'Die Seite ließ sich nicht anzeigen. Der Fehler wurde ohne Ihre Daten an den Administrator gemeldet. Nicht übertragene Prüfungen bleiben auf dem Gerät.': 'The page could not be displayed. The error was reported to the administrator without your data. Inspections not yet uploaded stay on the device.',
+  'Hier ist etwas schiefgegangen': 'Something went wrong here',
+  'Neu laden': 'Reload',
 }

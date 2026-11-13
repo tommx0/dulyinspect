@@ -8,6 +8,7 @@
 // ersten Admins hat Schlüssel und Instanz-ID erzeugt; hier wird nur die Kennung gespeichert (nie der Schlüssel), aktiv, weil der Bestand leer ist.
 // Eine Sperre in der Datenbank (pg_advisory_xact_lock) verhindert, dass zwei gleichzeitige Anfragen zwei Admins anlegen.
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { fehlerMeldenServer } from "../_shared/fehler.ts";
 import postgres from "npm:postgres@3.4.5";
 
 const CORS = {
@@ -124,6 +125,7 @@ Deno.serve(async (req) => {
     return antwort({ ok: true, verschluesselung: kennung !== null });
   } catch (e) {
     console.error("Ersteinrichtung fehlgeschlagen:", e);
+    await fehlerMeldenServer(service, "ersteinrichtung", e);
     return antwort({ fehler: "Die Ersteinrichtung ist fehlgeschlagen. Bitte erneut versuchen." }, 500);
   } finally {
     await db.end({ timeout: 5 });

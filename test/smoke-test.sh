@@ -79,6 +79,14 @@ check "Realtime: wal2json slot possible" sql "$NAME" "select pg_drop_replication
 check "Realtime WebSocket (101)" bash -c "curl -s -o /dev/null -w '%{http_code}' --max-time 3 -H 'Connection: Upgrade' -H 'Upgrade: websocket' \
   -H 'Sec-WebSocket-Version: 13' -H 'Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==' '$B/realtime/v1/websocket?apikey=$ANON&vsn=1.0.0' | grep -q 101"
 check "Edge Function reachable" bash -c "curl -s -X POST $B/functions/v1/ersteinrichtung -H 'Content-Type: application/json' -d '{}' | grep -q fehler"
+# Mail (app 2.92+): key generated, no mail server → no „Forgot password?“, mail-takt only with the service key, hourly service runs
+SRK_MAIL=$(docker exec "$NAME" sh -c '. /data/secrets/instance.env; echo $SERVICE_ROLE_KEY')
+check "mail key generated" docker exec "$NAME" sh -c '. /data/secrets/instance.env; [ ${#MAIL_SCHLUESSEL} -eq 44 ]'
+check "forgot password not offered without mail server" bash -c "curl -fsS -X POST $B/functions/v1/passwort-vergessen -H 'apikey: $ANON' \
+  -H 'Content-Type: application/json' -d '{\"aktion\":\"verfuegbar\"}' | grep -q '\"verfuegbar\":false'"
+check "mail-takt refuses the anon key" bash -c "[[ \$(curl -s -o /dev/null -w '%{http_code}' -X POST $B/functions/v1/mail-takt -H 'apikey: $ANON' -H 'Authorization: Bearer $ANON') == 403 ]]"
+check "mail-takt with the service key" bash -c "curl -fsS -X POST $B/functions/v1/mail-takt -H 'apikey: $SRK_MAIL' -H 'Authorization: Bearer $SRK_MAIL' | grep -q '\"statusmail\":\"aus\"'"
+check "service mail-takt running" docker exec "$NAME" sh -c '/command/s6-svstat -u /run/service/mail-takt | grep -q true'
 check "backup.sh" docker exec "$NAME" /usr/local/lib/instance/backup.sh 3
 
 # Emergency password reset from the command line: one-time password, change at next login, log entry
@@ -131,6 +139,7 @@ check "backup before the update" bash -c "docker logs $NAME 2>&1 | grep -q '^Upd
 check "APP_ADRESSE still accepted" bash -c "curl -fsS $B/konfig.js | grep -q '\"supabaseUrl\":\"$B\"'"
 check "data kept (file still there)" bash -c "curl -fsS '$B/storage/v1/object/public/branding/smoke.png' -o /dev/null"
 check "keys kept" bash -c "[[ \$(docker exec $NAME sh -c '. /data/secrets/instance.env; echo \$ANON_KEY') == '$ANON' ]]"
+check "mail key kept or added" docker exec "$NAME" sh -c '. /data/secrets/instance.env; [ ${#MAIL_SCHLUESSEL} -eq 44 ] && [ $(grep -c ^MAIL_SCHLUESSEL= /data/secrets/instance.env) -eq 1 ]'
 check "no second admin" bash -c "! docker logs --since $SINCE $NAME 2>&1 | grep -q 'First admin'"
 TOKEN=$(token)
 check "xattr fallback: upload" curl -fsS -X POST "$B/storage/v1/object/branding/fallback.png" -H "apikey: $ANON" -H "Authorization: Bearer $TOKEN" \

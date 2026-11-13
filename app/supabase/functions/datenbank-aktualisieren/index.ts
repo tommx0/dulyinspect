@@ -7,6 +7,7 @@
 // Jede Migration läuft in einer eigenen Transaktion als Rolle postgres (SUPABASE_DB_URL) und wird in
 // supabase_migrations.schema_migrations eingetragen – wie bei „supabase db push“ und scripts/ausrollen-coolify.mjs.
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { fehlerMeldenServer } from "../_shared/fehler.ts";
 import postgres from "npm:postgres@3.4.5";
 import { OEFFENTLICHER_SCHLUESSEL } from "./schluessel.ts";
 
@@ -109,6 +110,7 @@ Deno.serve(async (req) => {
   } catch (e) {
     const meldung = e instanceof Error ? e.message : String(e);
     console.error(`Migration ${aktuell} fehlgeschlagen:`, meldung);
+    await fehlerMeldenServer(service, `datenbank-aktualisieren/${aktuell}`, e);
     return antwort({ fehler: `Migration ${aktuell} fehlgeschlagen (zurückgerollt): ${meldung}`, eingespielt }, 500);
   } finally {
     await db.end({ timeout: 5 });

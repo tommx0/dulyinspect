@@ -4,6 +4,8 @@ import { createHashRouter, Navigate, RouterProvider } from 'react-router'
 import { AuthProvider, NurAdmin, NurSystemadmin } from './auth'
 import { AltePruefung, AlteAdresse } from './components/AlteAdresse'
 import { BestaetigungsHost } from './components/Bestaetigung'
+import { FehlerSeite } from './components/FehlerSeite'
+import { fehlerFaengerInstallieren } from './lib/fehlerMelden'
 import { NurSichtbar } from './components/NurSichtbar'
 import { SchemaPruefung } from './components/SchemaPruefung'
 import { anwenden, ausCache } from './lib/erscheinungsbild'
@@ -46,12 +48,15 @@ import MelderSuche from './seiten/MelderSuche'
 import Anlagentypen from './seiten/Anlagentypen'
 
 document.documentElement.lang = sprache()
+fehlerFaengerInstallieren()
 
 // Hash-Routing: funktioniert auf reinem Static Hosting ohne Rewrite-Regeln und unter Unterpfaden.
 // QR-Codes zeigen auf ./?t=PK-0000427 – das wird in Layout auf #/anlage/PK-0000427 umgeleitet (Melder-Etiketten: ./?m=<Code> → #/melder/<Code>).
 const router = createHashRouter([
   {
     element: <Layout />,
+    // Absturz einer Seite: Hinweis statt weißem Bildschirm, Meldung ans Fehlerprotokoll (src/lib/fehlerMelden.ts)
+    errorElement: <FehlerSeite />,
     children: [
       { index: true, element: <Start /> },
       { path: 'kunden', element: <NurSichtbar bereich="kunden"><Kunden /></NurSichtbar> },

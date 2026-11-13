@@ -254,11 +254,13 @@
           <li><a href="#benutzer">Benutzer und Sachkunde</a></li>
           <li><a href="#menue-pruefer">Menü für Prüfer</a></li>
           <li><a href="#einstellungen">Firmendaten, Erscheinungsbild, Rechtstexte</a></li>
+          <li><a href="#mail">Mail: Mailserver, Statusmail, Meldungen</a></li>
           <li><a href="#revision">Revision eines Protokolls</a></li>
           <li><a href="#verschluesselung">Verschlüsselung</a></li>
           <li><a href="#datensicherung">Datensicherung</a></li>
           <li><a href="#kundendaten-loeschen">Alle Kundendaten löschen</a></li>
           <li><a href="#logdateien">Logdateien</a></li>
+          <li><a href="#fehlerprotokoll">Fehlerprotokoll</a></li>
           <li><a href="#datenbank-update">Datenbank-Update</a></li>
         </ol>
       </li>
@@ -365,7 +367,7 @@
         <p><strong>Vorgegebenes Passwort:</strong> Hat der Administrator Ihr Passwort festgelegt, legen Sie bei der ersten Anmeldung ein eigenes fest (mindestens 10 Zeichen, nicht dasselbe wie das vorgegebene). Erst danach geht es in die App.</p>
         <div class="box">
           <strong>Passwort vergessen?</strong>
-          Wenden Sie sich an den Administrator. Er setzt Ihnen unter <span class="ui">Benutzer</span> ein neues Passwort.
+          Ist für Ihre App ein Mailserver eingerichtet, steht unter dem Knopf <span class="ui">Anmelden</span> der Link <span class="ui">Passwort vergessen?</span>. Tragen Sie Ihre E-Mail-Adresse ein. Gehört sie zu einem Zugang, kommt in den nächsten Minuten eine Mail mit einem Link. Er gilt <strong>eine Stunde</strong> und nur einmal. Über den Link legen Sie ein neues Passwort fest; ist die Zwei-Faktor-Anmeldung eingerichtet, fragt die App vorher den Code aus der Authenticator-App ab. Danach sind Sie auf allen anderen Geräten abgemeldet und bekommen eine Mail „Ihr Passwort wurde geändert“. Kommt keine Mail, sehen Sie im Spam-Ordner nach. Ohne den Link (kein Mailserver) wenden Sie sich an den Administrator: Er setzt Ihnen unter <span class="ui">Benutzer</span> ein neues Passwort.
         </div>
         <p><strong>Abmelden</strong> finden Sie im Menü (☰) unten bzw. am PC oben rechts. Beim Abmelden löscht die App alle Prüfdaten auf diesem Gerät. Sind noch nicht alle Änderungen übertragen, fragt die App vorher nach. Ist die <a href="#schluessel-scannen">Verschlüsselung</a> eingerichtet, bleibt der Schlüssel auf dem Gerät.</p>
         <p>Unter <span class="ui">Angemeldet bleiben?</span> wählen Sie beim Anmelden, wie lange die Anmeldung auf diesem Gerät gilt. Die App merkt sich Ihre Wahl für das nächste Mal.</p>
@@ -1253,7 +1255,7 @@
     <h3 id="einstellungen">Firmendaten, Erscheinungsbild, Rechtstexte</h3>
     <div class="mit-bild">
       <div>
-        <p>Unter <span class="ui">System</span> → <span class="ui">Einstellungen</span> finden Sie eine Übersicht, gegliedert in <strong>Firma</strong> (Firmendaten, Erscheinungsbild), <strong>Prüfungen</strong> (<a href="#arten-einschalten">Zu prüfende Anlagen</a>, Ansicht der Prüfung, Etiketten), <strong>Sicherheit</strong> (<a href="#verschluesselung">Verschlüsselung</a>), <strong>Rechtliches</strong> (Impressum und Datenschutz, Zustimmungen zur Lizenz) und <strong>System</strong> (<a href="#kundendaten-loeschen">Kundendaten löschen</a>). Ein Klick öffnet den Punkt; links sehen Sie am PC weiter alle Punkte, mit <span class="ui">Alle Einstellungen</span> geht es zurück zur Übersicht.</p>
+        <p>Unter <span class="ui">System</span> → <span class="ui">Einstellungen</span> finden Sie eine Übersicht, gegliedert in <strong>Firma</strong> (Firmendaten, Erscheinungsbild), <strong>Prüfungen</strong> (<a href="#arten-einschalten">Zu prüfende Anlagen</a>, Ansicht der Prüfung, Etiketten), <strong>Sicherheit</strong> (<a href="#verschluesselung">Verschlüsselung</a>), <strong>Rechtliches</strong> (Impressum und Datenschutz, Zustimmungen zur Lizenz) und <strong>System</strong> (<a href="#mail">Mail</a>, <a href="#fehlerprotokoll">Fehlerprotokoll</a>, <a href="#kundendaten-loeschen">Kundendaten löschen</a>). Ein Klick öffnet den Punkt; links sehen Sie am PC weiter alle Punkte, mit <span class="ui">Alle Einstellungen</span> geht es zurück zur Übersicht.</p>
         <h4>Firmendaten</h4>
         <p>Unter <span class="ui">Firmendaten</span> pflegen Sie Firmenname, Adresse, Telefon, E-Mail, Website und einen Zusatz für den <strong>Kopf jedes Protokolls</strong>. Dazu kommt der <strong>Hinweistext</strong>, der unter jedem Protokoll steht. Änderungen gelten für alle künftig erstellten Protokolle. Bereits erstellte PDFs bleiben unverändert.</p>
         <h4>Sprache</h4>
@@ -1275,6 +1277,33 @@
       </div>
       <figure class="ausschnitt"><img src="bilder/einstellungen.jpg" alt="Einstellungen"><figcaption>Einstellungen</figcaption></figure>
     </div>
+
+    <h3 id="mail">Mail: Mailserver, Statusmail, Meldungen</h3>
+    <p>Unter <span class="ui">System</span> → <span class="ui">Einstellungen</span> → <span class="ui">Mail</span> richten Sie ein, worüber und was die App per Mail verschickt. Nur Admins sehen diesen Punkt.</p>
+    <h4>Mailserver</h4>
+    <ul>
+      <li><span class="ui">Keine Mails verschicken</span>: Vorgabe. Statusmail, Meldungen und „Passwort vergessen?“ gibt es dann nicht.</li>
+      <li><span class="ui">Mailserver des Betreibers nutzen</span>: erscheint nur, wenn der Betreiber Ihrer App einen Mailserver bereitstellt. Die Mails kommen von dessen Absenderadresse; tragen Sie als <span class="ui">Antwortadresse</span> Ihre eigene ein, gehen Antworten an Sie. Der <span class="ui">Absendername</span>, z. B. Ihr Firmenname, steht als Absender in der Mail.</li>
+      <li><span class="ui">Eigenen Mailserver eintragen</span>: die SMTP-Zugangsdaten Ihres Mailanbieters (Server, Verschlüsselung, Port, Benutzername, Passwort, Absenderadresse). Sie stehen meist in dessen Hilfe unter „E-Mail-Programm einrichten“. Wählen Sie <strong>STARTTLS</strong> (Port 587) oder <strong>SSL/TLS</strong> (Port 465). Das Passwort wird verschlüsselt gespeichert und nie wieder angezeigt; leer lassen behält es. Server im internen Netz der App sind aus Sicherheitsgründen gesperrt.</li>
+    </ul>
+    <p>Nach dem <span class="ui">Speichern</span> prüfen Sie die Einstellung mit <span class="ui">Testmail senden</span>. Schlägt der Versand fehl, zeigt die App die Antwort des Mailservers, z. B. bei falschem Passwort. Darunter schalten Sie <span class="ui">„Passwort vergessen?“ auf der Anmeldeseite anbieten</span> ein oder aus (Vorgabe: an, siehe <a href="#anmelden">Anmelden</a>).</p>
+    <h4>Statusmail</h4>
+    <p>Die Statusmail fasst regelmäßig zusammen, was geprüft wurde und was ansteht. Sie geht an die Adressen unter <span class="ui">Empfänger der Statusmail</span> (höchstens 20, mit Komma getrennt), <span class="ui">täglich</span>, <span class="ui">wöchentlich</span> am gewählten Wochentag oder <span class="ui">monatlich</span> am gewählten Tag (1. bis 28.), jeweils zur gewählten Uhrzeit in deutscher Zeit. Sie enthält:</p>
+    <ul>
+      <li>einen Überblick: Prüfungen im Zeitraum nach Ergebnis, neue Mängel je Stufe, offene Mängel, überfällige, bald fällige und noch nie geprüfte Anlagen,</li>
+      <li>die <strong>abgeschlossenen Prüfungen</strong> seit der letzten Statusmail mit Ergebnis, Mängeln, Prüfer und Protokollnummer,</li>
+      <li>die <strong>überfälligen</strong> Prüfungen und die <strong>bis zur nächsten Statusmail fälligen</strong>,</li>
+      <li>alles zusätzlich als <strong>CSV-Datei</strong> zum Öffnen in Excel (in der Mail selbst höchstens 200 Zeilen je Liste).</li>
+    </ul>
+    <p>Ist die <a href="#verschluesselung">Verschlüsselung</a> eingeschaltet, stehen <strong>keine Kunden- und Objektnamen</strong> in der Mail, denn der Server kann sie nicht lesen. Die Anlagen erkennen Sie dann am Etikett und an der Bezeichnung. Nach dem Einschalten kommt die erste Statusmail zum nächsten Termin, nicht sofort. Fällt ein Termin aus, z. B. weil der Server gewartet wurde, holt die nächste Statusmail den Zeitraum nach. <span class="ui">Vorschau</span> zeigt, wie die Mail für den letzten Zeitraum aussähe, ohne etwas zu verschicken.</p>
+    <h4>Meldungen</h4>
+    <p>Kurze Mails außerhalb der Statusmail, geprüft wird stündlich. Sie gehen an die <span class="ui">Empfänger der Meldungen</span> oder, wenn dort nichts steht, an die Empfänger der Statusmail.</p>
+    <ul>
+      <li><span class="ui">Fehler der App melden</span>: höchstens eine Sammelmail pro Stunde mit neuen und wieder aufgetretenen Fehlern, auch nicht erzeugten Protokoll-PDFs (siehe <a href="#fehlerprotokoll">Fehlerprotokoll</a>).</li>
+      <li><span class="ui">Kritische Prüfergebnisse sofort melden</span>: eine Mail, sobald eine Prüfung „nicht betriebssicher“ oder mit einem Mangel der Stufe 3 abgeschlossen wurde. Wahlweise schon bei „mit Mängeln“ bzw. Stufe 2, oder gar nicht.</li>
+      <li><span class="ui">Neu überfällige Prüfungen melden</span>: einmal am Tag zur Uhrzeit der Statusmail, jede Prüfung nur einmal.</li>
+    </ul>
+    <p>Beim Einschalten melden „kritisch“ und „überfällig“ nur, was danach neu hinzukommt; die schon bestehenden stehen in der Statusmail. Im Demomodus verschickt die App keine Mails.</p>
 
     <h3 id="revision">Revision eines Protokolls</h3>
     <div class="mit-bild">
@@ -1363,6 +1392,10 @@
     <p>Unter <span class="ui">System ▸ Logdateien</span> sehen Sie, wer wann was getan hat: jede Änderung in der Datenbank (Anlegen, Ändern, Löschen mit den geänderten Feldern) und wichtige Aktionen wie Anmeldung, Abmeldung, Exporte, Backups, Protokolle, Etiketten-PDFs, Importe und die Benutzerverwaltung. Jede Zeile beginnt mit Datum und Uhrzeit in <strong>UTC</strong> (deutsche Winterzeit = UTC + 1 Stunde, Sommerzeit = UTC + 2 Stunden) und dem Benutzer. <strong>System</strong> steht dort, wenn der Server etwas selbst ausführt.</p>
     <p>Mit <span class="ui">Anzeigen</span> sehen Sie die neuesten Einträge einer Datei zuerst und können sie durchsuchen, z. B. nach einem Namen oder einem Etikett. <span class="ui">Herunterladen</span> speichert die ganze Datei als Text (<code>.log</code>).</p>
     <p>Eine Logdatei wird höchstens <strong>10 MB</strong> groß. Ist sie voll, wird sie archiviert und eine neue begonnen. Es bleiben die aktuelle Datei und die <strong>2 letzten Archive</strong>; ältere werden gelöscht. Laden Sie Archive herunter, wenn Sie sie länger aufbewahren müssen.</p>
+
+    <h3 id="fehlerprotokoll">Fehlerprotokoll</h3>
+    <p>Unter <span class="ui">System</span> → <span class="ui">Einstellungen</span> → <span class="ui">Fehlerprotokoll</span> sehen Admins unerwartete Fehler der App und der Serverfunktionen, z. B. eine Seite, die sich nicht anzeigen ließ, oder ein Protokoll-PDF, das nicht erzeugt wurde. Gleiche Fehler stehen nur einmal da, mit Anzahl und Zeitpunkt. Ein Klick zeigt Version, Browser und technische Einzelheiten für den Support.</p>
+    <p>Gespeichert werden nur die Fehlermeldung, die Stelle in der App, die Version und der Browser, <strong>keine eingegebenen Daten</strong>; E-Mail-Adressen in Meldungen werden vorher unkenntlich gemacht. Einträge verfallen nach <strong>90 Tagen</strong>, <span class="ui">Alle löschen</span> leert das Protokoll sofort. Stürzt eine Seite ab, zeigt die App statt einer leeren Seite den Hinweis „Hier ist etwas schiefgegangen“ mit <span class="ui">Neu laden</span>; nicht übertragene Prüfungen bleiben dabei auf dem Gerät.</p>
 
     <h3 id="datenbank-update">Datenbank-Update</h3>
     <div class="mit-bild">

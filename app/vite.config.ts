@@ -192,7 +192,7 @@ export default defineConfig(({ mode }) => {
   base: './',
   test: {
     environment: 'node',
-    include: ['src/**/*.test.ts'],
+    include: ['src/**/*.test.ts', 'supabase/functions/_shared/**/*.test.ts'],
   },
 }
 })

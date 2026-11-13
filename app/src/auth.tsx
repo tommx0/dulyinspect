@@ -32,6 +32,33 @@ import { profilFehltGrund, zweiFaktorStand, type ZweiFaktorStand } from './lib/z
 import { Auswahl } from './components/Auswahl'
 
 const PROFIL_CACHE = 'tuerpruefung:profil'
+// „Passwort vergessen“: Benutzer, der sich über den Link aus der Mail angemeldet hat und ein neues Passwort festlegen muss
+const WIEDERHERSTELLEN = 'tuerpruefung:wiederherstellen'
+const wiederherstellenFuer = () => { try { return sessionStorage.getItem(WIEDERHERSTELLEN) } catch { return null } }
+
+/**
+ * Link aus der Mail (Edge Function passwort-vergessen): ?wiederherstellen=<token_hash> einlösen. Eine bestehende Anmeldung auf
+ * dem Gerät wird vorher beendet (Gerätedaten weg, Schlüssel und nicht übertragene Änderungen bleiben). Liefert eine Meldung
+ * für die Anmeldeseite, wenn der Link nicht (mehr) gilt.
+ */
+async function wiederherstellenEinloesen(): Promise<string> {
+  const token = new URLSearchParams(location.search).get('wiederherstellen')
+  if (!token) return ''
+  // Aus der Adresse entfernen: nicht im Verlauf, nicht beim Neuladen erneut
+  const ohne = new URL(location.href)
+  ohne.searchParams.delete('wiederherstellen')
+  history.replaceState(history.state, '', ohne.toString())
+  const { data: alt } = await supabase.auth.getSession()
+  if (alt.session) {
+    await supabase.auth.signOut({ scope: 'local' }).catch(() => undefined)
+    await lokalesVergessenSchluesselBleibt()
+  }
+  const { data, error } = await supabase.auth.verifyOtp({ type: 'recovery', token_hash: token })
+  if (error || !data.user) return t('Der Link zum Zurücksetzen des Passworts ist ungültig, abgelaufen oder schon benutzt. Bitte einen neuen anfordern.')
+  try { sessionStorage.setItem(WIEDERHERSTELLEN, data.user.id) } catch { /* gesperrt */ }
+  aktivitaetMerken(true)
+  return ''
+}
 const DEAKTIVIERT = t('Ihr Zugang ist deaktiviert. Die Daten auf diesem Gerät wurden gelöscht. Bitte wenden Sie sich an den Administrator.')
 
 /** Lokale Prüfdaten gehören zum Benutzer – nicht für den nächsten auf diesem Gerät liegen lassen. Löscht auch den Schlüssel der Verschlüsselung. */
@@ -97,11 +124,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const verschluesselung = useVerschluesselung()
   // Grund einer Abmeldung von außen (Zugang deaktiviert), für die Anmeldeseite
   const [abmeldeHinweis, setAbmeldeHinweis] = useState('')
+  const [wiederherstellen, setWiederherstellen] = useState(wiederherstellenFuer)
 
   useEffect(() => {
     // Frist ohne Serverkontakt (Verschlüsselung): beim Start prüfen, auch ohne Sitzung und ohne Netz
     void fristPruefen().catch(() => undefined)
-    supabase.auth.getSession().then(async ({ data }) => {
+    void wiederherstellenEinloesen().then((meldung) => { if (meldung) setAbmeldeHinweis(meldung); setWiederherstellen(wiederherstellenFuer()) }).then(() => supabase.auth.getSession()).then(async ({ data }) => {
       // „Nur bis zum Schließen“: Anmeldung ist mit dem Schließen weg – ohne Abmelden liegen die Daten noch da.
       // Nicht übertragene Änderungen und der Schlüssel bleiben für die nächste Anmeldung liegen.
       if (!data.session && anmeldedauer() === 'sitzung') await lokalesVergessenSchluesselBleibt()
@@ -311,7 +339,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [aktivBis])
 
   if (session === undefined) return <Vollbild>{t('Laden …')}</Vollbild>
-  if (!session) return <Anmeldung hinweis={abmeldeHinweis} />
+  // key: Meldung kann nach dem ersten Zeichnen kommen (Link aus der Mail ungültig), dann neu aufbauen
+  if (!session) return <Anmeldung key={abmeldeHinweis} hinweis={abmeldeHinweis} />
   if (!zweiFaktor) return <Vollbild>{t('Laden …')}</Vollbild>
   if (zweiFaktor !== 'ok') return <ZweiFaktor key={zweiFaktor} stand={zweiFaktor} onFertig={zweiFaktorPruefen} onAbmelden={abmelden} />
   if (profilFehler) {
@@ -333,6 +362,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return <LizenzHinweis onAkzeptiert={() => { void lizenzAkzeptieren(benutzer.id); setLizenzOk(benutzer.id) }} onAbmelden={abmelden} />
   }
 
+  if (wiederherstellen === benutzer.id) {
+    return <PasswortAendern art="vergessen" onFertig={() => { try { sessionStorage.removeItem(WIEDERHERSTELLEN) } catch { /* gesperrt */ } setWiederherstellen(null) }}
+      onAbmelden={() => { try { sessionStorage.removeItem(WIEDERHERSTELLEN) } catch { /* gesperrt */ } setWiederherstellen(null); void abmelden() }} />
+  }
   if (passwortGeprueft?.id !== benutzer.id) return <Vollbild>{t('Laden …')}</Vollbild>
   if (passwortGeprueft.noetig) {
     return <PasswortAendern onFertig={() => setPasswortGeprueft({ id: benutzer.id, noetig: false })} onAbmelden={abmelden} />
@@ -388,9 +421,14 @@ function Anmeldung({ hinweis = '' }: { hinweis?: string }) {
   const [laeuft, setLaeuft] = useState(false)
   // Neue Instanz ohne Zugang: Ersteinrichtung statt Anmeldung (fehlt die Funktion, ist die Datenbank älter → Anmeldung)
   const [einrichtung, setEinrichtung] = useState(false)
+  const [vergessenMoeglich, setVergessenMoeglich] = useState(false)
+  const [vergessen, setVergessen] = useState(false)
   useEffect(() => {
     let aktiv = true
     void supabase.rpc('ersteinrichtung_offen').then(({ data }) => { if (aktiv) setEinrichtung(data === true) })
+    // „Passwort vergessen?“ nur, wenn die Instanz Mails verschicken kann (ohne Netz oder ältere Instanz: kein Link)
+    void supabase.functions.invoke('passwort-vergessen', { body: { aktion: 'verfuegbar' } })
+      .then(({ data }) => { if (aktiv) setVergessenMoeglich(data?.verfuegbar === true) }, () => undefined)
     return () => { aktiv = false }
   }, [])
 
@@ -433,7 +471,9 @@ function Anmeldung({ hinweis = '' }: { hinweis?: string }) {
         <div className="space-y-2 text-center">
           <h1><Logo className="mx-auto max-h-28 w-full max-w-72 object-contain" /></h1>
         </div>
-        {einrichtung ? <Ersteinrichtung onAbgeschlossen={(hinweis) => { setEinrichtung(false); setFehler(hinweis) }} /> : (
+        {einrichtung ? <Ersteinrichtung onAbgeschlossen={(hinweis) => { setEinrichtung(false); setFehler(hinweis) }} /> : vergessen ? (
+          <PasswortVergessen email={email} onZurueck={() => setVergessen(false)} />
+        ) : (
           <form onSubmit={absenden} className="space-y-4">
             <div>
               <label htmlFor="email">{t('E-Mail')}</label>
@@ -470,6 +510,11 @@ function Anmeldung({ hinweis = '' }: { hinweis?: string }) {
             </div>
             {fehler &&<p className="text-sm text-red-700">{fehler}</p>}
             <button className="btn-primaer w-full" disabled={laeuft}>{laeuft ? t('Anmelden …') : t('Anmelden')}</button>
+            {vergessenMoeglich && (
+              <button type="button" className="w-full text-center text-sm text-marke underline-offset-2 hover:underline" onClick={() => { setFehler(''); setVergessen(true) }}>
+                {t('Passwort vergessen?')}
+              </button>
+            )}
             <p className="text-xs text-slate-500">
               {t('Zugänge werden vom Administrator vergeben.')}
             </p>
@@ -479,5 +524,50 @@ function Anmeldung({ hinweis = '' }: { hinweis?: string }) {
         <Entwickler />
       </div>
     </div>
+  )
+}
+
+/** Link zum Zurücksetzen anfordern. Die Antwort ist immer gleich, ob die Adresse bekannt ist oder nicht. */
+function PasswortVergessen({ email: vorgabe, onZurueck }: { email: string; onZurueck: () => void }) {
+  const [email, setEmail] = useState(vorgabe.includes('@') ? vorgabe : '')
+  const [laeuft, setLaeuft] = useState(false)
+  const [gesendet, setGesendet] = useState(false)
+  const [fehler, setFehler] = useState('')
+
+  const absenden = async (e: FormEvent) => {
+    e.preventDefault()
+    setLaeuft(true)
+    setFehler('')
+    const { error } = await supabase.functions.invoke('passwort-vergessen', { body: { aktion: 'anfordern', email: email.trim() } })
+    setLaeuft(false)
+    if (error) return setFehler(t('Die Anfrage ließ sich nicht senden. Bitte prüfen Sie die Verbindung und versuchen es erneut.'))
+    setGesendet(true)
+  }
+
+  if (gesendet) {
+    return (
+      <div className="space-y-4" data-passwort-vergessen>
+        <h2 className="text-lg font-semibold">{t('Mail ist unterwegs')}</h2>
+        <p role="status" className="text-sm text-slate-700">
+          {t('Gehört {email} zu einem Zugang, kommt in den nächsten Minuten eine Mail mit einem Link zum Festlegen eines neuen Passworts. Der Link gilt eine Stunde.', { email })}
+        </p>
+        <p className="text-sm text-slate-600">{t('Keine Mail? Bitte auch im Spam-Ordner nachsehen oder den Administrator fragen.')}</p>
+        <button type="button" className="btn-sekundaer w-full" onClick={onZurueck}>{t('Zurück zur Anmeldung')}</button>
+      </div>
+    )
+  }
+  return (
+    <form onSubmit={absenden} className="space-y-4" data-passwort-vergessen>
+      <h2 className="text-lg font-semibold">{t('Passwort vergessen')}</h2>
+      <p className="text-sm text-slate-700">{t('Geben Sie die E-Mail-Adresse Ihres Zugangs ein. Wir schicken Ihnen einen Link, mit dem Sie ein neues Passwort festlegen.')}</p>
+      <div>
+        <label htmlFor="vergessen-email">{t('E-Mail')}</label>
+        <input id="vergessen-email" type="email" autoCapitalize="none" autoCorrect="off" spellCheck={false} autoComplete="username" required autoFocus
+          value={email} onChange={(e) => setEmail(e.target.value)} />
+      </div>
+      {fehler && <p className="text-sm text-red-700">{fehler}</p>}
+      <button className="btn-primaer w-full" disabled={laeuft}>{laeuft ? t('Wird gesendet …') : t('Link anfordern')}</button>
+      <button type="button" className="btn-sekundaer w-full" onClick={onZurueck}>{t('Zurück zur Anmeldung')}</button>
+    </form>
   )
 }

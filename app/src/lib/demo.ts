@@ -8,7 +8,7 @@ export const DEMO_TEXT = 'Im Demomodus nicht möglich – Änderungen werden nic
 
 // Schreibt nur in technische Tabellen (Protokoll, Lizenzbestätigung) oder liest bloß; alle anderen Funktionen sperrt der Demomodus
 const ERLAUBTE_RPCS = new Set([
-  'anlage_suche', 'demo_modus', 'ersteinrichtung_offen', 'lizenz_akzeptieren', 'lizenz_akzeptiert', 'log_dateien',
+  'anlage_suche', 'demo_modus', 'ersteinrichtung_offen', 'fehler_melden', 'lizenz_akzeptieren', 'lizenz_akzeptiert', 'log_dateien',
   'log_eintragen', 'log_lesen', 'log_text', 'protokoll_liste', 'rechtstext_inhalt', 'schema_stand', 'startseite_kennzahlen',
   'verschluesselung_kennung', 'verschluesselung_stand', 'verschluesselung_verwaiste', 'zwei_faktor_eingerichtet',
   'zwei_faktor_pflicht',

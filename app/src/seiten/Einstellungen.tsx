@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react'
-import { Building2, ClipboardCheck, FileText, KeyRound, ListChecks, Palette, Scale, Signature, Tag, Trash2, type LucideIcon } from 'lucide-react'
+import { Bug, Building2, ClipboardCheck, FileText, KeyRound, ListChecks, Mail, Palette, Scale, Signature, Tag, Trash2, type LucideIcon } from 'lucide-react'
 import { Link, Navigate, NavLink, Outlet, useLocation, type RouteObject } from 'react-router'
 import { Formular, type FeldDef } from '../components/Formular'
 import { Weiter } from '../components/Symbole'
@@ -13,6 +13,8 @@ import { ErscheinungsbildBereich } from './ErscheinungsbildBereich'
 import { EtikettPraefixBereich } from './EtikettPraefixBereich'
 import { KundendatenLoeschenBereich } from './KundendatenLoeschenBereich'
 import { LizenzNachweisBereich } from './LizenzNachweisBereich'
+import { MailBereich } from './MailBereich'
+import { FehlerprotokollBereich } from './FehlerprotokollBereich'
 import { VerschluesselungBereich } from './VerschluesselungBereich'
 import { BLATT_BESCHRIFTUNG_BREITE, BLATT_BREITEN, BLATT_ERGEBNIS_BREITE } from '../lib/ansicht'
 import { t } from '../lib/sprache'
@@ -198,6 +200,8 @@ const GRUPPEN: { gruppe: string; punkte: Punkt[] }[] = [
   ] },
   { gruppe: t('System'), punkte: [
     { pfad: 'inbetriebnahme', titel: t('Inbetriebnahme'), text: t('Schritt für Schritt durch die Einrichtung: Firmendaten, Anlagen, Vorlagen, Rechtstexte, Benutzer'), Symbol: ListChecks, inhalt: <Navigate to="/inbetriebnahme" replace /> },
+    { pfad: 'mail', titel: t('Mail'), text: t('Mailserver für Statusmails, Fehlermeldungen und „Passwort vergessen“'), Symbol: Mail, inhalt: <MailBereich /> },
+    { pfad: 'fehlerprotokoll', titel: t('Fehlerprotokoll'), text: t('Unerwartete Fehler der App und der Serverfunktionen'), Symbol: Bug, inhalt: <FehlerprotokollBereich /> },
     { pfad: 'kundendaten-loeschen', titel: t('Kundendaten löschen'), text: t('Alle Kunden, Objekte, Prüfungen und Protokolle entfernen – Benutzer und Einstellungen bleiben'), Symbol: Trash2, inhalt: <KundendatenLoeschenBereich /> },
   ] },
 ]

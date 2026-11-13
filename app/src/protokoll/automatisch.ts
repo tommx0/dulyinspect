@@ -1,5 +1,6 @@
 // Protokolle der eigenen Prüfungen im Hintergrund erzeugen, sobald der Server den Abschluss bestätigt hat.
 // Läuft nach jedem Abgleich; was schon erzeugt ist, merkt sich das Gerät unter `protokoll:<Prüfung>:r<Revision>`.
+import { fehlerMelden } from '../lib/fehlerMelden'
 import { loggen } from '../lib/log'
 import { fehlertext } from '../lib/supabase'
 import { meineId } from '../offline/abgleich'
@@ -36,7 +37,10 @@ export async function protokolleNachholen(): Promise<void> {
         await db.meta.put({ schluessel, wert: new Date().toISOString() })
         fehlgeschlagen.delete(schluessel)
       } catch (e) {
-        if (!fehlgeschlagen.has(schluessel)) void loggen('Protokoll nicht erzeugt', `Prüfung ${p.id}, Revision ${p.revision}: ${fehlertext(e)}`)
+        if (!fehlgeschlagen.has(schluessel)) {
+          void loggen('Protokoll nicht erzeugt', `Prüfung ${p.id}, Revision ${p.revision}: ${fehlertext(e)}`)
+          void fehlerMelden(e, 'protokoll', 'Protokoll im Hintergrund')
+        }
         fehlgeschlagen.set(schluessel, Date.now())
       }
     }

@@ -568,13 +568,13 @@ isOneToOne: true
                   ]
                 },"firma": {
                   Row: {
-                    "blatt_beschriftung_breite": number,"blatt_ergebnis_breite": number,"datenschutz": string | null,"datenschutz_format": string,"email": string | null,"etikett_praefix": string,"geaendert_am": string,"id": number,"impressum": string | null,"impressum_format": string,"inbetriebnahme": Json,"kundendaten_geloescht_am": string | null,"mandantencode": string,"name": string,"ort": string | null,"plz": string | null,"protokoll_hinweis": string | null,"protokoll_sprache": string,"pruef_ansicht": string,"strasse": string | null,"telefon": string | null,"web": string | null,"zusatz": string | null
+                    "blatt_beschriftung_breite": number,"blatt_ergebnis_breite": number,"datenschutz": string | null,"datenschutz_format": string,"email": string | null,"etikett_praefix": string,"geaendert_am": string,"id": number,"impressum": string | null,"impressum_format": string,"inbetriebnahme": NonNullable<Json>,"kundendaten_geloescht_am": string | null,"mandantencode": string,"name": string,"ort": string | null,"plz": string | null,"protokoll_hinweis": string | null,"protokoll_sprache": string,"pruef_ansicht": string,"strasse": string | null,"telefon": string | null,"web": string | null,"zusatz": string | null
                   }
                   Insert: {
-                    "blatt_beschriftung_breite"?: number,"blatt_ergebnis_breite"?: number,"datenschutz"?: string | null,"datenschutz_format"?: string,"email"?: string | null,"etikett_praefix"?: string,"geaendert_am"?: string,"id"?: number,"impressum"?: string | null,"impressum_format"?: string,"inbetriebnahme"?: Json,"kundendaten_geloescht_am"?: string | null,"mandantencode"?: string,"name": string,"ort"?: string | null,"plz"?: string | null,"protokoll_hinweis"?: string | null,"protokoll_sprache"?: string,"pruef_ansicht"?: string,"strasse"?: string | null,"telefon"?: string | null,"web"?: string | null,"zusatz"?: string | null
+                    "blatt_beschriftung_breite"?: number,"blatt_ergebnis_breite"?: number,"datenschutz"?: string | null,"datenschutz_format"?: string,"email"?: string | null,"etikett_praefix"?: string,"geaendert_am"?: string,"id"?: number,"impressum"?: string | null,"impressum_format"?: string,"inbetriebnahme"?: NonNullable<Json>,"kundendaten_geloescht_am"?: string | null,"mandantencode"?: string,"name": string,"ort"?: string | null,"plz"?: string | null,"protokoll_hinweis"?: string | null,"protokoll_sprache"?: string,"pruef_ansicht"?: string,"strasse"?: string | null,"telefon"?: string | null,"web"?: string | null,"zusatz"?: string | null
                   }
                   Update: {
-                    "blatt_beschriftung_breite"?: number,"blatt_ergebnis_breite"?: number,"datenschutz"?: string | null,"datenschutz_format"?: string,"email"?: string | null,"etikett_praefix"?: string,"geaendert_am"?: string,"id"?: number,"impressum"?: string | null,"impressum_format"?: string,"inbetriebnahme"?: Json,"kundendaten_geloescht_am"?: string | null,"mandantencode"?: string,"name"?: string,"ort"?: string | null,"plz"?: string | null,"protokoll_hinweis"?: string | null,"protokoll_sprache"?: string,"pruef_ansicht"?: string,"strasse"?: string | null,"telefon"?: string | null,"web"?: string | null,"zusatz"?: string | null
+                    "blatt_beschriftung_breite"?: number,"blatt_ergebnis_breite"?: number,"datenschutz"?: string | null,"datenschutz_format"?: string,"email"?: string | null,"etikett_praefix"?: string,"geaendert_am"?: string,"id"?: number,"impressum"?: string | null,"impressum_format"?: string,"inbetriebnahme"?: NonNullable<Json>,"kundendaten_geloescht_am"?: string | null,"mandantencode"?: string,"name"?: string,"ort"?: string | null,"plz"?: string | null,"protokoll_hinweis"?: string | null,"protokoll_sprache"?: string,"pruef_ansicht"?: string,"strasse"?: string | null,"telefon"?: string | null,"web"?: string | null,"zusatz"?: string | null
                   }
                   Relationships: [
                     
@@ -652,6 +652,19 @@ isOneToOne: false
                   }
                   Update: {
                     "bytes"?: never,"datei"?: number,"id"?: never,"zeile"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"mail_einstellung": {
+                  Row: {
+                    "absender_adresse": string | null,"absender_name": string | null,"app_adresse": string | null,"fehler_aktiv": boolean,"geaendert_am": string,"id": number,"meldung_empfaenger": (string)[],"passwort_vergessen": boolean,"quelle": string,"smtp_benutzer": string | null,"smtp_host": string | null,"smtp_port": number | null,"smtp_sicherheit": string,"sofort_schwelle": string,"sofort_ueberfaellig": boolean,"status_aktiv": boolean,"status_empfaenger": (string)[],"status_intervall": string,"status_monatstag": number,"status_uhrzeit": string,"status_wochentag": number,"zuletzt_getestet_am": string | null,"zuletzt_test_ok": boolean | null
+                  }
+                  Insert: {
+                    "absender_adresse"?: string | null,"absender_name"?: string | null,"app_adresse"?: string | null,"fehler_aktiv"?: boolean,"geaendert_am"?: string,"id"?: number,"meldung_empfaenger"?: (string)[],"passwort_vergessen"?: boolean,"quelle"?: string,"smtp_benutzer"?: string | null,"smtp_host"?: string | null,"smtp_port"?: number | null,"smtp_sicherheit"?: string,"sofort_schwelle"?: string,"sofort_ueberfaellig"?: boolean,"status_aktiv"?: boolean,"status_empfaenger"?: (string)[],"status_intervall"?: string,"status_monatstag"?: number,"status_uhrzeit"?: string,"status_wochentag"?: number,"zuletzt_getestet_am"?: string | null,"zuletzt_test_ok"?: boolean | null
+                  }
+                  Update: {
+                    "absender_adresse"?: string | null,"absender_name"?: string | null,"app_adresse"?: string | null,"fehler_aktiv"?: boolean,"geaendert_am"?: string,"id"?: number,"meldung_empfaenger"?: (string)[],"passwort_vergessen"?: boolean,"quelle"?: string,"smtp_benutzer"?: string | null,"smtp_host"?: string | null,"smtp_port"?: number | null,"smtp_sicherheit"?: string,"sofort_schwelle"?: string,"sofort_ueberfaellig"?: boolean,"status_aktiv"?: boolean,"status_empfaenger"?: (string)[],"status_intervall"?: string,"status_monatstag"?: number,"status_uhrzeit"?: string,"status_wochentag"?: number,"zuletzt_getestet_am"?: string | null,"zuletzt_test_ok"?: boolean | null
                   }
                   Relationships: [
                     
@@ -1012,6 +1025,17 @@ isOneToOne: false
 "faelligkeit_naechste":
 { Args: { "p_anlage_id": string,"p_intervall": number,"p_letzte": string,"p_pruefart_id": string }; Returns: string
                            },
+"fehler_leeren":
+{ Args: Record<PropertyKey, never>; Returns: number
+                           },
+"fehler_liste":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "anzahl": number,"art": string,"benutzer": string,"erstmals_am": string,"gemeldet": boolean,"geraet": string,"id": number,"ort": string,"stack": string,"text": string,"version": string,"zuletzt_am": string
+            }[]
+                           },
+"fehler_melden":
+{ Args: { "p_art": string,"p_geraet"?: string,"p_ort"?: string,"p_stack"?: string,"p_text": string,"p_version"?: string }; Returns: undefined
+                           },
 "foto_bezug_beschreibbar":
 { Args: { "p_id": string,"p_typ": Database["public"]['Enums']["foto_bezug"] }; Returns: boolean
                            },
@@ -1053,6 +1077,9 @@ isOneToOne: false
                            },
 "ist_zugelassener_mitpruefer":
 { Args: { "p_anlagenpruefung_id": string }; Returns: boolean
+                           },
+"klartext_oder_null":
+{ Args: { "p_wert": string }; Returns: string
                            },
 "kundendatei_loeschbar":
 { Args: { "p_bucket": string,"p_pfad": string }; Returns: boolean
@@ -1136,6 +1163,48 @@ isOneToOne: false
 "log_zitat":
 { Args: { "p_max"?: number,"p_text": string }; Returns: string
                            },
+"mail_fehler_beanspruchen":
+{ Args: { "p_abstand": string }; Returns: boolean
+                           },
+"mail_fehler_freigeben":
+{ Args: Record<PropertyKey, never>; Returns: undefined
+                           },
+"mail_fehler_gemeldet":
+{ Args: { "p_stand": Json }; Returns: undefined
+                           },
+"mail_fehler_offen":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"mail_passwort_lesen":
+{ Args: Record<PropertyKey, never>; Returns: string
+                           },
+"mail_passwort_setzen":
+{ Args: { "p_geheim": string }; Returns: undefined
+                           },
+"mail_sofort_gemeldet":
+{ Args: { "p_bis": string }; Returns: undefined
+                           },
+"mail_sofort_pruefungen":
+{ Args: { "p_schwelle": string }; Returns: Json
+                           },
+"mail_stand":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"mail_status_beanspruchen":
+{ Args: { "p_termin": string }; Returns: string
+                           },
+"mail_status_ergebnis":
+{ Args: { "p_alt": string,"p_fehler"?: string,"p_ok": boolean }; Returns: undefined
+                           },
+"mail_status_neu_beginnen":
+{ Args: { "p_ab": string }; Returns: undefined
+                           },
+"mail_ueberfaellig_gemeldet":
+{ Args: { "p_heute": string,"p_liste": Json }; Returns: undefined
+                           },
+"mail_ueberfaellig_neu":
+{ Args: { "p_heute": string }; Returns: Json
+                           },
 "mandantencode_erzeugen":
 { Args: Record<PropertyKey, never>; Returns: string
                            },
@@ -1159,6 +1228,9 @@ isOneToOne: false
                            },
 "passwort_aendern_setzen":
 { Args: { "p_benutzer": string }; Returns: undefined
+                           },
+"passwort_vergessen_zulassen":
+{ Args: { "p_email_hash": string,"p_ip_hash": string }; Returns: boolean
                            },
 "protokoll_liste":
 { Args: Record<PropertyKey, never>; Returns: {
@@ -1216,6 +1288,9 @@ isOneToOne: false
                            },
 "startseite_kennzahlen":
 { Args: { "p_heute"?: string }; Returns: Json
+                           },
+"statusbericht":
+{ Args: { "p_bis": string,"p_heute": string,"p_naechster": string,"p_von": string }; Returns: Json
                            },
 "support_ablauf":
 { Args: Record<PropertyKey, never>; Returns: undefined

@@ -1,4 +1,5 @@
 // Gespeicherte Protokolle einer Prüfung (ohne Session) laden und fehlendes Protokoll der aktuellen Revision erzeugen.
+import { fehlerMelden } from '../lib/fehlerMelden'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { fehlertext, supabase } from '../lib/supabase'
 import { useAbfrage } from '../lib/useAbfrage'
@@ -37,6 +38,7 @@ export function usePruefprotokolle(pruefungId: string, stand: { revision: number
       await liste.neuLaden()
     } catch (e) {
       setFehler(fehlertext(e))
+      void fehlerMelden(e, 'protokoll', 'Protokoll erzeugen')
     } finally {
       setFortschritt('')
       laeuft.current = false
