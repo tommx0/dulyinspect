@@ -9,5 +9,12 @@ SERVICE_ENV=(
   SUPABASE_ANON_KEY="$ANON_KEY" SUPABASE_SERVICE_ROLE_KEY="$SERVICE_ROLE_KEY"
   SUPABASE_DB_URL="postgres://postgres:$PW_POSTGRES@127.0.0.1:5432/postgres"
   MAX_AKTIVE_BENUTZER="$(getenv MAX_ACTIVE_USERS 2 MAX_AKTIVE_BENUTZER)" DENO_DIR=/var/cache/edge
+  # Mail (app 2.92+): the operator's mail server ("Mailserver des Betreibers" in the app), optional
+  MAIL_SCHLUESSEL="${MAIL_SCHLUESSEL:-}"
+  MAIL_ZENTRAL_HOST="$(getenv SMTP_HOST)" MAIL_ZENTRAL_PORT="$(getenv SMTP_PORT)" MAIL_ZENTRAL_BENUTZER="$(getenv SMTP_USER)"
+  MAIL_ZENTRAL_PASSWORT="$(getenv SMTP_PASSWORD)" MAIL_ZENTRAL_ABSENDER="$(getenv SMTP_FROM)"
+  MAIL_ZENTRAL_SICHERHEIT="$(security=$(getenv SMTP_SECURITY starttls); [[ ${security,,} == none ]] && echo keine || echo "${security,,}")"
+  # Mail servers in private networks (the NAS's LAN); loopback stays blocked
+  MAIL_INTERNE_ZIELE="$(is_yes "$(getenv SMTP_ALLOW_PRIVATE no)" && echo ja || echo nein)"
 )
 run_as edge edge-runtime start --main-service /etc/instance/functions-main --ip 127.0.0.1 --port 9000

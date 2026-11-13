@@ -95,6 +95,8 @@ Step-by-step guides with screenshots of every setting, Synology Container Manage
 | `ADMIN_EMAIL`, `ADMIN_NAME`, `ADMIN_PASSWORD` | `admin@lokal`, `Administrator`, – | Automated installs only: create the first admin at startup instead of in the browser. Only on the very first start, while there is no account; remove `ADMIN_PASSWORD` afterwards |
 | `ADMIN_CHANGE_PASSWORD` | `yes` | With `ADMIN_PASSWORD`: the admin must choose a new password at first login |
 | `ADMIN_TWO_FACTOR` | `no` | With `ADMIN_PASSWORD`: the admin must set up an authenticator app at first login |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURITY`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` | –, `587`/`465`, `starttls`, –, –, – | Optional mail server offered in the app as „Mailserver des Betreibers“ (Einstellungen → Mail). `SMTP_SECURITY`: `starttls`, `tls` or `none`. Without these the admin can enter a mail server in the app; its password is stored encrypted with a key in `secrets/` |
+| `SMTP_ALLOW_PRIVATE` | `no` | `yes`: allow a mail server in the local network (10.x, 172.16–31.x, 192.168.x). Loopback is always blocked |
 | `SETUP_WITHOUT_KEY` | `no` | `yes`: the initial setup does not ask for the setup key. **Tests only** – whoever opens the page first becomes admin |
 
 Yes/no values also accept `ja`/`nein`, `true`/`false`. The German variable names of earlier versions (`APP_ADRESSE`,

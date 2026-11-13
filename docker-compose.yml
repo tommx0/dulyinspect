@@ -17,5 +17,14 @@ services:
       # ADMIN_EMAIL: "admin@lokal"
       # ADMIN_NAME: "Administrator"
       # ADMIN_PASSWORD: "at-least-10-characters"
+      # Optional: mail server offered in the app as "Mailserver des Betreibers" (Einstellungen → Mail). Without it, the admin
+      # can still enter a mail server in the app itself.
+      # SMTP_HOST: "smtp.example.com"
+      # SMTP_PORT: "587"
+      # SMTP_SECURITY: "starttls"        # starttls, tls or none
+      # SMTP_USER: "inspection@example.com"
+      # SMTP_PASSWORD: "…"
+      # SMTP_FROM: "inspection@example.com"
+      # SMTP_ALLOW_PRIVATE: "no"         # yes: mail server in the local network (e.g. 192.168.x.x)
     # Let Postgres shut down cleanly (usually takes less than 10 s)
     stop_grace_period: 60s

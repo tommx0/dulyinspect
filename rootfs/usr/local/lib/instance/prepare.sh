@@ -50,6 +50,9 @@ REALTIME_SECRET_KEY_BASE=$(rnd 32)
 REALTIME_DB_ENC_KEY=$(rnd 8)
 EOF
 fi
+# Key for the mail server password the app stores (app 2.92+, Edge Function "mail"). Added to older secret files once;
+# never replaced, a new key would make stored passwords unreadable.
+grep -q '^MAIL_SCHLUESSEL=' "$SECRETS" || echo "MAIL_SCHLUESSEL=$(openssl rand -base64 32)" >> "$SECRETS"
 umask 022
 load_secrets
 
