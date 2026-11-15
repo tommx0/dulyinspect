@@ -220,6 +220,13 @@ export const ARTEN_DE: Record<ArtSchluessel, ArtDefinition> = {
         { schluessel: 'ansaugrauchmelder', name: 'Ansaugrauchmelder', kuerzel: ['ras', 'ansaug'] },
         { schluessel: 'signalgeber', name: 'Signalgeber', kuerzel: ['sg', 'signal', 'sirene', 'blitz', 'akustisch'] },
         { schluessel: 'steuerung', name: 'Brandfallsteuerung', kuerzel: ['bfs', 'steuer', 'ansteuerung', 'koppler'] },
+        // Weitere Melder der Brandmeldetechnik (am Ende, damit der Import die bisherigen Arten zuerst erkennt)
+        { schluessel: 'flammenmelder', name: 'Flammenmelder', kuerzel: ['fm', 'flamme', 'flammen', 'uv', 'ir'] },
+        { schluessel: 'linienwaermemelder', name: 'Linienförmiger Wärmemelder (Sensorkabel)', kuerzel: ['sensorkabel', 'lwm', 'temperaturkabel', 'fühlerkabel', 'fuehlerkabel'] },
+        { schluessel: 'kanalrauchmelder', name: 'Kanalrauchmelder (Lüftungskanal)', kuerzel: ['kanal', 'lüftungskanal', 'lueftungskanal', 'krm'] },
+        { schluessel: 'brandgasmelder', name: 'Brandgasmelder (CO)', kuerzel: ['co', 'brandgas', 'gas', 'kohlenmonoxid'] },
+        { schluessel: 'loeschanlage', name: 'Druckschalter / Strömungsmelder (Löschanlage)', kuerzel: ['druckschalter', 'strömungsmelder', 'stroemungsmelder', 'sprinkler', 'löschanlage', 'loeschanlage', 'ds'] },
+        { schluessel: 'ein_ausgang', name: 'Ein-/Ausgangsmodul', kuerzel: ['eam', 'modul', 'transponder', 'eingangsmodul', 'ausgangsmodul'] },
       ],
       gruende: ['löst nicht aus', 'Prüfgas/Prüfwärme nicht erkannt', 'verschmutzt', 'beschädigt', 'Melder fehlt', 'Parallelanzeige defekt', 'sonstiger Defekt'],
       felder: [
@@ -249,6 +256,14 @@ export const ARTEN_DE: Record<ArtSchluessel, ArtDefinition> = {
         { schluessel: 'ueberfallmelder', name: 'Überfallmelder', kuerzel: ['üm', 'uem', 'überfall', 'ueberfall', 'notruf'] },
         { schluessel: 'signalgeber', name: 'Signalgeber', kuerzel: ['sg', 'signal', 'sirene', 'blitz'] },
         { schluessel: 'bedienteil', name: 'Bedienteil', kuerzel: ['bt', 'bedien', 'tastatur', 'leser'] },
+        // Weitere Melder der Einbruchmeldetechnik (am Ende, damit der Import die bisherigen Arten zuerst erkennt)
+        { schluessel: 'lichtschranke', name: 'Lichtschranke (Infrarot)', kuerzel: ['ls', 'lichtschranke', 'infrarotschranke', 'schranke'] },
+        { schluessel: 'vorhangmelder', name: 'Vorhangmelder', kuerzel: ['vorhang', 'vhm'] },
+        { schluessel: 'flaechenueberwachung', name: 'Flächenüberwachung (Alarmglas, Alarmtapete)', kuerzel: ['alarmglas', 'alarmtapete', 'tapete', 'durchbruch', 'fläche', 'flaeche'] },
+        { schluessel: 'trittmatte', name: 'Druck- und Trittmatte', kuerzel: ['trittmatte', 'druckmatte', 'matte', 'drucksensor'] },
+        { schluessel: 'sabotagekontakt', name: 'Sabotagekontakt', kuerzel: ['sabotage', 'sak'] },
+        { schluessel: 'schalteinrichtung', name: 'Schalteinrichtung (Blockschloss, Schlüsselschalter)', kuerzel: ['blockschloss', 'bs', 'schlüsselschalter', 'schluesselschalter', 'schalteinrichtung'] },
+        { schluessel: 'technischer_melder', name: 'Technischer Melder (Wasser, Gas, Temperatur)', kuerzel: ['wassermelder', 'gasmelder', 'technisch', 'tm', 'wasser'] },
       ],
       gruende: ['löst nicht aus', 'Sabotageüberwachung defekt', 'Erfassungsbereich verstellt', 'beschädigt', 'Batterie schwach (Funk)', 'sonstiger Defekt'],
       felder: [{ schluessel: 'bereich', text: 'Sicherungsbereich', typ: 'text' }],

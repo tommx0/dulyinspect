@@ -62,3 +62,32 @@
   @apply karte flex h-full w-full flex-col gap-2 p-4 text-left transition
     hover:border-slate-300 hover:bg-akzent-hell/40 hover:shadow-md active:bg-akzent-hell;
 }
+
+/* Baumdiagramm der Elemente (src/components/ElementBaum.tsx): Anlage → Gruppen → Elemente, Verbindungslinien per CSS */
+.baum-aeste { @apply relative mt-0 ml-6 pt-2; }
+.baum-ast { @apply relative rounded-lg pt-2 pl-7 transition-colors; }
+.baum-ast::before { content: ""; @apply absolute top-0 bottom-0 left-0 border-l-2 border-slate-300; }
+.baum-ast:last-child::before { @apply bottom-auto h-[1.95rem]; }
+.baum-ast::after { content: ""; @apply absolute top-[1.85rem] left-0 w-7 border-t-2 border-slate-300; }
+.baum-ast-ablage { @apply bg-akzent-hell; }
+/* Raster mit festen Spalten (Stummel 0,75rem + Knoten 2,75rem): beim Umbruch steht jeder Melder unter dem darüber */
+.baum-linie { @apply grid min-w-0 grid-cols-[repeat(auto-fill,3.5rem)] items-center gap-y-4 pr-3; }
+.baum-linie > li { @apply relative pl-3; }
+/* Schmaler Bildschirm: Elemente eingerückt unter der Gruppe, eine Leitung führt vom Gruppenknoten hinunter zur ersten Zeile */
+@media (width < 40rem) {
+  .baum-zeilen { @apply mt-2 ml-4; }
+  .baum-zeilen::before { content: ""; @apply absolute -top-2 left-0 h-[1.875rem] border-l-2 border-slate-300; }
+}
+.baum-linie > li::before { content: ""; @apply absolute top-1/2 left-0 w-3 border-t-2 border-slate-300; }
+.baum-linie > li[data-umbruch]::before { content: none; }
+.baum-melder {
+  @apply relative inline-flex size-11 cursor-grab flex-col items-center justify-center gap-0.5 rounded-full border-[2.5px] text-xs font-bold tabular-nums
+    transition hover:-translate-y-0.5 hover:shadow-md active:cursor-grabbing disabled:cursor-not-allowed disabled:opacity-40
+    disabled:hover:translate-y-0 disabled:hover:shadow-none;
+  touch-action: manipulation;
+}
+.baum-plus { @apply cursor-pointer border-dashed bg-white/60 hover:bg-white; }
+.baum-zu {
+  @apply relative ml-3 mt-2 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-xs text-slate-500 hover:bg-slate-100;
+}
+.baum-zu::before { content: ""; @apply absolute top-1/2 -left-3 w-3 border-t-2 border-dashed border-slate-300; }

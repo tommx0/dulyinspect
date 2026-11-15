@@ -1,8 +1,10 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
+import { List, Network } from 'lucide-react'
 import { useParams } from 'react-router'
 import { useAuth } from '../auth'
 import { bestaetigen } from '../components/Bestaetigung'
 import { DateiKnoepfe } from '../components/DateiKnoepfe'
+import { ElementBaum } from '../components/ElementBaum'
 import { eigenschaftenAusWerten, eigenschaftenStart, ersteFreieKnopf, eigenschaftFelder, typAusWerten, typFelder, typStart, vorgabeAusWerten, vorgabeFelder } from '../components/elementFelder'
 import { Formular, type FeldDef } from '../components/Formular'
 import { useGruppeAuswahl } from '../components/GruppeAuswahl'
@@ -34,6 +36,9 @@ export default function AnlageElemente() {
   const [fehler, setFehler] = useState('')
   const [stillgelegte, setStillgelegte] = useState(false)
   const [mehrere, setMehrere] = useState(false)
+  // Baumdiagramm (Gruppen und Elemente zum Anlegen und Ändern) oder Tabelle; die Wahl gilt für alle Anlagen
+  const [ansicht, setAnsichtZustand] = useState<'baum' | 'liste'>(() => (localStorage.getItem('ansicht:elemente') === 'liste' ? 'liste' : 'baum'))
+  const setAnsicht = (a: 'baum' | 'liste') => { localStorage.setItem('ansicht:elemente', a); setAnsichtZustand(a) }
 
   const anlage = useAbfrage(() => entschluesselt('anlage', supabase.from('anlage')
     .select('id, etikett_id, kunden_bezeichnung, objekt_id, objekt(id, name), anlagentyp(name, anlagenart)').eq('id', id).single()), [id])
@@ -60,6 +65,11 @@ export default function AnlageElemente() {
     gruppen.neuLaden()
   })
 
+  // Neue Elemente tragen ihre Gruppe ein (Datenbank), daher beide neu laden
+  const { neuLaden: elementeNeu } = elemente
+  const { neuLaden: gruppenNeu } = gruppen
+  const neuLaden = useCallback(() => { elementeNeu(); gruppenNeu() }, [elementeNeu, gruppenNeu])
+
   if (anlage.laedt && !anlage.daten) return <Laden />
   const a = anlage.daten
   if (!a) return <Seite titel={t('Elemente')}><Fehler text={anlage.fehler || t('Anlage nicht gefunden')} /></Seite>
@@ -74,8 +84,6 @@ export default function AnlageElemente() {
   const aktive = ((elemente.daten ?? []) as Element[]).filter((e) => e.aktiv)
   const ortText = def.ort ?? 'Ort'
   const ortName = t(ortText)
-  // Neue Elemente tragen ihre Gruppe ein (Datenbank), daher beide neu laden
-  const neuLaden = () => { elemente.neuLaden(); gruppen.neuLaden() }
 
   const felder = (w: Record<string, unknown>): FeldDef[] => [
     gruppeAuswahl.feld(w.gruppe),
@@ -205,9 +213,31 @@ export default function AnlageElemente() {
       {meldung && <div role="status" className="rounded-md border border-green-200 bg-green-50 p-3 text-sm text-green-800">{meldung}</div>}
       <Fehler text={fehler || elemente.fehler} />
 
-      <GruppenVerwalten def={def} anlageId={id} gruppen={gruppen.daten ?? []} aktive={aktive} istAdmin={istAdmin} auswahl={gruppeAuswahl}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div role="group" aria-label={t('Ansicht')} className="inline-flex gap-0.5 rounded-md border border-slate-300 bg-white p-0.5 shadow-sm">
+          {([['baum', t('Baum'), Network], ['liste', t('Liste'), List]] as const).map(([wert, text, Bild]) => (
+            <button key={wert} type="button" onClick={() => setAnsicht(wert)} aria-pressed={ansicht === wert}
+              className={`inline-flex items-center gap-1.5 rounded px-3 py-1.5 text-sm font-medium transition ${ansicht === wert ? 'bg-marke text-white' : 'text-slate-600 hover:bg-slate-100 hover:text-marke'}`}>
+              <Bild className="size-4" strokeWidth={2} aria-hidden />{text}
+            </button>
+          ))}
+        </div>
+        {ansicht === 'baum' && (
+          <label className="flex items-center gap-2 font-normal">
+            <input type="checkbox" checked={stillgelegte} onChange={(e) => setStillgelegte(e.target.checked)} /> {t('stillgelegte zeigen')}
+          </label>
+        )}
+      </div>
+
+      {ansicht === 'baum' && (elemente.laedt && !elemente.daten ? <Laden /> : (
+        <ElementBaum def={def} anlageId={id} anlagenart={a.anlagentyp?.anlagenart} titel={[a.etikett_id, a.kunden_bezeichnung].filter(Boolean).join(' · ') || a.anlagentyp?.name || t('Anlage')}
+          elemente={(elemente.daten ?? []) as Element[]} gruppen={gruppen.daten ?? []} mangelJe={mangelJe} stillgelegte={stillgelegte} istAdmin={istAdmin}
+          onBearbeiten={(e) => setDialog(e)} onGeaendert={() => { setMeldung(''); neuLaden() }} />
+      ))}
+
+      {ansicht === 'liste' && <GruppenVerwalten def={def} anlageId={id} gruppen={gruppen.daten ?? []} aktive={aktive} istAdmin={istAdmin} auswahl={gruppeAuswahl}
         lage={istBestandArt(a.anlagentyp?.anlagenart) ? (objektLage.daten ?? []).map((x) => ({ ...x, art: null })) : undefined}
-        onGeaendert={(m) => { setFehler(''); setMeldung(m ?? ''); neuLaden() }} />
+        onGeaendert={(m) => { setFehler(''); setMeldung(m ?? ''); neuLaden() }} />}
 
       <section className="karte space-y-3 p-4">
         <h2 className="font-semibold">{t('{elemente} importieren (Excel/CSV)', { elemente: mehrzahl })}</h2>
@@ -235,6 +265,7 @@ export default function AnlageElemente() {
         )}
       </section>
 
+      {ansicht === 'liste' && <>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <label className="flex items-center gap-2 font-normal">
           <input type="checkbox" checked={stillgelegte} onChange={(e) => setStillgelegte(e.target.checked)} /> {t('stillgelegte zeigen')}
@@ -269,6 +300,7 @@ export default function AnlageElemente() {
           </table>
         </div>
       )}
+      </>}
       <p className="text-sm text-slate-500">{t('{n} aktive {elemente}', { n: aktive.length, elemente: mehrzahl })}{mangelJe.size > 0 && ' · ' + t('{n} mit offenem Mangel (werden bei der nächsten Prüfung nachgeprüft)', { n: mangelJe.size })}</p>
 
       <Dialog offen={mehrere} titel={t('Mehrere {elemente} anlegen', { elemente: mehrzahl })} onSchliessen={() => setMehrere(false)}>

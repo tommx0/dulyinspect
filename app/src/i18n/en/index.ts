@@ -12,6 +12,7 @@ import { DATEN } from './daten'
 import { PROTOKOLL } from './protokoll'
 import { SERVER } from './server'
 import { EINHEITLICH } from './einheitlich'
+import { BAUM } from './baum'
 
 export const EN: Record<string, string> = {
   ...ALLGEMEIN,
@@ -24,5 +25,6 @@ export const EN: Record<string, string> = {
   ...DATEN,
   ...PROTOKOLL,
   ...SERVER,
+  ...BAUM,
   ...EINHEITLICH,
 }
